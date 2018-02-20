@@ -20,7 +20,7 @@ freertos_hooks.o: \
  /home/osk/esp/esp-idf/components/newlib/include/alloca.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -121,7 +121,7 @@ freertos_hooks.o: \
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 

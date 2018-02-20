@@ -24,7 +24,7 @@ port/esp_bignum.o: \
  /home/osk/esp/esp-idf/components/newlib/include/machine/malloc.h \
  /home/osk/esp/esp-idf/components/newlib/include/limits.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/alloca.h \
@@ -144,7 +144,7 @@ port/esp_bignum.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdlib.h:
 

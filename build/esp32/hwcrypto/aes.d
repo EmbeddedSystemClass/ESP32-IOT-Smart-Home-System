@@ -16,7 +16,7 @@ hwcrypto/aes.o: /home/osk/esp/esp-idf/components/esp32/hwcrypto/aes.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/osk/esp/esp-idf/components/mbedtls/include/mbedtls/aes.h \
  /home/osk/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/mbedtls/include/mbedtls/check_config.h \
  /home/osk/esp/esp-idf/components/newlib/include/limits.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
@@ -123,7 +123,7 @@ hwcrypto/aes.o: /home/osk/esp/esp-idf/components/esp32/hwcrypto/aes.c \
 
 /home/osk/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/mbedtls/include/mbedtls/check_config.h:
 

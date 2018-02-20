@@ -10,7 +10,7 @@ src/ff.o: /home/osk/esp/esp-idf/components/fatfs/src/ff.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/syslimits.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/param.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -111,7 +111,7 @@ src/ff.o: /home/osk/esp/esp-idf/components/fatfs/src/ff.c \
 
 /home/osk/esp/esp-idf/components/newlib/include/machine/param.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 

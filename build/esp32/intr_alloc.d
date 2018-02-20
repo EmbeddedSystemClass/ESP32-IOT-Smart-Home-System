@@ -1,5 +1,5 @@
 intr_alloc.o: /home/osk/esp/esp-idf/components/esp32/./intr_alloc.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/features.h \
@@ -82,7 +82,7 @@ intr_alloc.o: /home/osk/esp/esp-idf/components/esp32/./intr_alloc.c \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdint.h:
 

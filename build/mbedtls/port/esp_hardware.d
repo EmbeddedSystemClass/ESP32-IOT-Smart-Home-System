@@ -1,7 +1,7 @@
 port/esp_hardware.o: \
  /home/osk/esp/esp-idf/components/mbedtls/port/esp_hardware.c \
  /home/osk/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/mbedtls/include/mbedtls/check_config.h \
  /home/osk/esp/esp-idf/components/newlib/include/limits.h \
  /home/osk/esp/esp-idf/components/newlib/include/newlib.h \
@@ -28,7 +28,7 @@ port/esp_hardware.o: \
 
 /home/osk/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/mbedtls/include/mbedtls/check_config.h:
 

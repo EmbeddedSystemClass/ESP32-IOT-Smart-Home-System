@@ -6,7 +6,7 @@ esp32/rtc_sleep.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_sleep.c \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -50,7 +50,7 @@ esp32/rtc_sleep.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_sleep.c \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdlib.h:
 

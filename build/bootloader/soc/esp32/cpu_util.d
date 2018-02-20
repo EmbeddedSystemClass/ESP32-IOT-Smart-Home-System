@@ -6,7 +6,7 @@ esp32/cpu_util.o: /home/osk/esp/esp-idf/components/soc/esp32/cpu_util.c \
  /home/osk/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/rtc_cntl_reg.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_attr.h:
 
@@ -22,5 +22,5 @@ esp32/cpu_util.o: /home/osk/esp/esp-idf/components/soc/esp32/cpu_util.c \
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 /home/osk/esp/esp-idf/components/soc/esp32/cpu_util.c:

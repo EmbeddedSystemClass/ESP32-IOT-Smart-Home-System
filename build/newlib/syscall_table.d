@@ -39,7 +39,7 @@ syscall_table.o: \
  /home/osk/esp/esp-idf/components/vfs/include/esp_vfs.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/newlib/include/dirent.h \
  /home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h \
@@ -123,7 +123,7 @@ syscall_table.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

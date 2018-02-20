@@ -1,5 +1,5 @@
-main.o: /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.h \
+main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
+ /home/osk/esp/esp32-iot-smart-home-system/main/./main.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdio.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/osk/esp/esp-idf/components/newlib/include/newlib.h \
@@ -22,7 +22,7 @@ main.o: /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -81,27 +81,27 @@ main.o: /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/CayenneMQTTClient.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/MQTTClient.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTConnect.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPublish.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTSubscribe.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTUnsubscribe.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/PlatformHeader.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/MQTTesp32.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/MQTTClient.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTConnect.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPublish.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTSubscribe.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTUnsubscribe.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/PlatformHeader.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/MQTTesp32.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/time.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Network.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTypes.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTopics.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTypes.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTopics.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/./main.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/./main.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -147,7 +147,7 @@ main.o: /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c \
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 
@@ -265,41 +265,41 @@ main.o: /home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c \
 
 /home/osk/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/CayenneMQTTClient.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/MQTTClient.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/MQTTClient.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTConnect.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTConnect.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPublish.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPublish.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTSubscribe.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTSubscribe.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../MQTTCommon/MQTTUnsubscribe.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTUnsubscribe.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/PlatformHeader.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/PlatformHeader.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/MQTTesp32.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/MQTTesp32.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/time.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Network.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTypes.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTypes.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTopics.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTopics.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
-/home/osk/esp/esp32-iot_temp/esp32iot/main/./main.c:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/./main.c:

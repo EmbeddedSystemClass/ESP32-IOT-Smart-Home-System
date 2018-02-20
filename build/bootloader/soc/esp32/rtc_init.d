@@ -8,7 +8,7 @@ esp32/rtc_init.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_init.c \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_attr.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/gpio_reg.h
 
@@ -30,7 +30,7 @@ esp32/rtc_init.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_init.c \
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h:
 

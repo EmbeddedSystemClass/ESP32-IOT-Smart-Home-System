@@ -20,7 +20,7 @@ wifi_internal.o: /home/osk/esp/esp-idf/components/esp32/./wifi_internal.c \
  /home/osk/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/alloca.h \
  /home/osk/esp/esp-idf/components/heap/include/multi_heap.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_attr.h:
 
@@ -64,5 +64,5 @@ wifi_internal.o: /home/osk/esp/esp-idf/components/esp32/./wifi_internal.c \
 
 /home/osk/esp/esp-idf/components/heap/include/multi_heap.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 /home/osk/esp/esp-idf/components/esp32/./wifi_internal.c:

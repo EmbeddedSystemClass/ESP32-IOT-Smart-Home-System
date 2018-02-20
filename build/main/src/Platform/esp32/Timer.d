@@ -1,6 +1,6 @@
 src/Platform/esp32/Timer.o: \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.c \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/time.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/osk/esp/esp-idf/components/newlib/include/newlib.h \
@@ -21,7 +21,7 @@ src/Platform/esp32/Timer.o: \
  /home/osk/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/stdio.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/time.h:
 
@@ -60,4 +60,4 @@ src/Platform/esp32/Timer.o: \
 /home/osk/esp/esp-idf/components/newlib/include/sys/reent.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/stdio.h:
-/home/osk/esp/esp32-iot_temp/esp32iot/main/src/Platform/esp32/Timer.c:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.c:

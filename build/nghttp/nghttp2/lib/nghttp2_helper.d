@@ -32,7 +32,7 @@ nghttp2/lib/nghttp2_helper.o: \
  /home/osk/esp/esp-idf/components/nghttp/port/include/nghttp2/nghttp2ver.h \
  /home/osk/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_mem.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_net.h
 
@@ -100,7 +100,7 @@ nghttp2/lib/nghttp2_helper.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

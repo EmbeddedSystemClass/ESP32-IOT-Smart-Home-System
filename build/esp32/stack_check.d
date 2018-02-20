@@ -1,5 +1,5 @@
 stack_check.o: /home/osk/esp/esp-idf/components/esp32/./stack_check.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_system.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -56,7 +56,7 @@ stack_check.o: /home/osk/esp/esp-idf/components/esp32/./stack_check.c \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core-matmap.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_system.h:
 

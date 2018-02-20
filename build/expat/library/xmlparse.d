@@ -16,7 +16,7 @@ library/xmlparse.o: \
  /home/osk/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/alloca.h \
@@ -69,7 +69,7 @@ library/xmlparse.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdlib.h:
 

@@ -18,7 +18,7 @@ heap_trace.o: /home/osk/esp/esp-idf/components/heap/./heap_trace.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/syslimits.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/param.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/heap/include/esp_heap_trace.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -125,7 +125,7 @@ heap_trace.o: /home/osk/esp/esp-idf/components/heap/./heap_trace.c \
 
 /home/osk/esp/esp-idf/components/newlib/include/machine/param.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/heap/include/esp_heap_trace.h:
 

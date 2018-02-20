@@ -27,7 +27,7 @@ pm_locks.o: /home/osk/esp/esp-idf/components/esp32/./pm_locks.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp32/pm.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/rtc.h \
@@ -138,7 +138,7 @@ pm_locks.o: /home/osk/esp/esp-idf/components/esp32/./pm_locks.c \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

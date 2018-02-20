@@ -3,7 +3,7 @@ src/bootloader_flash.o: \
  /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_flash.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
@@ -27,7 +27,7 @@ src/bootloader_flash.o: \
 
 /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/log/include/esp_log.h:
 

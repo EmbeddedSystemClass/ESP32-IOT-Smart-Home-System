@@ -33,7 +33,7 @@ src/crypto/des-internal.o: \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/mem.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/opt.h \
@@ -180,7 +180,7 @@ src/crypto/des-internal.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

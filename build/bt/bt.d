@@ -27,7 +27,7 @@ bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/heap/include/esp_heap_caps.h \
  /home/osk/esp/esp-idf/components/heap/include/multi_heap.h \
@@ -155,7 +155,7 @@ bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

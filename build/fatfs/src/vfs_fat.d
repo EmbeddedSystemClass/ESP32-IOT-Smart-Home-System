@@ -37,7 +37,7 @@ src/vfs_fat.o: /home/osk/esp/esp-idf/components/fatfs/src/vfs_fat.c \
  /home/osk/esp/esp-idf/components/newlib/include/stdio.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/assert.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
@@ -180,7 +180,7 @@ src/vfs_fat.o: /home/osk/esp/esp-idf/components/fatfs/src/vfs_fat.c \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/assert.h:
 

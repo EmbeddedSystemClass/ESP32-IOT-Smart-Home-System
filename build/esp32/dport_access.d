@@ -16,7 +16,7 @@ dport_access.o: /home/osk/esp/esp-idf/components/esp32/./dport_access.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/lock.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_attr.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdio.h \
@@ -127,7 +127,7 @@ dport_access.o: /home/osk/esp/esp-idf/components/esp32/./dport_access.c \
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_attr.h:
 

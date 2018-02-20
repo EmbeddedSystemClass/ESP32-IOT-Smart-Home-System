@@ -1,7 +1,7 @@
 libsodium/src/libsodium/sodium/utils.o: \
  /home/osk/esp/esp-idf/components/libsodium/libsodium/src/libsodium/sodium/utils.c \
  /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -39,7 +39,7 @@ libsodium/src/libsodium/sodium/utils.o: \
 
 /home/osk/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdlib.h:
 

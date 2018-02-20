@@ -1,5 +1,5 @@
 int_wdt.o: /home/osk/esp/esp-idf/components/esp32/./int_wdt.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/features.h \
@@ -87,7 +87,7 @@ int_wdt.o: /home/osk/esp/esp-idf/components/esp32/./int_wdt.c \
  /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_int_wdt.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/stdint.h:
 

@@ -27,7 +27,7 @@ port.o: /home/osk/esp/esp-idf/components/freertos/./port.c \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/system.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/simcall.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h \
@@ -145,7 +145,7 @@ port.o: /home/osk/esp/esp-idf/components/freertos/./port.c \
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 

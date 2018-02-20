@@ -1,5 +1,5 @@
 spiram_psram.o: /home/osk/esp/esp-idf/components/esp32/./spiram_psram.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/newlib/include/string.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/osk/esp/esp-idf/components/newlib/include/newlib.h \
@@ -59,7 +59,7 @@ spiram_psram.o: /home/osk/esp/esp-idf/components/esp32/./spiram_psram.c \
  /home/osk/esp/esp-idf/components/esp32/include/rom/queue.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/periph_ctrl.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/string.h:
 

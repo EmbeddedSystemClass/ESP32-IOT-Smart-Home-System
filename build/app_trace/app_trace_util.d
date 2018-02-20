@@ -15,7 +15,7 @@ app_trace_util.o: \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -111,7 +111,7 @@ app_trace_util.o: \
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 

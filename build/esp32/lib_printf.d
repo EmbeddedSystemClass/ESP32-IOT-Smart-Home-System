@@ -23,7 +23,7 @@ lib_printf.o: /home/osk/esp/esp-idf/components/esp32/./lib_printf.c \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_assert.h \
@@ -80,7 +80,7 @@ lib_printf.o: /home/osk/esp/esp-idf/components/esp32/./lib_printf.c \
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 

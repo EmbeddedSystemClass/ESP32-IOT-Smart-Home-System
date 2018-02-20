@@ -1,6 +1,6 @@
 pm_trace.o: /home/osk/esp/esp-idf/components/esp32/./pm_trace.c \
  /home/osk/esp/esp-idf/components/esp32/./pm_trace.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/gpio.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
@@ -42,7 +42,7 @@ pm_trace.o: /home/osk/esp/esp-idf/components/esp32/./pm_trace.c \
 
 /home/osk/esp/esp-idf/components/esp32/./pm_trace.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/driver/include/driver/gpio.h:
 

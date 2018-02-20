@@ -3,7 +3,7 @@ src/flash_encrypt.o: \
  /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_flash.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_random.h \
  /home/osk/esp/esp-idf/components/bootloader_support/include/esp_image_format.h \
  /home/osk/esp/esp-idf/components/bootloader_support/include/esp_flash_partitions.h \
@@ -33,7 +33,7 @@ src/flash_encrypt.o: \
 
 /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_random.h:
 

@@ -1,6 +1,6 @@
 src/secure_boot_signatures.o: \
  /home/osk/esp/esp-idf/components/bootloader_support/src/secure_boot_signatures.c \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_flash.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
@@ -19,7 +19,7 @@ src/secure_boot_signatures.o: \
  /home/osk/esp/esp-idf/components/micro-ecc/micro-ecc/uECC.h \
  /home/osk/esp/esp-idf/components/esp32/include/rom/sha.h
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/bootloader_support/include_priv/bootloader_flash.h:
 

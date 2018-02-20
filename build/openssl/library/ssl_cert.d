@@ -11,7 +11,7 @@ library/ssl_cert.o: \
  /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h \
  /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_dbg.h \
  /home/osk/esp/esp-idf/components/openssl/include/platform/ssl_opt.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/openssl/include/platform/ssl_port.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_types.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/cdefs.h \
@@ -67,7 +67,7 @@ library/ssl_cert.o: \
 
 /home/osk/esp/esp-idf/components/openssl/include/platform/ssl_opt.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/openssl/include/platform/ssl_port.h:
 

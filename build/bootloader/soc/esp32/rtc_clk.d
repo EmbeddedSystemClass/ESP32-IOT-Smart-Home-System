@@ -16,7 +16,7 @@ esp32/rtc_clk.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_clk.c \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/apb_ctrl_reg.h \
  /home/osk/esp/esp-idf/components/soc/esp32/i2c_rtc_clk.h \
@@ -66,7 +66,7 @@ esp32/rtc_clk.o: /home/osk/esp/esp-idf/components/soc/esp32/rtc_clk.c \
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/bootloader/../include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/bootloader/../include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h:
 

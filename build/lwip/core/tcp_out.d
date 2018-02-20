@@ -30,7 +30,7 @@ core/tcp_out.o: /home/osk/esp/esp-idf/components/lwip/core/tcp_out.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/stat.h \
  /home/osk/esp/esp-idf/components/vfs/include/sys/ioctl.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_task.h \
- /home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h \
+ /home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_system.h \
  /home/osk/esp/esp-idf/components/newlib/include/stdint.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -184,7 +184,7 @@ core/tcp_out.o: /home/osk/esp/esp-idf/components/lwip/core/tcp_out.c \
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_task.h:
 
-/home/osk/esp/esp32-iot_temp/esp32iot/build/include/sdkconfig.h:
+/home/osk/esp/esp32-iot-smart-home-system/build/include/sdkconfig.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_system.h:
 
