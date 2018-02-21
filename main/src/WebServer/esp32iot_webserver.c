@@ -15,6 +15,13 @@ esp_err_t webserver_initialize(void){
 		ESP_LOGW(webserver_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
 	}
+
+/*    err = wifi_ap_create();
+    if(err != ESP_OK){
+        ESP_LOGW(webserver_tag, "%s", wifi_err_to_string(err));
+        ESP_ERROR_CHECK( err );
+    }*/
+
 /*	err = wifi_scan_initialize();
 	if(err != ESP_OK){
 		ESP_LOGW(webserver_webserver_tag, "%s", wifi_err_to_string(err));

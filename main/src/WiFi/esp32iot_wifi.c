@@ -344,13 +344,20 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
      		break;
      	case SYSTEM_EVENT_AP_STADISCONNECTED:
         	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STADISCONNECTED");
+        	
+        	xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+        	
         	connection_failure_counter++;
             
      		break;  
      	case SYSTEM_EVENT_AP_STACONNECTED:
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
+            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        	openssl_server_init();
+
             connection_failure_counter = 0;
+
      		break;
      	case SYSTEM_EVENT_AP_PROBEREQRECVED:
         	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_PROBEREQRECVED");
