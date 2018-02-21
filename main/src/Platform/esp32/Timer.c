@@ -18,30 +18,41 @@
 
 void TimerInit(Timer* timer)
 {
-
+	timer->end_time = (struct timeval){0, 0};
 }
 
 char TimerIsExpired(Timer* timer)
 {
-		
-	return "";
+	struct timeval now, res;
+	gettimeofday(&now, NULL);
+	timersub(&timer->end_time, &now, &res);		
+	return res.tv_sec < 0 || (res.tv_sec == 0 && res.tv_usec <= 0);
 }
 
 
 void TimerCountdownMS(Timer* timer, unsigned int timeout)
 {
-
+	struct timeval now;
+	gettimeofday(&now, NULL);
+	struct timeval interval = {timeout / 1000, (timeout % 1000) * 1000};
+	timeradd(&now, &interval, &timer->end_time);
 }
 
 
 void TimerCountdown(Timer* timer, unsigned int timeout)
 {
-
+	struct timeval now;
+	gettimeofday(&now, NULL);
+	struct timeval interval = {timeout, 0};
+	timeradd(&now, &interval, &timer->end_time);
 }
 
 
 int TimerLeftMS(Timer* timer)
 {
-
-	return 0;
+	struct timeval now, res;
+	gettimeofday(&now, NULL);
+	timersub(&timer->end_time, &now, &res);
+	//printf("left %d ms\n", (res.tv_sec < 0) ? 0 : res.tv_sec * 1000 + res.tv_usec / 1000);
+	return (res.tv_sec < 0) ? 0 : res.tv_sec * 1000 + res.tv_usec / 1000;
 }

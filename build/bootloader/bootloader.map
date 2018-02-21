@@ -325,7 +325,7 @@ END GROUP
  .rodata.str1.4
                 0x000000003fff0038      0x95a /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/main/libmain.a(bootloader_start.o)
  *fill*         0x000000003fff0992        0x2 
- .rodata.__func__$3802
+ .rodata.__func__$3808
                 0x000000003fff0994       0x10 /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/main/libmain.a(bootloader_start.o)
  .rodata.str1.4
                 0x000000003fff09a4      0x28e /home/osk/esp/esp32-iot-smart-home-system/build/bootloader/bootloader_support/libbootloader_support.a(bootloader_flash.o)

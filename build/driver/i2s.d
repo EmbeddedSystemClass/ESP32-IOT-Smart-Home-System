@@ -99,6 +99,7 @@ i2s.o: /home/osk/esp/esp-idf/components/driver/./i2s.c \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/rtc_gpio_channel.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/dac.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dac_channel.h \
+ /home/osk/esp/esp-idf/components/driver/./adc1_i2s_private.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log_internal.h
 
@@ -301,6 +302,8 @@ i2s.o: /home/osk/esp/esp-idf/components/driver/./i2s.c \
 /home/osk/esp/esp-idf/components/driver/include/driver/dac.h:
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dac_channel.h:
+
+/home/osk/esp/esp-idf/components/driver/./adc1_i2s_private.h:
 
 /home/osk/esp/esp-idf/components/log/include/esp_log.h:
 

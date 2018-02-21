@@ -28,6 +28,12 @@
   #define DLLExport
 #endif
 
+#include "lwip/err.h"
+#include "lwip/sockets.h"
+#include "lwip/sys.h"
+#include "lwip/netdb.h"
+#include "lwip/dns.h"
+ 
 /*#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/param.h>

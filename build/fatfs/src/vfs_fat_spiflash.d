@@ -107,6 +107,7 @@ src/vfs_fat_spiflash.o: \
  /home/osk/esp/esp-idf/components/wear_levelling/include/wear_levelling.h \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
+ /home/osk/esp/esp-idf/components/fatfs/src/vfs_fat_internal.h \
  /home/osk/esp/esp-idf/components/fatfs/src/diskio.h \
  /home/osk/esp/esp-idf/components/sdmmc/include/sdmmc_cmd.h \
  /home/osk/esp/esp-idf/components/fatfs/src/diskio_spiflash.h
@@ -324,6 +325,8 @@ src/vfs_fat_spiflash.o: \
 /home/osk/esp/esp-idf/components/spi_flash/include/esp_partition.h:
 
 /home/osk/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
+
+/home/osk/esp/esp-idf/components/fatfs/src/vfs_fat_internal.h:
 
 /home/osk/esp/esp-idf/components/fatfs/src/diskio.h:
 

@@ -98,6 +98,7 @@ rtc_module.o: /home/osk/esp/esp-idf/components/driver/./rtc_module.c \
  /home/osk/esp/esp-idf/components/newlib/include/limits.h \
  /home/osk/esp/esp-idf/components/freertos/include/freertos/list.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/rtc_cntl.h \
+ /home/osk/esp/esp-idf/components/driver/./adc1_i2s_private.h \
  /home/osk/esp/esp-idf/components/esp32/include/rom/queue.h
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_types.h:
@@ -297,6 +298,8 @@ rtc_module.o: /home/osk/esp/esp-idf/components/driver/./rtc_module.c \
 /home/osk/esp/esp-idf/components/freertos/include/freertos/list.h:
 
 /home/osk/esp/esp-idf/components/driver/include/driver/rtc_cntl.h:
+
+/home/osk/esp/esp-idf/components/driver/./adc1_i2s_private.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/rom/queue.h:
 /home/osk/esp/esp-idf/components/driver/./rtc_module.c:
