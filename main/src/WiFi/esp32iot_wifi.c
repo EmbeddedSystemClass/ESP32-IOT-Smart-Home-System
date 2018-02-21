@@ -68,6 +68,8 @@ esp_err_t wifi_initialize(void)
 
 	tcpip_adapter_init();
 
+	wifi_event_group = xEventGroupCreate();
+	
 	err = esp_event_loop_init(wifi_event_handler, NULL);
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
@@ -290,6 +292,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
             	connection_failure_counter = 0;
             }
+
+            xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
             
             break;
         case SYSTEM_EVENT_STA_AUTHMODE_CHANGE:
@@ -298,6 +302,9 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
      		break;
         case SYSTEM_EVENT_STA_GOT_IP:
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
+            
+            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        	openssl_server_init();
 
             // Connect to Cayenne.
             err = connectClient();

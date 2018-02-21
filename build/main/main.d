@@ -143,6 +143,9 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp-idf/components/esp32/include/rom/queue.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_wifi_types.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/apps/dhcpserver.h \
+ /home/osk/esp/esp-idf/components/freertos/include/freertos/event_groups.h \
+ /home/osk/esp/esp-idf/components/freertos/include/freertos/timers.h \
+ /home/osk/esp/esp-idf/components/freertos/include/freertos/task.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_event.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_event_loop.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Storage/esp32iot_storage.h \
@@ -153,6 +156,15 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/esp32iot_webserver.h \
+ /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/mqtt-setup/mqtt-setup_html.h
@@ -445,6 +457,12 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 
 /home/osk/esp/esp-idf/components/lwip/include/lwip/apps/dhcpserver.h:
 
+/home/osk/esp/esp-idf/components/freertos/include/freertos/event_groups.h:
+
+/home/osk/esp/esp-idf/components/freertos/include/freertos/timers.h:
+
+/home/osk/esp/esp-idf/components/freertos/include/freertos/task.h:
+
 /home/osk/esp/esp-idf/components/esp32/include/esp_event.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_event_loop.h:
@@ -464,6 +482,24 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/esp32iot_webserver.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/index_html.h:
 

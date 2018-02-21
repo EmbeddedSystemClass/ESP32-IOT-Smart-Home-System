@@ -4,6 +4,7 @@
 #include "main.h"
 
 #include <esp_wifi.h>
+#include "freertos/event_groups.h"
 
 #include <esp_log.h>
 #include <esp_event.h>
@@ -35,6 +36,8 @@
 #define WIFI_MANAGER_CONNECTED_AP               8
 
 static char wifi_tag []="esp32iot-wifi";
+
+static EventGroupHandle_t wifi_event_group;
 
 static uint8_t connection_failure_counter = 0; //should be local in file *.c
 
