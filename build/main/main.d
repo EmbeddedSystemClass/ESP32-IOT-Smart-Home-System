@@ -151,6 +151,7 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/osk/esp/esp-idf/components/newlib/include/string.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/esp32iot_webserver.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/./web_root/wifi-setup/wifi-setup_html.h \
@@ -459,6 +460,8 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 /home/osk/esp/esp-idf/components/newlib/include/string.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/WebServer/esp32iot_webserver.h:
 

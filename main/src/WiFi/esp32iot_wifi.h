@@ -10,6 +10,7 @@
 #include <esp_event_loop.h>
 
 #include "esp32iot_storage.h"
+#include "esp32iot_cayenne.h"
 
 #define DEFAULT_AP_SSID "esp32-iot-smart-home-system"
 #define DEFAULT_AP_PASSWORD ""

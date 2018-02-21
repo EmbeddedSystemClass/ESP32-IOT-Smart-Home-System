@@ -236,6 +236,10 @@ esp_err_t wifi_scan_get(void ) {
 esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 	esp_err_t err;
 
+	if(network.connected == 1){
+		loop();
+	}
+
 	switch (event->event_id) {
 		case SYSTEM_EVENT_WIFI_READY:
         	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_WIFI_READY");
@@ -296,14 +300,12 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
             // Connect to Cayenne.
-		    if (connectClient() == CAYENNE_SUCCESS) {
-		        // Run main loop.
-		        loop();
-		    }
-		    else {
-		        printf("Connection failed, exiting\n");
-		    }
-		    
+            err = connectClient();
+            if(err != CAYENNE_SUCCESS){
+            	ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
+				ESP_ERROR_CHECK( err );
+            }
+            
             break;
         case SYSTEM_EVENT_STA_LOST_IP:
         	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_STA_LOST_IP");
