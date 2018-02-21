@@ -24,18 +24,46 @@
 #include "./web_root/wifi-setup/wifi-setup_html.h"
 #include "./web_root/mqtt-setup/mqtt-setup_html.h"
 
-#define OPENSSL_ESP32IOT_SERVER_ACK "HTTP/1.1 200 OK\r\n" \
+#define OPENSSL_ESP32IOT_TASK_NAME        "ESP32IOT Manager"
+
+#define OPENSSL_ESP32IOT_SERVER_SUCCESS "HTTP/1.1 200 OK\r\n" \
                                 "Content-Type: text/html\r\n" \
-                                "Content-Length: 98\r\n\r\n" \
+                                "Content-Length: 200\r\n\r\n" \
                                 "<html>\r\n" \
                                 "<head>\r\n" \
-                                "<title>OpenSSL example</title></head><body>\r\n" \
-                                "OpenSSL server example!\r\n" \
+                                "<title>"OPENSSL_ESP32IOT_TASK_NAME": Success</title>\r\n" \
+                                "</head>\r\n" \
+                                "<body>\r\n" \
+                                "<h1>Operation completed successfully!</h1>\r\n" \
                                 "</body>\r\n" \
-                                "</html>\r\n" \
-                                "\r\n"
+                                "</html>\r\n"
 
-#define OPENSSL_ESP32IOT_TASK_NAME        "ESP32IOT Manager"
+#define OPENSSL_ESP32IOT_SERVER_ERROR "HTTP/1.1 404 Not Found\r\n" \
+                                "Content-Type: text/html\r\n" \
+                                "Content-Length: 200\r\n\r\n" \
+                                "<html>\r\n" \
+                                "<head>\r\n" \
+                                "<title>"OPENSSL_ESP32IOT_TASK_NAME": 404 Not Found</title>\r\n" \
+                                "</head>\r\n" \
+                                "<body>\r\n" \
+                                "<h1>404 Not Found</h1>\r\n" \
+                                "We cannot find the page you`re looking for!\r\n" \
+                                "</body>\r\n" \
+                                "</html>\r\n"
+
+#define OPENSSL_ESP32IOT_SERVER_EMPTY_FORM "HTTP/1.1 204 No Content\r\n" \
+                                "Content-Type: text/html\r\n" \
+                                "Content-Length: 200\r\n\r\n" \
+                                "<html>\r\n" \
+                                "<head>\r\n" \
+                                "<title>"OPENSSL_ESP32IOT_TASK_NAME": 204 No Content</title>\r\n" \
+                                "</head>\r\n" \
+                                "<body>\r\n" \
+                                "<h1>204 No Content</h1>\r\n" \
+                                "Form cannot be submitted, empty fields found. Fill out all fields!\r\n" \
+                                "</body>\r\n" \
+                                "</html>\r\n"
+
 #define OPENSSL_ESP32IOT_TASK_STACK_WORDS 10240
 #define OPENSSL_ESP32IOT_TASK_PRIORITY    8
 

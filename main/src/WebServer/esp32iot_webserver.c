@@ -69,10 +69,8 @@ void openssl_esp32iot_task(void *p)
 
     char recv_buf[OPENSSL_ESP32IOT_RECV_BUF_LEN];
 
-    const char send_data[sizeof(index_html)];
-    strcpy(send_data, (char *)index_html);
-
-    const int send_bytes = sizeof(send_data);
+/*    const char send_data[sizeof(index_html)];
+    strcpy(send_data, (char *)index_html);*/
 
     extern const unsigned char cacert_pem_start[] asm("_binary_cacert_pem_start");
     extern const unsigned char cacert_pem_end[]   asm("_binary_cacert_pem_end");
@@ -173,17 +171,93 @@ reconnect:
             break;
         }
         ESP_LOGI(webserver_tag, "SSL read: %s", recv_buf);
-        if (strstr(recv_buf, "GET ") &&
-            strstr(recv_buf, " HTTP/1.1")) {
+        if (strstr(recv_buf, "GET ") && strstr(recv_buf, " HTTP/1.1")) {
+            //printf("\nGET recv_buf: %s\n",recv_buf );
             ESP_LOGI(webserver_tag, "SSL get matched message")
             ESP_LOGI(webserver_tag, "SSL write message")
-            ret = SSL_write(ssl, send_data, send_bytes);
-            if (ret > 0) {
-                ESP_LOGI(webserver_tag, "OK")
-            } else {
-                ESP_LOGI(webserver_tag, "error")
+            if(strstr(recv_buf, "/ ")){
+                ret = SSL_write(ssl, index_html, sizeof(index_html));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                }
+            }else if(strstr(recv_buf, "/index ")){
+                ret = SSL_write(ssl, index_html, sizeof(index_html));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                }
+            }else if(strstr(recv_buf, "/wifi-setup-menu ")){
+                ret = SSL_write(ssl, wifi_setup_html, sizeof(wifi_setup_html));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                }
+            }else if(strstr(recv_buf, "/mqtt-setup-menu ")){
+                ret = SSL_write(ssl, mqtt_setup_html, sizeof(mqtt_setup_html));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                }
+            }else {
+                ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_ERROR, sizeof(OPENSSL_ESP32IOT_SERVER_ERROR));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                } 
             }
             break;
+        }else if(strstr(recv_buf, "POST ") && strstr(recv_buf, " HTTP/1.1")){
+            printf("\nPOST recv_buf: %s\n",recv_buf );
+            ESP_LOGI(webserver_tag, "SSL get matched message");
+            ESP_LOGI(webserver_tag, "SSL write message");
+
+            if(strstr(recv_buf, "/wifi-setup ")){
+                if(strstr(recv_buf, "ssid") && strstr(recv_buf, "password")){
+                    ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_SUCCESS, sizeof(OPENSSL_ESP32IOT_SERVER_SUCCESS));
+                    if (ret > 0) {
+                        ESP_LOGI(webserver_tag, "OK")
+                    } else {
+                        ESP_LOGI(webserver_tag, "error")
+                    }
+                }else{
+                    ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_EMPTY_FORM, sizeof(OPENSSL_ESP32IOT_SERVER_EMPTY_FORM));
+                    if (ret > 0) {
+                        ESP_LOGI(webserver_tag, "OK")
+                    } else {
+                        ESP_LOGI(webserver_tag, "error")
+                    } 
+                }
+            }else if(strstr(recv_buf, "/mqtt-setup ")){
+                if(strstr(recv_buf, "username") && strstr(recv_buf, "password")){
+                    ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_SUCCESS, sizeof(OPENSSL_ESP32IOT_SERVER_SUCCESS));
+                    if (ret > 0) {
+                        ESP_LOGI(webserver_tag, "OK")
+                    } else {
+                        ESP_LOGI(webserver_tag, "error")
+                    }
+                }else{
+                    ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_EMPTY_FORM, sizeof(OPENSSL_ESP32IOT_SERVER_EMPTY_FORM));
+                    if (ret > 0) {
+                        ESP_LOGI(webserver_tag, "OK")
+                    } else {
+                        ESP_LOGI(webserver_tag, "error")
+                    }
+                }
+            }else {
+                ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_ERROR, sizeof(OPENSSL_ESP32IOT_SERVER_ERROR));
+                if (ret > 0) {
+                    ESP_LOGI(webserver_tag, "OK")
+                } else {
+                    ESP_LOGI(webserver_tag, "error")
+                } 
+            }
+            break; 
         }
     } while (1);
     

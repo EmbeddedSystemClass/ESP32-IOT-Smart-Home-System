@@ -6,7 +6,7 @@ static unsigned char wifi_setup_html[] =
 "<html>\n"
 "<head>\n"
   "<meta charset=\"UTF-8\">\n"
-  "<title>Configure WiFi</title>\n"
+  "<title>ESP32IOT Manager: Configure WiFi</title>\n"
 "</head>\n"
 "<body>\n"
   "<div style=\"zoom: 340%;\">\n"
