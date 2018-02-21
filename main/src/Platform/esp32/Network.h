@@ -33,20 +33,6 @@
 #include "lwip/sys.h"
 #include "lwip/netdb.h"
 #include "lwip/dns.h"
- 
-/*#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/param.h>
-#include <sys/select.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>*/
 
 /**
 * Network struct for reading from and writing to a network connection.
