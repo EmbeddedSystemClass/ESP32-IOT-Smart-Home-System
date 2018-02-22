@@ -36,7 +36,8 @@
                                 "<body>\r\n" \
                                 "<h1>Operation completed successfully!</h1>\r\n" \
                                 "</body>\r\n" \
-                                "</html>\r\n"
+                                "</html>\r\n" \
+                                "\r\n"
 
 #define OPENSSL_ESP32IOT_SERVER_ERROR "HTTP/1.1 404 Not Found\r\n" \
                                 "Content-Type: text/html\r\n" \

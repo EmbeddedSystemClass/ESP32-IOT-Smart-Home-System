@@ -351,6 +351,9 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             
      		break;  
      	case SYSTEM_EVENT_AP_STACONNECTED:
+            ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: station:"MACSTR" join,AID=%d\n", MAC2STR(event->event_info.sta_connected.mac), 
+			event->event_info.sta_connected.aid);
+
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);

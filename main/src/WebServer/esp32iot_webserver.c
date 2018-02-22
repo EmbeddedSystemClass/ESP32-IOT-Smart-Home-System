@@ -10,17 +10,17 @@ esp_err_t webserver_initialize(void){
 		ESP_ERROR_CHECK( err );
 	}
 
-	err = wifi_sta_start("hotosk", "W6game555");
+/*	err = wifi_sta_start("hotosk", "W6game555");
 	if(err != ESP_OK){
 		ESP_LOGW(webserver_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
-	}
+	}*/
 
-/*    err = wifi_ap_create();
+    err = wifi_ap_create();
     if(err != ESP_OK){
         ESP_LOGW(webserver_tag, "%s", wifi_err_to_string(err));
         ESP_ERROR_CHECK( err );
-    }*/
+    }
 
 /*	err = wifi_scan_initialize();
 	if(err != ESP_OK){
@@ -224,7 +224,7 @@ reconnect:
             ESP_LOGI(webserver_tag, "SSL get matched message");
             ESP_LOGI(webserver_tag, "SSL write message");
 
-            if(strstr(recv_buf, "/wifi-setup ")){
+            if(strstr(recv_buf, "/wifi-setup")){
                 if(strstr(recv_buf, "ssid") && strstr(recv_buf, "password")){
                     ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_SUCCESS, sizeof(OPENSSL_ESP32IOT_SERVER_SUCCESS));
                     if (ret > 0) {
@@ -240,7 +240,7 @@ reconnect:
                         ESP_LOGI(webserver_tag, "error")
                     } 
                 }
-            }else if(strstr(recv_buf, "/mqtt-setup ")){
+            }else if(strstr(recv_buf, "/mqtt-setup")){
                 if(strstr(recv_buf, "username") && strstr(recv_buf, "password")){
                     ret = SSL_write(ssl, OPENSSL_ESP32IOT_SERVER_SUCCESS, sizeof(OPENSSL_ESP32IOT_SERVER_SUCCESS));
                     if (ret > 0) {
