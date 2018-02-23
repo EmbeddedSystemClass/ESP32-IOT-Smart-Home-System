@@ -21,6 +21,12 @@ const static unsigned char index_html[] =
     "<form action=\"/mqtt-setup-menu\" method=\"get\">\r\n" \
         "<button type=\"submit\">Configure MQTT</button><br>\r\n" \
     "</form>\r\n" \
+    "<form action=\"/erase-wifi-data\" method=\"post\">\r\n" \
+        "<button type=\"submit\">Erase WiFi data</button><br>\r\n" \
+    "</form>\r\n" \
+    "<form action=\"/restart\" method=\"post\">\r\n" \
+        "<button type=\"submit\">Restart</button><br>\r\n" \
+    "</form>\r\n" \
   "</div>\r\n" \
 "</body>\r\n" \
 "</html>\r\n" \

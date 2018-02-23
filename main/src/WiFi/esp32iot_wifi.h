@@ -35,6 +35,8 @@
 #define WIFI_MANAGER_CONNECTING_AP              7
 #define WIFI_MANAGER_CONNECTED_AP               8
 
+#define MAX_WIFI_CONNECTION_ATTEMPTS	3
+
 static char wifi_tag []="esp32iot-wifi";
 
 static EventGroupHandle_t wifi_event_group;

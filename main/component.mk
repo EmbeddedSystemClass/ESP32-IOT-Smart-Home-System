@@ -6,7 +6,7 @@ MQTT_COMMON_DIR := $(SRC_DIR)/MQTTCommon
 PLATFORM_DIR := $(SRC_DIR)/Platform/esp32
 WIFI_DIR := $(SRC_DIR)/WiFi
 STORAGE_DIR := $(SRC_DIR)/Storage
-HTTP_SERVER_DIR := $(SRC_DIR)/WebServer
+HTTP_SERVER_DIR := $(SRC_DIR)/HttpServer
 CAYENNE_DIR := $(SRC_DIR)/Cayenne
 
 MAIN_OBJS := $(MAIN_DIR)/main.o
