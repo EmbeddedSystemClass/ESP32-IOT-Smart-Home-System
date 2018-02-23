@@ -92,7 +92,7 @@ esp_err_t wifi_initialize(void)
 	return ESP_OK;
 }
 
-esp_err_t wifi_ap_create(void) {
+esp_err_t wifi_ap_start(void) {
 	esp_err_t err;
 
 	err = esp_wifi_stop();
@@ -112,6 +112,7 @@ esp_err_t wifi_ap_create(void) {
 	      .ssid=DEFAULT_AP_SSID,
 	      .ssid_len=0,
 	      .password=DEFAULT_AP_PASSWORD,
+	      //.bssid_set = false,
 	      .channel=1,
 	      .authmode=DEFAULT_AP_AUTHMODE,
 	      .ssid_hidden=0,
@@ -156,7 +157,7 @@ esp_err_t wifi_sta_start(const char *ssid, const char *password)
 		.sta = {
       		.ssid = "",
 	      	.password = "",
-      		.bssid_set = 0,
+      		.bssid_set = false,
       		.channel = 0.
 	  	}
 	};
@@ -182,6 +183,69 @@ esp_err_t wifi_sta_start(const char *ssid, const char *password)
 
 	return ESP_OK;
 }
+
+esp_err_t wifi_start(void){
+	esp_err_t err;
+
+	err = wifi_initialize();
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+/*	err = wifi_sta_start("hotosk", "W6game555");
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}*/
+
+    err = wifi_ap_start();
+    if(err != ESP_OK){
+        ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+        ESP_ERROR_CHECK( err );
+    }
+
+/*	err = wifi_scan_initialize();
+	if(err != ESP_OK){
+		ESP_LOGW(webserver_wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}*/
+
+	//char ssid[] = "hotosk";
+    //char* password;
+	//save_last_connected_wifi("asda", "asdasd");
+/*	wifi_manager_state = 0;
+    err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
+    if (err != ESP_OK){
+        ESP_LOGW(webserver_wifi_tag, "( %d )", err);
+        ESP_ERROR_CHECK( err );
+    }else{
+    	if(actual_wifi.password){
+    		printf("Last connected wifi: ssid=%s password=%s\n",  actual_wifi.ssid, actual_wifi.password);
+    		//ESP_ERROR_CHECK( wifi_sta_conect(ssid, password) );
+    		err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+			if(err != ESP_OK){
+				ESP_LOGW(webserver_wifi_tag, "%s", wifi_err_to_string(err));
+				ESP_ERROR_CHECK( err );
+			}
+    	}else{
+    		err = wifi_ap_create();
+			if(err != ESP_OK){
+				ESP_LOGW(webserver_wifi_tag, "%s", wifi_err_to_string(err));
+				ESP_ERROR_CHECK( err );
+			}
+    	}
+	}*/
+
+/*    err = save_wifi(ssid, "W6game55");
+    if (err != ESP_OK){
+        ESP_LOGW(webserver_wifi_tag, "( %d )", err);
+        ESP_ERROR_CHECK( err );
+    }*/
+	
+	return ESP_OK;
+}
+
 
 esp_err_t wifi_scan_start(void) {
 	esp_err_t err;
@@ -288,7 +352,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 				}
             }else{
             	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_STA_DISCONNECTED: Cannot connect to WiFi. Creating Access Point.");
-            	wifi_ap_create();
+            	wifi_ap_start();
 
             	connection_failure_counter = 0;
             }
@@ -304,7 +368,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
             
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	openssl_server_init();
+        	http_server_init();
 
             // Connect to Cayenne.
             err = connectClient();
@@ -357,7 +421,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	openssl_server_init();
+        	http_server_init();
 
             connection_failure_counter = 0;
 

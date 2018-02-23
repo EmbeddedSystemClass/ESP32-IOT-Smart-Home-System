@@ -1,7 +1,11 @@
 #ifndef INDEX_HTML
 #define INDEX_HTML
 
-static unsigned char index_html[] =
+const static unsigned char index_html_header[] = 
+"HTTP/1.1 200 OK\r\n" \
+"Content-Type: text/html\r\n\r\n";
+
+const static unsigned char index_html[] =
 "<!DOCTYPE html>\r\n" \
 "<html>\r\n" \
 "<head>\r\n" \

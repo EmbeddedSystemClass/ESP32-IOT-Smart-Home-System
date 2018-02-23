@@ -50,7 +50,7 @@ void app_main()
         ESP_ERROR_CHECK( err );
     }
 
-    err = webserver_initialize();
+    err = wifi_start();
     if (err != ESP_OK){
         ESP_LOGW(main_tag, "Error ( %d )", err);
         ESP_ERROR_CHECK( err );

@@ -55,9 +55,6 @@ char *wifi_err_to_string(int ev);
 
 void copy_string(uint8_t d[], uint8_t s[]);
 
-/* Initialize Wi-Fi as ap */
-esp_err_t wifi_ap_create(void);
-
 /* Initialize Wi-Fi as ap with scan */
 esp_err_t wifi_ap_scan_create(void);
 
@@ -67,8 +64,14 @@ esp_err_t wifi_initialize(void);
 /* Start Wi-Fi scan */
 esp_err_t wifi_scan_start(void);
 
+/* Initialize Wi-Fi as ap */
+esp_err_t wifi_ap_start(void);
+
 /* Connect to sta Wi-Fi */
 esp_err_t wifi_sta_start(const char *ssid, const char *password);
+
+/* Start AP or STA Wi-Fi */
+esp_err_t wifi_start(void);
 
 /*  WiFi event handler. */
 esp_err_t wifi_event_handler(void *ctx, system_event_t *event);
