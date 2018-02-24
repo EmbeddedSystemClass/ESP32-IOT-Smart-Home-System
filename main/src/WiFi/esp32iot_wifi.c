@@ -62,6 +62,19 @@ void copy_string(uint8_t d[], uint8_t s[]) {
    d[c] = '\0';
 }
 
+esp_err_t conect_sta(void){
+	esp_err_t err;
+
+	wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
+    err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+    if(err != ESP_OK){
+      ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+      ESP_ERROR_CHECK( err );
+    }
+
+    return err;
+}
+
 esp_err_t wifi_initialize(void)
 {
 	esp_err_t err;
@@ -137,7 +150,7 @@ esp_err_t wifi_ap_start(void) {
 	return ESP_OK;
 }
 
-esp_err_t wifi_sta_start(const char *ssid, const char *password)
+esp_err_t wifi_sta_start(const char ssid[], const char password[])
 {
 	esp_err_t err;
 
@@ -155,14 +168,23 @@ esp_err_t wifi_sta_start(const char *ssid, const char *password)
 
 	wifi_config_t sta_config = {
 		.sta = {
-      		.ssid = "",
-	      	.password = "",
       		.bssid_set = false,
       		.channel = 0.
-	  	}
+	  	},
 	};
-	copy_string(sta_config.sta.ssid, (uint8_t *)ssid);
-	copy_string(sta_config.sta.password, (uint8_t *)password);
+
+	//*sta_config.sta.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
+	//*sta_config.sta.password = (char*)malloc(strlen(password) * sizeof(char));
+	for(size_t i = 0; i<= strlen(ssid); ++i)
+      sta_config.sta.ssid[i] = ssid[i];
+	for(size_t i = 0; i<= strlen(password); ++i)
+      sta_config.sta.password[i] = password[i];  
+
+	//strcpy(sta_config.sta.ssid, ssid);
+	//strcpy(sta_config.sta.password, password);
+	//printf("\n%s | %s\n", sta_config.sta.ssid, sta_config.sta.password );
+	//fflush(stdout);
+
 	err = esp_wifi_set_config(WIFI_IF_STA, &sta_config);
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
@@ -205,15 +227,6 @@ esp_err_t wifi_start(void){
         ESP_ERROR_CHECK( err );
     }
 
-/*	err = wifi_scan_initialize();
-	if(err != ESP_OK){
-		ESP_LOGW(webserver_wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}*/
-
-	//char ssid[] = "hotosk";
-    //char* password;
-	//save_last_connected_wifi("asda", "asdasd");
 	wifi_manager_state = 0;
     err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
     if (err != ESP_OK){

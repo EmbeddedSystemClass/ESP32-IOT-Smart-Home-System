@@ -50,6 +50,6 @@ static void http_server(void *pvParameters);
 
 void http_server_init(void);
 
-static err_t parse_http_request(const char* request, const char* key, const char* value);
+static err_t parse_http_request(const char* request, const char key[], char value[]);
 
 #endif

@@ -52,6 +52,10 @@ static wifi_evidence_t actual_wifi;
 
 static uint8_t wifi_manager_state = 0;
 
+void change_state(uint8_t state);
+
+esp_err_t conect_sta(void);
+
 /* Convert a WiFi event type to a string. */
 char *wifi_err_to_string(int ev);
 
@@ -70,7 +74,7 @@ esp_err_t wifi_scan_start(void);
 esp_err_t wifi_ap_start(void);
 
 /* Connect to sta Wi-Fi */
-esp_err_t wifi_sta_start(const char *ssid, const char *password);
+esp_err_t wifi_sta_start(const char ssid[], const char password[]);
 
 /* Start AP or STA Wi-Fi */
 esp_err_t wifi_start(void);

@@ -10,6 +10,8 @@ static void http_server_netconn_serve(struct netconn *conn){
   /* Read the data from the port, blocking if nothing yet there.
    We assume the request (the part we care about) is in one netbuf */
   err = netconn_recv(conn, &inbuf);
+  
+
   if (err == ERR_OK) {
     netbuf_data(inbuf, (void**)&recv_buf, &buflen);
 
@@ -18,6 +20,7 @@ static void http_server_netconn_serve(struct netconn *conn){
     /* Is this an HTTP GET command? (only check the first 5 chars, since
     there are other formats for GET, and we're keeping it very simple )*/
     printf("buffer = %s \n", recv_buf);
+    fflush(stdout);
 /*    if (buflen>=5 &&
         recv_buf[0]=='G' &&
         recv_buf[1]=='E' &&
@@ -83,22 +86,28 @@ static void http_server_netconn_serve(struct netconn *conn){
 
       if(strstr(recv_buf, "/wifi-setup")){
         char ssid[33];
-        char password[64];
-        
         parse_http_request(recv_buf, "ssid", &ssid);
-        printf("\nssid=%s", ssid); 
-        parse_http_request(recv_buf, "password", &password);
-        printf("\password=%s", password); 
-        //if(ssid!=""){
-         
-       /// }
 
-        if(strstr(recv_buf, "ssid") && strstr(recv_buf, "password")){
+        if(ssid != NULL){
+          char password[64];
+          parse_http_request(recv_buf, "password", &password);
+          //printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
+
+          actual_wifi.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
+          strcpy(actual_wifi.ssid, ssid);
+          actual_wifi.password = (char*)malloc(strlen(password) * sizeof(char));
+          strcpy(actual_wifi.password, password);
+
+          printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
+          //fflush(stdout);
+
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
           err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
           if (err != ESP_OK) {
             ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
             ESP_ERROR_CHECK( err );
+          }else{
+            //ESP_ERROR_CHECK( conect_sta() );
           }
         }else{
           netconn_write(conn, empty_field_form_html_header, sizeof(empty_field_form_html_header)-1, NETCONN_NOCOPY);
@@ -127,7 +136,7 @@ static void http_server_netconn_serve(struct netconn *conn){
       }else if(strstr(recv_buf, "/erase-wifi-data ")){
         err = erase_storage();
         if(err != ESP_OK){
-          ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+          ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
           ESP_ERROR_CHECK( err );
         }else{
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
@@ -194,11 +203,49 @@ void http_server_init(void){
 
 #include <ctype.h>
 //ssid=hh&password=gg 
-static err_t parse_http_request(const char* request, const char* key, const char* value){
+static err_t parse_http_request(const char* request, const char key[], char* value){
   err_t err = 0;
 
+/*
+  const char *request_params = strstr(request, key);
+    printf("\n1: %s",request_params);*/
+
+  if(strstr(request, key) != NULL){
+    const char *param_start = strstr(request, key);
+    //  printf("\n1: %s",param_start);
+
+    char *param_end = strchr(param_start, '&');
+    if(param_end == NULL){
+      param_end = strchr(param_start, '\0');
+    //  printf("\n2b: %s",param_end);
+    }else{
+    //  printf("\n2a: %s",param_end);
+    }
+    
+    char tmp_param[param_end-param_start];
+    strncpy(tmp_param, param_start, param_end-param_start);
+    tmp_param[sizeof(tmp_param)] = 0;
+    // printf("\n3: %s, size: %i",tmp_param, sizeof(tmp_param));
+
+    // printf("\n4: %d",strlen(key));
+    char param[strlen(tmp_param)-strlen(key)-1];
+    //  printf("\n5: %d", sizeof(param));
+    for(int i = 0; i < sizeof(param); i++){
+      param[i]=tmp_param[strlen(key) + 1 + i];
+    }
+    param[sizeof(param)]='\0';
+    //  printf("\n6: %s", param);
+
+    //value = (char*)malloc(strlen(param) * sizeof(char));
+    for(size_t i = 0; i<= sizeof(param); ++i)
+      value[i] = param[i];    
+    //copy_string((uint8_t)value, (uint8_t)param);
+
+  }else{
+    ESP_LOGI(http_server_tag, "Key: %s not found.", key);
+    err = 1;
+  }
 
   fflush(stdout);
-
   return err;
 }
