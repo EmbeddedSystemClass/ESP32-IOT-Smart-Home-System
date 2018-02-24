@@ -95,6 +95,6 @@ void app_main()
     CayenneInit();
 
     printf("\nESP32-IOT End!.\n");
-    ;
+    //fflush(stdout);
     //esp_restart();
 }
