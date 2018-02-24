@@ -246,6 +246,6 @@ static err_t parse_http_request(const char* request, const char key[], char* val
     err = 1;
   }
 
-//  fflush(stdout);
+  flush(stdout);
   return err;
 }
