@@ -183,7 +183,7 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 	//strcpy(sta_config.sta.ssid, ssid);
 	//strcpy(sta_config.sta.password, password);
 	//printf("\n%s | %s\n", sta_config.sta.ssid, sta_config.sta.password );
-	//fflush(stdout);
+	//;
 
 	err = esp_wifi_set_config(WIFI_IF_STA, &sta_config);
 	if(err != ESP_OK){
@@ -305,7 +305,7 @@ esp_err_t wifi_scan_get(void ) {
     for (int i = 0; i < apCount; ++i)
     {
         printf("\n%s", ap_list[i].ssid);
-        //fflush(stdout);
+        //;
     }
     free(ap_list);
 
@@ -434,7 +434,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             	connection_failure_counter = 0;
             	
             	printf("Restarting now.\n");
-			    fflush(stdout);
+			    ;
 			    esp_restart();
             }
      		break;  

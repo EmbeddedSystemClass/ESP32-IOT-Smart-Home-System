@@ -20,7 +20,7 @@ static void http_server_netconn_serve(struct netconn *conn){
     /* Is this an HTTP GET command? (only check the first 5 chars, since
     there are other formats for GET, and we're keeping it very simple )*/
     printf("buffer = %s \n", recv_buf);
-    fflush(stdout);
+    ;
 /*    if (buflen>=5 &&
         recv_buf[0]=='G' &&
         recv_buf[1]=='E' &&
@@ -91,15 +91,15 @@ static void http_server_netconn_serve(struct netconn *conn){
         if(ssid != NULL){
           char password[64];
           parse_http_request(recv_buf, "password", &password);
-          //printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
+          printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
 
-          actual_wifi.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
-          strcpy(actual_wifi.ssid, ssid);
-          actual_wifi.password = (char*)malloc(strlen(password) * sizeof(char));
-          strcpy(actual_wifi.password, password);
+          //actual_wifi.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
+          //strcpy(actual_wifi.ssid, ssid);
+          //actual_wifi.password = (char*)malloc(strlen(password) * sizeof(char));
+          //strcpy(actual_wifi.password, password);
 
-          printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
-          //fflush(stdout);
+          //printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
+          //;
 
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
           err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
@@ -154,7 +154,7 @@ static void http_server_netconn_serve(struct netconn *conn){
           ESP_ERROR_CHECK( err );
         }
         printf("Restarting now.\n");
-        fflush(stdout);
+        ;
         delay(5000);
         esp_restart();
       }else {
@@ -246,6 +246,6 @@ static err_t parse_http_request(const char* request, const char key[], char* val
     err = 1;
   }
 
-  fflush(stdout);
+  ;
   return err;
 }
