@@ -525,3 +525,4 @@ src/HttpServer/esp32iot_http_server.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/ctype.h:
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.c:

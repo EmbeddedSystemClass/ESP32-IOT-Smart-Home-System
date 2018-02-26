@@ -25,8 +25,8 @@ esp_err_t erase_storage(void);
 esp_err_t save_wifi(const char* ssid, const char* password);
 esp_err_t save_last_connected_wifi(const char* ssid, const char* password);
 
-esp_err_t get_wifi(const char* ssid, char* password[]);
-esp_err_t get_last_connected_wifi(const char* ssid[], char* password[]);
+esp_err_t get_wifi(const char* ssid, char* password);
+esp_err_t get_last_connected_wifi(const char* ssid, char* password);
 
 esp_err_t save_mqtt(void);
 esp_err_t get_mqtt(void);

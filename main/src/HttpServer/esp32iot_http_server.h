@@ -42,6 +42,12 @@ static char http_server_tag []="esp32iot-http_server";
 
 char* json_unformatted;
 
+extern struct wifi_evidence_t actual_wifi;
+
+extern uint8_t wifi_manager_state;
+
+struct netconn *conn, *newconn;
+
 struct http_request_str http_request_to_str(const char *s);
 
 static void http_server_netconn_serve(struct netconn *conn);

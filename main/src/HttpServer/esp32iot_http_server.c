@@ -1,6 +1,5 @@
 #include "esp32iot_http_server.h"
 
-
 static void http_server_netconn_serve(struct netconn *conn){
   struct netbuf *inbuf;
   char *recv_buf;
@@ -88,18 +87,21 @@ static void http_server_netconn_serve(struct netconn *conn){
         char ssid[33];
         parse_http_request(recv_buf, "ssid", &ssid);
 
-        if(ssid != NULL){
+        if(strcmp(ssid, "")){
           char password[64];
           parse_http_request(recv_buf, "password", &password);
-          printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
+          //printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
+/*
+          actual_wifi.ssid = (char*)realloc(actual_wifi.ssid, strlen(ssid) * sizeof(char));
+          
+          actual_wifi.password = (char*)realloc(actual_wifi.ssid, strlen(password) * sizeof(char));
+          
 
-/*          actual_wifi.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
-          strcpy(actual_wifi.ssid, ssid);
-          actual_wifi.password = (char*)malloc(strlen(password) * sizeof(char));
-          strcpy(actual_wifi.password, password);
-
-          printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);*/
+          */
           //fflush(stdout);
+          strcpy(actual_wifi.ssid, ssid);
+          strcpy(actual_wifi.password, password);
+          printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
 
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
           err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
@@ -108,6 +110,22 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }else{
             //ESP_ERROR_CHECK( conect_sta() );
+            wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
+            //ESP_ERROR_CHECK(esp_wifi_disconnect());
+            //err = wifi_sta_connect(*actual_wifi.ssid, *actual_wifi.password);
+            /* Close the connection (server closes in HTTP) */
+            netconn_close(conn);
+
+            netbuf_delete(inbuf);
+
+            //delay(5000);
+            err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+            if(err != ESP_OK){
+              ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+              ESP_ERROR_CHECK( err );
+            }
+
+            return;
           }
         }else{
           netconn_write(conn, empty_field_form_html_header, sizeof(empty_field_form_html_header)-1, NETCONN_NOCOPY);
@@ -176,7 +194,6 @@ static void http_server_netconn_serve(struct netconn *conn){
 }
 
 static void http_server(void *pvParameters){
-  struct netconn *conn, *newconn;
   err_t err;
   conn = netconn_new(NETCONN_TCP);
   netconn_bind(conn, NULL, 80);

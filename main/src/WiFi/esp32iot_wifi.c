@@ -79,6 +79,8 @@ esp_err_t wifi_initialize(void)
 {
 	esp_err_t err;
 
+	wifi_manager_state = 0;
+
 	tcpip_adapter_init();
 
 	wifi_event_group = xEventGroupCreate();
@@ -233,7 +235,7 @@ esp_err_t wifi_start(void){
         ESP_LOGW(wifi_tag, "( %d )", err);
         ESP_ERROR_CHECK( err );
     }else{
-    	if(actual_wifi.password){
+    	if(strcmp(actual_wifi.password, "")){
     		ESP_LOGW(wifi_tag, "Last connected wifi: ssid=%s password=%s\n",  actual_wifi.ssid, actual_wifi.password);
     		//ESP_ERROR_CHECK( wifi_sta_conect(ssid, password) );
     		err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
@@ -356,6 +358,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             break;
         case SYSTEM_EVENT_STA_DISCONNECTED:
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_STA_DISCONNECTED");
+            xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+
             connection_failure_counter++;
             if(connection_failure_counter < MAX_WIFI_CONNECTION_ATTEMPTS){
             	err = esp_wifi_connect();
@@ -369,8 +373,6 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
             	connection_failure_counter = 0;
             }
-
-            xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
             
             break;
         case SYSTEM_EVENT_STA_AUTHMODE_CHANGE:

@@ -43,14 +43,14 @@ static EventGroupHandle_t wifi_event_group;
 
 static uint8_t connection_failure_counter = 0; //should be local in file *.c
 
-typedef struct {
-	char *ssid;      /**< SSID of target AP*/
-    char *password;  /**< password of target AP*/	
-} wifi_evidence_t;
+typedef struct wifi_evidence_t{
+	char ssid[33];      /**< SSID of target AP*/
+    char password[64];  /**< password of target AP*/	
+};
 
-static wifi_evidence_t actual_wifi;
+struct wifi_evidence_t actual_wifi;
 
-static uint8_t wifi_manager_state = 0;
+uint8_t wifi_manager_state;
 
 void change_state(uint8_t state);
 

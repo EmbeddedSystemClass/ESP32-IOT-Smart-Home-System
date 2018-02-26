@@ -137,7 +137,7 @@ esp_err_t save_wifi(const char* ssid, const char* password){
     return ESP_OK;
 }
 
-esp_err_t get_wifi(const char* ssid, char* password[]){
+esp_err_t get_wifi(const char* ssid, char* password){
 	nvs_handle my_handle;
     esp_err_t err;
 
@@ -163,18 +163,18 @@ esp_err_t get_wifi(const char* ssid, char* password[]){
     if (required_size == 0) {
         ESP_LOGI(storage_tag, "get_wifi: Nothing saved yet!\n");
     } else {
-        char* found_password = malloc(required_size);
+        char found_password[64];// = malloc(required_size);
         err = nvs_get_str(my_handle, ssid, found_password, &required_size);
         if (err != ESP_OK){
 	    	ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
 			ESP_ERROR_CHECK( err );
 	    	return err;
 	    } else{
-	    	*password = malloc(required_size);
-	    	strcpy(*password, found_password);
+	    	//*password = malloc(required_size);
+	    	strcpy(password, found_password);
         	//printf("WiFi: ssid=%s password=%s\n", ssid, *password); 
 
-        	free(found_password);
+        	//free(found_password);
 	    }
 	        
     }
@@ -244,7 +244,7 @@ esp_err_t save_last_connected_wifi(const char* ssid, const char* password){
     return ESP_OK;
 }
 
-esp_err_t get_last_connected_wifi(const char* ssid[], char* password[]){
+esp_err_t get_last_connected_wifi(const char* ssid, char* password){
     nvs_handle my_handle;
     esp_err_t err;
 
@@ -270,18 +270,18 @@ esp_err_t get_last_connected_wifi(const char* ssid[], char* password[]){
     if (required_size == 0) {
         ESP_LOGI(storage_tag, "get_last_connected_wifi: No last connected wifi ssid saved!\n");
     } else {
-        char* found_ssid = malloc(required_size);
+        char found_ssid[33];// = malloc(required_size);
         err = nvs_get_str(my_handle, "last_ssid", found_ssid, &required_size);
         if (err != ESP_OK){
             ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
             ESP_ERROR_CHECK( err );
             return err;
         } else{
-            *ssid = malloc(required_size);
-            strcpy(*ssid, found_ssid);
+            //*ssid malloc= malloc(required_size);
+            strcpy(ssid, found_ssid);
             //printf("WiFi: ssid=%s password=%s\n", key, *password); 
 
-            free(found_ssid);
+            //free(found_ssid);
         }
             
     }
@@ -298,16 +298,16 @@ esp_err_t get_last_connected_wifi(const char* ssid[], char* password[]){
     if (required_size == 0) {
         ESP_LOGI(storage_tag, "get_last_connected_wifi: No last connected wifi password saved!\n");
     } else {
-        char* found_password = malloc(required_size);
+        char found_password[64];// = malloc(required_size);
         err = nvs_get_str(my_handle, "last_password", found_password, &required_size);
         if (err != ESP_OK){
             ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
             ESP_ERROR_CHECK( err );
             return err;
         } else{
-            *password = malloc(required_size);
-            strcpy(*password, found_password); 
-            free(found_password);
+            //*password = malloc(required_size);
+            strcpy(password, found_password); 
+            //free(found_password);
         }
             
     }
