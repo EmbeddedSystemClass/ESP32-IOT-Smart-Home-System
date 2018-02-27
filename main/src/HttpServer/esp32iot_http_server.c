@@ -101,7 +101,7 @@ static void http_server_netconn_serve(struct netconn *conn){
           //fflush(stdout);
           strcpy(actual_wifi.ssid, ssid);
           strcpy(actual_wifi.password, password);
-          printf("\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
+          ESP_LOGI(http_server_tag, "\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
 
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
           err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
@@ -114,17 +114,33 @@ static void http_server_netconn_serve(struct netconn *conn){
             //ESP_ERROR_CHECK(esp_wifi_disconnect());
             //err = wifi_sta_connect(*actual_wifi.ssid, *actual_wifi.password);
             /* Close the connection (server closes in HTTP) */
+            //xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
             netconn_close(conn);
 
             netbuf_delete(inbuf);
 
             //delay(5000);
-            err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+
+            err = esp_wifi_stop();
             if(err != ESP_OK){
               ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
               ESP_ERROR_CHECK( err );
             }
 
+
+
+/*            vTaskDelete(http_server);
+            
+            netconn_delete(conn);
+            netconn_thread_cleanup();*/
+
+            //delay(5000);
+/*            err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+            if(err != ESP_OK){
+              ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+              ESP_ERROR_CHECK( err );
+            }
+*/
             return;
           }
         }else{

@@ -156,11 +156,11 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 {
 	esp_err_t err;
 
-	err = esp_wifi_stop();
+	/*err = esp_wifi_stop();
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
-	}
+	}*/
 
 	err = esp_wifi_set_mode(WIFI_MODE_STA);
 	if(err != ESP_OK){
@@ -184,7 +184,7 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 
 	//strcpy(sta_config.sta.ssid, ssid);
 	//strcpy(sta_config.sta.password, password);
-	//printf("\n%s | %s\n", sta_config.sta.ssid, sta_config.sta.password );
+	ESP_LOGI(wifi_tag, "\n%s -|- %s\n", sta_config.sta.ssid, sta_config.sta.password );
 	//fflush(stdout);
 
 	err = esp_wifi_set_config(WIFI_IF_STA, &sta_config);
@@ -199,12 +199,12 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 		ESP_ERROR_CHECK( err );
 	}
 
-/*	err = esp_wifi_connect();
+	/*err = esp_wifi_connect();
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
-	}*/
 
+	}*/
 	return ESP_OK;
 }
 
@@ -223,11 +223,11 @@ esp_err_t wifi_start(void){
 		ESP_ERROR_CHECK( err );
 	}*/
 
-    err = wifi_ap_start();
+/*    err = wifi_ap_start();
     if(err != ESP_OK){
         ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
         ESP_ERROR_CHECK( err );
-    }
+    }*/
 
 	wifi_manager_state = 0;
     err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
@@ -350,7 +350,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_STA_CONNECTED");
             connection_failure_counter = 0;
 
-            save_last_connected_wifi("hotosk", "W6game555");
+            save_last_connected_wifi(actual_wifi.ssid, actual_wifi.password);
             if(wifi_manager_state==WIFI_MANAGER_CONNECTION_ATTEMPT_STA){
             	save_wifi(actual_wifi.ssid, actual_wifi.password);
             }
@@ -428,16 +428,20 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         	
         	connection_failure_counter++;
             if(connection_failure_counter < MAX_WIFI_CONNECTION_ATTEMPTS){
-            	wifi_ap_start();
-
+            	//wifi_ap_start();
+            	//STA WIFI CONNECT
+            	err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+				if(err != ESP_OK){
+					ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+					ESP_ERROR_CHECK( err );
+				}
             }else{
             	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STADISCONNECTED: Major error. Cannot create WiFi Access Point.");
 
             	connection_failure_counter = 0;
-            	
-            	printf("Restarting now.\n");
-//			    fflush(stdout);
-			    esp_restart();
+
+            	ESP_LOGI(wifi_tag, "Restarting now.");
+			    //esp_restart();
             }
      		break;  
      	case SYSTEM_EVENT_AP_STACONNECTED:
