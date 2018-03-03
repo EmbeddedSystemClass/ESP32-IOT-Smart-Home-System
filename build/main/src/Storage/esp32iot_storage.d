@@ -169,6 +169,13 @@ src/Storage/esp32iot_storage.o: \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h \
+ /home/osk/esp/esp-idf/components/newlib/include/ctype.h \
+ /home/osk/esp/esp-idf/components/newlib/include/dirent.h \
+ /home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h \
+ /home/osk/esp/esp-idf/components/newlib/include/fcntl.h \
+ /home/osk/esp/esp-idf/components/newlib/include/inttypes.h \
+ /home/osk/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
@@ -512,6 +519,20 @@ src/Storage/esp32iot_storage.o: \
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h:
 
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/ctype.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/dirent.h:
+
+/home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/fcntl.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/inttypes.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/machine/endian.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h:
 

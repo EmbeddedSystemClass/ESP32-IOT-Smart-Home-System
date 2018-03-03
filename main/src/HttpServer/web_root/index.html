@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32IOT Manager: Configuration Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style type="text/css">
+    * { outline: none; }
+    body {
+      background-color: #789; margin: 0;
+      padding: 0; font: 16px/1.4 Helvetica, Arial, sans-serif;
+      font: 16px/1.4 Helvetica, Arial, sans-serif;
+    }
+    div.content {
+      width: 800px; margin: 2em auto; padding: 20px 50px;
+      background-color: #fff; border-radius: 1em;
+    }
+    label { display: inline-block; min-width: 12em; }
+    input { border: 1px solid #ccc; padding: 0.2em; min-width: 20em; }
+    a:link, a:visited { color: #69c; text-decoration: none; }
+    #result {
+      background: #ffc; min-height: 3em; border: 1px solid #ccc;
+      white-space: pre-wrap; font-size: 85%;
+    }
+    @media (max-width: 700px) {
+      body { background-color: #fff; }
+      div.content { width: auto; margin: 0 auto; padding: 1em; }
+    }
+  </style>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script language="javascript" type="text/javascript">
+    jQuery(function() {
+
+      $(document).on('click', '#upload', function() {
+        var data = {};
+        $('#upload_form [name]').each(function(index, el) {
+          data[$(el).attr('name')] = $(el).val();
+        });
+        $('#result').text('');
+        $.ajax({
+          url: '/upload',
+          method: 'POST',
+          dataType: 'html',
+          data: data,
+          success: function(data) {
+            $('#result').text(data);
+          }
+        });
+      });
+
+    });
+  </script>
+
+  <!--<script language="javascript" type="text/javascript">
+    jQuery(function() {
+
+      $(document).on('keyup', '#n1, #n2', function() {
+        $.ajax({
+          url: '/api/v1/sum',
+          method: 'POST',
+          dataType: 'json',
+          data: { n1: $('#n1').val(), n2: $('#n2').val() },
+          success: function(json) {
+            $('#result').html(json.result);
+          }
+        });
+      });
+
+    });
+  </script> -->
+</head>
+<body>
+  <div style="zoom: 340%;">
+    <h1>Configuration Menu</h1>
+    <form action="/wifi-setup-menu" method="get">
+        <button type="submit">Configure WiFi</button><br>
+    </form> 
+    <form action="/mqtt-setup-menu" method="get">
+        <button type="submit">Configure MQTT</button><br>
+    </form>
+    <form action="/erase-wifi-data" method="post">
+        <button type="submit">Erase WiFi data</button><br>
+    </form>
+    <form action="/restart" method="post">
+        <button type="submit">Restart</button><br>
+    </form>
+    <button id="test">test</button>
+  </div>
+
+  <div id="upload_form">
+    <div>
+      <label>Bucket name:</label> <input type="text" name="bucket"
+        value="my_uploads"/>
+    </div><div>
+      <label>File name:</label> <input type="text" name="file_name"
+        value="myfile.txt"/>
+    </div><div>
+      <label>File content:</label> <input type="text" name="file_data"
+        value=":-)"/>
+    </div><div>
+      <label>Host:</label> <input type="text" name="host"
+        value="s3.amazonaws.com"/>
+    </div><div>
+      <label></label>
+      <button id="upload">Upload</button>
+    </div><div>
+      <label>Result:</label> <pre id="result">&nbsp;</pre>
+    </div>
+  </div>
+</body>
+</html>

@@ -14,6 +14,7 @@
 #include "esp32iot_storage.h"
 #include "esp32iot_http_server.h"
 #include "esp32iot_cayenne.h"
+#include "mongoose.h"
 
 #define delay(ms) (vTaskDelay(ms/portTICK_RATE_MS))
 

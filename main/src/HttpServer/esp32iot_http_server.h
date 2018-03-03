@@ -19,6 +19,8 @@
 #include "lwip/api.h"
 #include "lwip/err.h"
 
+#include "mongoose.h"
+
 #include "esp32iot_wifi.h"
 #include "esp32iot_storage.h"
 
@@ -26,6 +28,11 @@
 #include "./web_root/wifi-setup/wifi-setup_html.h"
 #include "./web_root/mqtt-setup/mqtt-setup_html.h"
 #include "./web_root/notifications/notifications_html.h"
+
+static const char *s_http_port = "8000";
+static const char *s_access_key_id = NULL;
+static const char *s_secret_access_key = NULL;
+static struct mg_serve_http_opts s_http_server_opts;
 
 #define HTTP_SERVER_ESP32IOT_TASK_NAME        "ESP32IOT Manager"
 
@@ -48,14 +55,17 @@ extern uint8_t wifi_manager_state;
 
 struct netconn *conn, *newconn;
 
-struct http_request_str http_request_to_str(const char *s);
+#define MG_LISTEN_ADDR "80"
 
-static void http_server_netconn_serve(struct netconn *conn);
 
-static void http_server(void *pvParameters);
+/* Server handler */
+static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data);
 
-void http_server_init(void);
+static esp_err_t mg_init(void );
 
-static err_t parse_http_request(const char* request, const char key[], char value[]);
+void mongoose_task(void );
+
+esp_err_t http_server_init(void);
+
 
 #endif

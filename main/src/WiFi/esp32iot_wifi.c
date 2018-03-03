@@ -321,6 +321,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 		loop();
 	}
 
+	//printf("elo\n");
 	switch (event->event_id) {
 		case SYSTEM_EVENT_WIFI_READY:
         	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_WIFI_READY");
@@ -383,7 +384,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
             
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	http_server_init();
+        	//http_server_init();
+        	xTaskCreatePinnedToCore(&mongoose_task, "mongoose_task", 20000, NULL, 5, NULL,0);
 
             // Connect to Cayenne.
             err = connectClient();
@@ -445,14 +447,14 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             }
      		break;  
      	case SYSTEM_EVENT_AP_STACONNECTED:
-            ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: station:"MACSTR" join,AID=%d\n", MAC2STR(event->event_info.sta_connected.mac), 
-			event->event_info.sta_connected.aid);
+            //ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: station:"MACSTR" join,AID=%d\n", MAC2STR(event->event_info.sta_connected.mac), 
+			//event->event_info.sta_connected.aid);
 
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	http_server_init();
-
+        	//http_server_init();
+            xTaskCreatePinnedToCore(&mongoose_task, "mongoose_task", 20000, NULL, 5, NULL,0);
             connection_failure_counter = 0;
 
      		break;

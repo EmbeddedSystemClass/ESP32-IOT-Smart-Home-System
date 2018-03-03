@@ -158,6 +158,13 @@ src/HttpServer/esp32iot_http_server.o: \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h \
+ /home/osk/esp/esp-idf/components/newlib/include/ctype.h \
+ /home/osk/esp/esp-idf/components/newlib/include/dirent.h \
+ /home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h \
+ /home/osk/esp/esp-idf/components/newlib/include/fcntl.h \
+ /home/osk/esp/esp-idf/components/newlib/include/inttypes.h \
+ /home/osk/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h \
  /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h \
  /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h \
@@ -173,8 +180,7 @@ src/HttpServer/esp32iot_http_server.o: \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h \
- /home/osk/esp/esp-idf/components/newlib/include/ctype.h
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
 
@@ -492,6 +498,20 @@ src/HttpServer/esp32iot_http_server.o: \
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
 
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/ctype.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/dirent.h:
+
+/home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/fcntl.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/inttypes.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/machine/endian.h:
+
 /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h:
 
 /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h:
@@ -523,6 +543,4 @@ src/HttpServer/esp32iot_http_server.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/ctype.h:
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.c:
