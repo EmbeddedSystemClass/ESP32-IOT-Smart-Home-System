@@ -1,6 +1,6 @@
 #include "esp32iot_http_server.h"
 
-char *mg_event_to_string(int ev) {
+char *mg_ev_to_string(int ev) {
   switch (ev) {
     case MG_EV_HTTP_REQUEST:
       return "MG_EV_HTTP_REQUEST";
@@ -85,102 +85,96 @@ char *mg_event_to_string(int ev) {
 static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
   esp_err_t err;
 
-  static const char *reply_fmt =
-      "HTTP/1.0 200 OK\r\n"
-      "Connection: close\r\n"
-      "Content-Type: text/plain\r\n"
-      "\r\n"
-      "Hello %s\n";
-
   struct http_message *hm = (struct http_message *) ev_data;
   switch (ev) {
     case MG_EV_HTTP_REQUEST: {
-      ESP_LOGD(http_server_tag, "MG_EV_HTTP_REQUEST");
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
       char addr[32];
       mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
                           MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-      printf("HTTP request from %s: %.*s %.*s\n", addr, (int) hm->method.len,
+      ESP_LOGI(http_server_tag, "HTTP request from %s: %.*s %.*s\n", addr, (int) hm->method.len,
              hm->method.p, (int) hm->uri.len, hm->uri.p);
-      mg_printf(nc, reply_fmt, addr);
+      mg_send(nc, index_html, sizeof(index_html));
       nc->flags |= MG_F_SEND_AND_CLOSE;
+
       break;
     }
     case MG_EV_ACCEPT: {
-      ESP_LOGD(http_server_tag, "MG_EV_ACCEPT");
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
       char addr[32];
       mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
                           MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-      printf("Connection %p from %s\n", nc, addr);
+      ESP_LOGI(http_server_tag, "Connection %p from %s\n", nc, addr);
+
       break;
     }
     case MG_EV_CLOSE: {
-      ESP_LOGD(http_server_tag, "MG_EV_HTTP_REQUEST");
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+      ESP_LOGI(http_server_tag, "Connection %p closed\n", nc);
+
+      break;
+    }
+    case MG_EV_RECV: {
       
       break;
     }
+    case MG_EV_HTTP_CHUNK: {
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
+      break;
+    }
+    case MG_EV_SEND: {
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
+      break;
+    }
     case MG_EV_MQTT_CONNACK: {
-      //ESP_LOGD(http_server_tag, "MG_EV_HTTP_REQUEST");
+      //ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
       
       break;
     }
     case MG_EV_MQTT_CONNACK_ACCEPTED: {
-      //ESP_LOGD(http_server_tag, "MG_EV_HTTP_REQUEST");
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
       break;
     }
     default: {
-      ESP_LOGW(http_server_tag, "( %s )", mg_event_to_string(ev));
+      ESP_LOGW(http_server_tag, "( %s )", mg_ev_to_string(ev));
+
       break;
     }
   }
 }
-//xTaskCreatePinnedToCore(&mg_init, "mongoose_task", 20000, NULL, 5, NULL,0);
-static esp_err_t mg_init(void ){
+
+void mg_init(void *data){
+  /* Starting Mongoose */
   struct mg_mgr mgr;
   struct mg_connection *nc;
 
-  esp_err_t err = 0;
+  ESP_LOGI(http_server_tag, "Starting web-server on port %s\n", MG_LISTEN_ADDR);
 
   mg_mgr_init(&mgr, NULL);
 
   nc = mg_bind(&mgr, MG_LISTEN_ADDR, mg_ev_handler);
   if (nc == NULL) {
-    printf("Error setting up listener!\n");
-    err = 101;
-    return err;
+    ESP_LOGI(http_server_tag, "Error setting up listener!\n");
+    return;
   }
   mg_set_protocol_http_websocket(nc);
 
-  while (1) {
+  /* Processing events */
+  for(;;){
     mg_mgr_poll(&mgr, 1000);
   }
+  mg_mgr_free(&mgr);
 
-  return err;
+  return;
 }
 
-void mongoose_task(void ){
-  struct mg_mgr mgr;
-  struct mg_connection *nc;
+void http_server_init(void *data){
+  mg_init(data);
 
-  ESP_LOGD(http_server_tag, "Starting setup...");
-  
-  mg_mgr_init(&mgr, NULL);
-
-  nc = mg_bind(&mgr, MG_LISTEN_ADDR, mg_ev_handler);
-  if (nc == NULL) {
-    ESP_LOGE(http_server_tag, "No connection from the mg_bind()...  Error setting up listener!");
-  }
-  mg_set_protocol_http_websocket(nc);
-
-  while (1) {
-    mg_mgr_poll(&mgr, 1000);
-  }
-}
-
-esp_err_t http_server_init(void){
-  esp_err_t err;
-  err = mg_init();
-  if(err != ESP_OK){
-    ESP_ERROR_CHECK( err );
-  }
-  return err;
+  return;
 }

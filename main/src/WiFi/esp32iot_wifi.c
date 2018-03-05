@@ -385,7 +385,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         	//http_server_init();
-        	xTaskCreatePinnedToCore(&mongoose_task, "mongoose_task", 20000, NULL, 5, NULL,0);
+        	xTaskCreatePinnedToCore(&http_server_init, "http_server_init", 20000, NULL, 5, NULL,0);
 
             // Connect to Cayenne.
             err = connectClient();
@@ -454,7 +454,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         	//http_server_init();
-            xTaskCreatePinnedToCore(&mongoose_task, "mongoose_task", 20000, NULL, 5, NULL,0);
+            xTaskCreatePinnedToCore(&http_server_init, "http_server_init", 20000, NULL, 5, NULL,0);
             connection_failure_counter = 0;
 
      		break;

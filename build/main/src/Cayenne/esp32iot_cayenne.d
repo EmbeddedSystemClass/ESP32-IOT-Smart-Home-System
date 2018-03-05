@@ -158,18 +158,6 @@ src/Cayenne/esp32iot_cayenne.o: \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h \
- /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h \
- /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h \
  /home/osk/esp/esp-idf/components/newlib/include/ctype.h \
  /home/osk/esp/esp-idf/components/newlib/include/dirent.h \
@@ -497,30 +485,6 @@ src/Cayenne/esp32iot_cayenne.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h:
-
-/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h:
 
