@@ -11,7 +11,7 @@
 #include <esp_event_loop.h>
 
 #include "esp32iot_storage.h"
-#include "esp32iot_cayenne.h"
+#include "esp32iot_http_server.h"
 
 #define DEFAULT_AP_SSID "esp32-iot-smart-home-system"
 #define DEFAULT_AP_PASSWORD ""
@@ -75,6 +75,7 @@ esp_err_t wifi_ap_start(void);
 
 /* Connect to sta Wi-Fi */
 esp_err_t wifi_sta_start(const char ssid[], const char password[]);
+esp_err_t wifi_sta_start2(const char ssid[], const char password[]);
 
 /* Start AP or STA Wi-Fi */
 esp_err_t wifi_start(void);

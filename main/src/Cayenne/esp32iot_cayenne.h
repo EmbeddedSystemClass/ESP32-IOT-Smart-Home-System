@@ -3,6 +3,8 @@
 
 #include "main.h"
 
+#include "CayenneMQTTClient.h"
+
 static char cayenne_tag []="esp32iot-cayenne";
 
 Network network;

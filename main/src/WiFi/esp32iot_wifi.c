@@ -110,11 +110,11 @@ esp_err_t wifi_initialize(void)
 esp_err_t wifi_ap_start(void) {
 	esp_err_t err;
 
-	err = esp_wifi_stop();
+/*	err = esp_wifi_stop();
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
-	}
+	}*/
 
 	err = esp_wifi_set_mode(WIFI_MODE_AP);
 	if(err != ESP_OK){
@@ -156,7 +156,7 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 {
 	esp_err_t err;
 
-	/*err = esp_wifi_stop();
+/*	err = esp_wifi_stop();
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 		ESP_ERROR_CHECK( err );
@@ -182,7 +182,7 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 	for(size_t i = 0; i<= strlen(password); ++i)
       sta_config.sta.password[i] = password[i];  
 
-	//strcpy(sta_config.sta.ssid, ssid);
+	//strcpy(sta_config.sta.ssid, ssiSTARTEDd);
 	//strcpy(sta_config.sta.password, password);
 	ESP_LOGI(wifi_tag, "\n%s -|- %s\n", sta_config.sta.ssid, sta_config.sta.password );
 	//fflush(stdout);
@@ -205,6 +205,62 @@ esp_err_t wifi_sta_start(const char ssid[], const char password[])
 		ESP_ERROR_CHECK( err );
 
 	}*/
+	return ESP_OK;
+}
+
+esp_err_t wifi_sta_start2(const char ssid[], const char password[])
+{
+	esp_err_t err;
+
+	err = esp_wifi_disconnect();
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+	err = esp_wifi_set_mode(WIFI_MODE_STA);
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+	wifi_config_t sta_config = {
+		.sta = {
+      		.bssid_set = false,
+      		.channel = 0.
+	  	},
+	};
+
+	//*sta_config.sta.ssid = (char*)malloc(strlen(ssid) * sizeof(char));
+	//*sta_config.sta.password = (char*)malloc(strlen(password) * sizeof(char));
+	for(size_t i = 0; i<= strlen(ssid); ++i)
+      sta_config.sta.ssid[i] = ssid[i];
+	for(size_t i = 0; i<= strlen(password); ++i)
+      sta_config.sta.password[i] = password[i];  
+
+	//strcpy(sta_config.sta.ssid, ssiSTARTEDd);
+	//strcpy(sta_config.sta.password, password);
+	ESP_LOGI(wifi_tag, "\n%s -|- %s\n", sta_config.sta.ssid, sta_config.sta.password );
+	//fflush(stdout);
+
+	err = esp_wifi_set_config(WIFI_IF_STA, &sta_config);
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+/*	err = esp_wifi_restore();
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}*/
+
+	err = esp_wifi_connect();
+	if(err != ESP_OK){
+		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+
+	}
 	return ESP_OK;
 }
 
@@ -386,13 +442,6 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         	//http_server_init();
         	xTaskCreatePinnedToCore(&http_server_init, "http_server_init", 20000, NULL, 5, NULL,0);
-
-            // Connect to Cayenne.
-            err = connectClient();
-            if(err != CAYENNE_SUCCESS){
-            	ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
-				ESP_ERROR_CHECK( err );
-            }
             
             break;
         case SYSTEM_EVENT_STA_LOST_IP:

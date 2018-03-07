@@ -95,8 +95,97 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
                           MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
       ESP_LOGI(http_server_tag, "HTTP request from %s: %.*s %.*s\n", addr, (int) hm->method.len,
              hm->method.p, (int) hm->uri.len, hm->uri.p);
-      mg_send(nc, index_html, sizeof(index_html));
-      nc->flags |= MG_F_SEND_AND_CLOSE;
+
+      if((mg_vcmp(&hm->uri, "/") == 0) || (mg_vcmp(&hm->uri, "/index") == 0)){
+        //mg_send(nc, index_html, sizeof(index_html));
+        mg_send_head(nc, 200, sizeof(index_html), "Content-Type: text/html");
+        mg_send(nc, index_html, sizeof(index_html));
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }else if(mg_vcmp(&hm->uri, "/mqtt-setup-menu") == 0){
+        mg_send_head(nc, 200, sizeof(mqtt_setup_html), "Content-Type: text/html");
+        mg_send(nc, mqtt_setup_html, sizeof(mqtt_setup_html));
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }else if(mg_vcmp(&hm->uri, "/wifi-setup-menu") == 0){
+        mg_send_head(nc, 200, sizeof(wifi_setup_html), "Content-Type: text/html");
+        mg_send(nc, wifi_setup_html, sizeof(wifi_setup_html));
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }else if(mg_vcmp(&hm->uri, "/wifi-setup") == 0){
+        char ssid[33];
+        char password[64];
+        /* Get form variables */
+        mg_get_http_var(&hm->body, "ssid", ssid, sizeof(ssid));
+        mg_get_http_var(&hm->body, "password", password, sizeof(password));
+        
+        strcpy(actual_wifi.ssid, ssid);
+        strcpy(actual_wifi.password, password);
+
+        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
+        mg_send(nc, success_html, sizeof(success_html));
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+
+        ESP_LOGI(http_server_tag, "\n\nwifi: ssid=%s password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
+
+        //mg_mgr_free(&mgr);
+
+        //wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
+        /*err = wifi_sta_start2(actual_wifi.ssid, actual_wifi.password);
+        if(err != ESP_OK){
+          ESP_ERROR_CHECK( err );
+        }*/
+
+      }else if(mg_vcmp(&hm->uri, "/mqtt-setup") == 0){
+        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
+        mg_send(nc, success_html, sizeof(success_html));
+
+        CayenneInit();
+
+        // Connect to Cayenne.
+        err = connectClient();
+        if(err != CAYENNE_SUCCESS){
+          ESP_ERROR_CHECK( err );
+        }
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }else if(mg_vcmp(&hm->uri, "/restart") == 0){
+        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
+        mg_send(nc, success_html, sizeof(success_html));
+
+        ESP_LOGI(http_server_tag, "Restarting now.\n");
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+//        fflush(stdout);
+        //delay(5000);
+        esp_restart();
+      }else if(mg_vcmp(&hm->uri, "/erase-wifi-data") == 0){
+        
+
+        ESP_LOGI(http_server_tag, "Erasing now.\n");
+
+        err = erase_storage();
+        if(err != ESP_OK){
+          ESP_ERROR_CHECK( err );
+          mg_send_head(nc, 101, sizeof(unknown_error_html), "Content-Type: text/html");
+          mg_send(nc, unknown_error_html, sizeof(unknown_error_html));
+        }else{
+          mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
+          mg_send(nc, success_html, sizeof(success_html));
+        }
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+        //delay(5000);
+      }else{
+        ESP_LOGI(http_server_tag, "Wrong gateway.\n");
+        mg_send_head(nc, 404, sizeof(not_found_error_html), "Content-Type: text/html");
+        mg_send(nc, not_found_error_html, sizeof(not_found_error_html));
+
+        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }
+
+            
+
 
       break;
     }
@@ -117,7 +206,8 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
       break;
     }
     case MG_EV_RECV: {
-      
+      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+
       break;
     }
     case MG_EV_HTTP_CHUNK: {
@@ -136,7 +226,7 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
       break;
     }
     case MG_EV_MQTT_CONNACK_ACCEPTED: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+      //ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
 
       break;
     }
@@ -149,14 +239,17 @@ static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 }
 
 void mg_init(void *data){
+  
+}
+
+void http_server_init(void *data){
   /* Starting Mongoose */
-  struct mg_mgr mgr;
-  struct mg_connection *nc;
 
   ESP_LOGI(http_server_tag, "Starting web-server on port %s\n", MG_LISTEN_ADDR);
 
   mg_mgr_init(&mgr, NULL);
 
+  mg_mgr_free(&mgr);
   nc = mg_bind(&mgr, MG_LISTEN_ADDR, mg_ev_handler);
   if (nc == NULL) {
     ESP_LOGI(http_server_tag, "Error setting up listener!\n");
@@ -168,13 +261,7 @@ void mg_init(void *data){
   for(;;){
     mg_mgr_poll(&mgr, 1000);
   }
-  mg_mgr_free(&mgr);
-
-  return;
-}
-
-void http_server_init(void *data){
-  mg_init(data);
+  //mg_mgr_free(&mgr);
 
   return;
 }

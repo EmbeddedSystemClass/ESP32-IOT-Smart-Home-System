@@ -92,7 +92,6 @@ void app_main()
     printf("TimerMS: TimerIsExpired: %i \n\n", TimerIsExpired(&timer));*/
 
     // Initialize the network.
-    CayenneInit();
 
     printf("\nESP32-IOT End!.\n");
     //fflush(stdout);
