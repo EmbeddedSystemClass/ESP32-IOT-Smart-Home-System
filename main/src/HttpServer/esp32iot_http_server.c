@@ -195,6 +195,19 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }
         }
+      }else if(strstr(recv_buf, "/reset_restart_counter ")){
+        err = reset_restart_counter();
+        if(err != ESP_OK){
+          ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+          ESP_ERROR_CHECK( err );
+        }else{
+          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }
+        }
       }else if(strstr(recv_buf, "/restart ")){
         netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
         err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);

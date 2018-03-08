@@ -33,5 +33,6 @@ esp_err_t get_mqtt(void);
 
 esp_err_t save_restart_counter(void);
 esp_err_t get_restart_counter(void);
+esp_err_t reset_restart_counter(void);
 
 #endif

@@ -25,6 +25,9 @@ const static unsigned char index_html[] =
     "<form action=\"/erase-wifi-data\" method=\"post\">\r\n" \
         "<button type=\"submit\">Erase WiFi data</button><br>\r\n" \
     "</form>\r\n" \
+    "<form action=\"/reset_restart_counter\" method=\"post\">\r\n" \
+        "<button type=\"submit\">Reset restart counter</button><br>\r\n" \
+    "</form>\r\n" \
     "<form action=\"/restart\" method=\"post\">\r\n" \
         "<button type=\"submit\">Restart</button><br>\r\n" \
     "</form>\r\n" \

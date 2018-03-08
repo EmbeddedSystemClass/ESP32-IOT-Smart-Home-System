@@ -423,3 +423,39 @@ esp_err_t get_restart_counter(void){
     nvs_close(my_handle);
     return ESP_OK;
 }
+
+esp_err_t reset_restart_counter(void){
+    nvs_handle my_handle;
+    esp_err_t err;
+
+    // Open
+    err = nvs_open(GENERAL_STORAGE_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    // Write
+    err = nvs_set_i32(my_handle, "restart_counter", 0);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    // Commit written value.
+    // After setting any values, nvs_commit() must be called to ensure changes are written
+    // to flash storage. Implementations may write to storage at other times,
+    // but this is not guaranteed.
+    err = nvs_commit(my_handle);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}

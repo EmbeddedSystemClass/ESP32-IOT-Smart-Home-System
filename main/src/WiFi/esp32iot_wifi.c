@@ -331,7 +331,7 @@ esp_err_t wifi_start(void){
         ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
         ESP_ERROR_CHECK( err );
     }*/
-
+/*
     err = wifi_apsta_configure("hotosk", "W6game555");
 	if(err != ESP_OK){
 		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
@@ -342,31 +342,45 @@ esp_err_t wifi_start(void){
 			ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 			ESP_ERROR_CHECK( err );
 		}
-	}
+	}*/
 
 
 
-/*    err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
+    err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
     if (err != ESP_OK){
         ESP_LOGW(wifi_tag, "( %d )", err);
         ESP_ERROR_CHECK( err );
     }else{
-    	if(strcmp(actual_wifi.password, "")){
+    	if(strcmp(actual_wifi.ssid, "") && strcmp(actual_wifi.password, "")){
     		ESP_LOGW(wifi_tag, "Last connected wifi: ssid=%s password=%s\n",  actual_wifi.ssid, actual_wifi.password);
     		//ESP_ERROR_CHECK( wifi_sta_conect(ssid, password) );
-    		err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+    		err = wifi_apsta_configure(actual_wifi.ssid, actual_wifi.password);
 			if(err != ESP_OK){
 				ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 				ESP_ERROR_CHECK( err );
+			}else{
+				err = esp_wifi_start();
+				if(err != ESP_OK){
+					ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+					ESP_ERROR_CHECK( err );
+				}
 			}
     	}else{
-    		err = wifi_ap_start();
+    		err = wifi_apsta_configure(DEFAULT_AP_SSID,"");
 			if(err != ESP_OK){
 				ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
 				ESP_ERROR_CHECK( err );
+			}else{
+				err = esp_wifi_start();
+				if(err != ESP_OK){
+					ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+					ESP_ERROR_CHECK( err );
+				}
 			}
     	}
-	}*/
+	}
+
+
 
 /*    err = save_wifi(ssid, "W6game55");
     if (err != ESP_OK){
@@ -468,11 +482,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             //connection_failure_counter = 0;
 
             //wifi_manager_state = WIFI_MANAGER_CONNECTED_STA;
-
-/*            save_last_connected_wifi(actual_wifi.ssid, actual_wifi.password);
-            if(wifi_manager_state==WIFI_MANAGER_CONNECTION_ATTEMPT_STA){
-            	save_wifi(actual_wifi.ssid, actual_wifi.password);
-            }*/
+            save_last_connected_wifi(actual_wifi.ssid, actual_wifi.password);
+            save_wifi(actual_wifi.ssid, actual_wifi.password);
             
             break;
         case SYSTEM_EVENT_STA_DISCONNECTED:
