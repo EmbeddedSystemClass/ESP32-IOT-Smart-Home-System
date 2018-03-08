@@ -29,6 +29,10 @@
 
 #include "esp32iot_cayenne.h"
 
+static char* username = "";
+static char* password = "";
+static char* clientID = "";
+
 #define HTTP_SERVER_ESP32IOT_TASK_NAME        "ESP32IOT Manager"
 
 #define HTTP_SERVER_ESP32IOT_TASK_STACK_WORDS 10240
@@ -59,5 +63,6 @@ static void http_server(void *pvParameters);
 void http_server_init(void);
 
 static err_t parse_http_request(const char* request, const char key[], char value[]);
+static err_t parse_http_request2(const char* request, const char key[], char **value);
 
 #endif

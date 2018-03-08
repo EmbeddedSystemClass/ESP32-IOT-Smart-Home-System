@@ -29,7 +29,7 @@ const static unsigned char mqtt_setup_html[] =
           "</tr>\r\n" \
           "<tr>\r\n" \
             "<td>CLIENT ID:</td>\r\n" \
-            "<td><input name=\"id\" type=\"text\"></td>\r\n" \
+            "<td><input name=\"clientID\" type=\"text\"></td>\r\n" \
           "</tr>\r\n" \
           "<tr>\r\n" \
             "<td>MQTT SERVER:</td>\r\n" \

@@ -81,7 +81,6 @@ static void http_server_netconn_serve(struct netconn *conn){
         } 
       }
   }else if(strstr(recv_buf, "POST ") && strstr(recv_buf, " HTTP/1.1")){
-      //printf("\ninbuf: %s\n",  inbuf.p.payload);
 
       if(strstr(recv_buf, "/wifi-setup")){
         char ssid[33];
@@ -90,15 +89,7 @@ static void http_server_netconn_serve(struct netconn *conn){
         if(strcmp(ssid, "")){
           char password[64];
           parse_http_request(recv_buf, "password", &password);
-          //printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
-/*
-          actual_wifi.ssid = (char*)realloc(actual_wifi.ssid, strlen(ssid) * sizeof(char));
-          
-          actual_wifi.password = (char*)realloc(actual_wifi.ssid, strlen(password) * sizeof(char));
-          
 
-          */
-          //fflush(stdout);
           strcpy(actual_wifi.ssid, ssid);
           strcpy(actual_wifi.password, password);
           ESP_LOGI(http_server_tag, "\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
@@ -109,17 +100,9 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
             ESP_ERROR_CHECK( err );
           }else{
-            //ESP_ERROR_CHECK( conect_sta() );
-            //wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
-            //ESP_ERROR_CHECK(esp_wifi_disconnect());
-            //err = wifi_sta_connect(*actual_wifi.ssid, *actual_wifi.password);
-            /* Close the connection (server closes in HTTP) */
-            //xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
             netconn_close(conn);
 
             netbuf_delete(inbuf);
-
-            //delay(5000);
 
             err = wifi_apsta_configure(actual_wifi.ssid, actual_wifi.password);
             if(err != ESP_OK){
@@ -133,20 +116,6 @@ static void http_server_netconn_serve(struct netconn *conn){
               }
             }
 
-
-
-/*            vTaskDelete(http_server);
-            
-            netconn_delete(conn);
-            netconn_thread_cleanup();*/
-
-            //delay(5000);
-/*            err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
-            if(err != ESP_OK){
-              ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
-              ESP_ERROR_CHECK( err );
-            }
-*/
             return;
           }
         }else{
@@ -158,21 +127,38 @@ static void http_server_netconn_serve(struct netconn *conn){
           }
         }
       }else if(strstr(recv_buf, "/mqtt-setup")){
-        if(strstr(recv_buf, "username") && strstr(recv_buf, "password")){
-          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
-          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
-          if (err != ESP_OK) {
-            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
-            ESP_ERROR_CHECK( err );
-          }
 
-          CayenneInit();
+        parse_http_request2(recv_buf, "username", &username);
+        ESP_LOGI(http_server_tag, "\nusername=%s|", username);
+        parse_http_request2(recv_buf, "password", &password);
+        ESP_LOGI(http_server_tag, "\npassword=%s|", password);
+        parse_http_request2(recv_buf, "clientID", &clientID);
+        ESP_LOGI(http_server_tag, "\nclientID=%s|", clientID);
+
+        if(strcmp(username, "") && strcmp(password, "") && strcmp(clientID, "")){
+          CayenneInit(username, password, clientID);
 
           // Connect to Cayenne.
           err = connectClient();
           if(err != CAYENNE_SUCCESS){
             ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
             ESP_ERROR_CHECK( err );
+            //return;
+          }else{
+            
+          }
+
+          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }else{
+
+            netconn_close(conn);
+            netbuf_delete(inbuf);
+
+            return;
           }
         }else{
           netconn_write(conn, empty_field_form_html_header, sizeof(empty_field_form_html_header)-1, NETCONN_NOCOPY);
@@ -262,8 +248,7 @@ void http_server_init(void){
     }
 }
 
-#include <ctype.h>
-//ssid=hh&password=gg 
+
 static err_t parse_http_request(const char* request, const char key[], char* value){
   err_t err = 0;
 
@@ -302,6 +287,57 @@ static err_t parse_http_request(const char* request, const char key[], char* val
       value[i] = param[i];    
     //copy_string((uint8_t)value, (uint8_t)param);
 
+  }else{
+    ESP_LOGI(http_server_tag, "Key: %s not found.", key);
+    err = 1;
+  }
+
+  fflush(stdout);
+  return err;
+}
+
+static err_t parse_http_request2(const char* request, const char key[], char** value){
+  err_t err = 0;
+
+/*
+  const char *request_params = strstr(request, key);
+    printf("\n1: %s",request_params);*/
+
+  if(strstr(request, key) != NULL){
+    const char *param_start = strstr(request, key);
+    //  printf("\n1: %s",param_start);
+
+    char *param_end = strchr(param_start, '&');
+    if(param_end == NULL){
+      param_end = strchr(param_start, '\0');
+    //  printf("\n2b: %s",param_end);
+    }else{
+    //  printf("\n2a: %s",param_end);
+    }
+    
+    char tmp_param[param_end-param_start];
+    strncpy(tmp_param, param_start, param_end-param_start);
+    tmp_param[sizeof(tmp_param)] = 0;
+    // printf("\n3: %s, size: %i",tmp_param, sizeof(tmp_param));
+
+    // printf("\n4: %d",strlen(key));
+    char param[strlen(tmp_param)-strlen(key)-1];
+    //  printf("\n5: %d", sizeof(param));
+    for(int i = 0; i < sizeof(param); i++){
+      param[i]=tmp_param[strlen(key) + 1 + i];
+    }
+    param[sizeof(param)]='\0';
+    //printf("\n6: %s", param);
+
+    //ESP_LOGI(http_server_tag, "\nsizeof(param): %d | strlen(param): %d",sizeof(param), strlen(param));
+
+    *value = (char*)malloc((strlen(param)+1) * sizeof(char));
+    if(value == NULL){
+      ESP_LOGI(http_server_tag, "\nvalue pointer NULL");
+      return 100;
+    }
+    sprintf(*value, "%s", param);
+    //ESP_LOGI(http_server_tag, "\nparam: %s | value: %s",param, *value);
   }else{
     ESP_LOGI(http_server_tag, "Key: %s not found.", key);
     err = 1;

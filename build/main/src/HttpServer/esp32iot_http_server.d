@@ -173,8 +173,7 @@ src/HttpServer/esp32iot_http_server.o: \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h \
- /home/osk/esp/esp-idf/components/newlib/include/ctype.h
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
 
@@ -523,6 +522,4 @@ src/HttpServer/esp32iot_http_server.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/ctype.h:
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.c:
