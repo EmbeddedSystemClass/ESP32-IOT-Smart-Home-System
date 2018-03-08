@@ -131,23 +131,6 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/osk/esp/esp-idf/components/newlib/include/string.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h \
- /home/osk/esp/esp-idf/components/newlib/include/ctype.h \
- /home/osk/esp/esp-idf/components/newlib/include/dirent.h \
- /home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h \
- /home/osk/esp/esp-idf/components/newlib/include/fcntl.h \
- /home/osk/esp/esp-idf/components/newlib/include/inttypes.h \
- /home/osk/esp/esp-idf/components/newlib/include/machine/endian.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/inet.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netdb.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sockets.h \
- /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/dns.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/MQTTClient.h \
@@ -160,14 +143,36 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/MQTTesp32.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sockets.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/inet.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sys.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netdb.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/dns.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTypes.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneTopics.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h \
+ /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h \
+ /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h \
+ /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h
 
 /home/osk/esp/esp32-iot-smart-home-system/main/./main.h:
 
@@ -433,40 +438,6 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/Mongoose/mongoose.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/ctype.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/dirent.h:
-
-/home/osk/esp/esp-idf/components/vfs/include/sys/dirent.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/fcntl.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/inttypes.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/machine/endian.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/inet.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netdb.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sockets.h:
-
-/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/dns.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
-
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h:
@@ -491,7 +462,17 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h:
 
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sockets.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/inet.h:
+
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/sys.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netdb.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/dns.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h:
 
@@ -506,4 +487,38 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_types.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_code.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl3.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/tls1.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/x509_vfy.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_stack.h:
+
+/home/osk/esp/esp-idf/components/openssl/include/internal/ssl_pkey.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h:
+
+/home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
 /home/osk/esp/esp32-iot-smart-home-system/main/./main.c:

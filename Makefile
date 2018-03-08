@@ -6,5 +6,4 @@
 PROJECT_NAME := esp32iot
 
 include $(IDF_PATH)/make/project.mk
-include ./main/src/HttpServer/Mongoose/Makefile.projbuild
 

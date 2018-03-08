@@ -1,267 +1,299 @@
 #include "esp32iot_http_server.h"
 
-char *mg_ev_to_string(int ev) {
-  switch (ev) {
-    case MG_EV_HTTP_REQUEST:
-      return "MG_EV_HTTP_REQUEST";
-    case MG_EV_HTTP_REPLY:
-      return "MG_EV_HTTP_REPLY";
-    case MG_EV_HTTP_CHUNK:
-      return "MG_EV_HTTP_CHUNK";
-    case MG_EV_SSI_CALL:
-      return "MG_EV_SSI_CALL";
-    case MG_EV_SSI_CALL_CTX:
-      return "MG_EV_SSI_CALL_CTX";
-    #if MG_ENABLE_HTTP_WEBSOCKET
-    case MG_EV_WEBSOCKET_HANDSHAKE_REQUEST:
-      return "MG_EV_WEBSOCKET_HANDSHAKE_REQUEST";
-    case MG_EV_WEBSOCKET_HANDSHAKE_DONE:
-      return "MG_EV_WEBSOCKET_HANDSHAKE_DONE";
-    case MG_EV_WEBSOCKET_FRAME:
-      return "MG_EV_WEBSOCKET_FRAME";
-    case MG_EV_WEBSOCKET_CONTROL_FRAME:
-      return "MG_EV_WEBSOCKET_CONTROL_FRAME";
-    #endif
-    #if MG_ENABLE_HTTP_STREAMING_MULTIPART
-    case MG_EV_HTTP_MULTIPART_REQUEST:
-      return "MG_EV_HTTP_MULTIPART_REQUEST";
-    case MG_EV_HTTP_PART_BEGIN:
-      return "MG_EV_HTTP_PART_BEGIN";
-    case MG_EV_HTTP_PART_DATA:
-      return "MG_EV_HTTP_PART_DATA";
-    case MG_EV_HTTP_PART_END:
-      return "MG_EV_HTTP_PART_END";
-    /* struct mg_http_multipart_part */
-    case MG_EV_HTTP_MULTIPART_REQUEST_END:
-      return "MG_EV_HTTP_MULTIPART_REQUEST_END";
-    #endif
-    case MG_EV_CONNECT:
-      return "MG_EV_CONNECT";
-    case MG_EV_ACCEPT:
-      return "MG_EV_ACCEPT";
-    case MG_EV_CLOSE:
-      return "MG_EV_CLOSE";
-    case MG_EV_SEND:
-      return "MG_EV_SEND";
-    case MG_EV_RECV:
-      return "MG_EV_RECV";
-    case MG_EV_MQTT_CONNACK:
-      return "MG_EV_MQTT_CONNACK";
-    case MG_EV_MQTT_CONNACK_ACCEPTED:
-      return "MG_EV_MQTT_CONNACK_ACCEPTED";
-    case MG_EV_MQTT_CONNECT:
-      return "MG_EV_MQTT_CONNECT";
-    case MG_EV_MQTT_DISCONNECT:
-      return "MG_EV_MQTT_DISCONNECT";
-    case MG_EV_MQTT_PINGREQ:
-      return "MG_EV_MQTT_PINGREQ";
-    case MG_EV_MQTT_PINGRESP:
-      return "MG_EV_MQTT_PINGRESP";
-    case MG_EV_MQTT_PUBACK:
-      return "MG_EV_MQTT_PUBACK";
-    case MG_EV_MQTT_PUBCOMP:
-      return "MG_EV_MQTT_PUBCOMP";
-    case MG_EV_MQTT_PUBLISH:
-      return "MG_EV_MQTT_PUBLISH";
-    case MG_EV_MQTT_PUBREC:
-      return "MG_EV_MQTT_PUBREC";
-    case MG_EV_MQTT_PUBREL:
-      return "MG_EV_MQTT_PUBREL";
-    case MG_EV_MQTT_SUBACK:
-      return "MG_EV_MQTT_SUBACK";
-    case MG_EV_MQTT_SUBSCRIBE:
-      return "MG_EV_MQTT_SUBSCRIBE";
-    case MG_EV_MQTT_UNSUBACK:
-      return "MG_EV_MQTT_UNSUBACK";
-    case MG_EV_MQTT_UNSUBSCRIBE:
-      return "MG_EV_MQTT_UNSUBSCRIBE";
-  }
+static void http_server_netconn_serve(struct netconn *conn){
+  struct netbuf *inbuf;
+  char *recv_buf;
+  u16_t buflen;
+  err_t err;
 
-  static char unknown[100];
-  sprintf(unknown, "Unknown event: %d", ev);
-  return unknown;
-}
+  /* Read the data from the port, blocking if nothing yet there.
+   We assume the request (the part we care about) is in one netbuf */
+  err = netconn_recv(conn, &inbuf);
+  
 
-static void mg_ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
-  esp_err_t err;
+  if (err == ERR_OK) {
+    netbuf_data(inbuf, (void**)&recv_buf, &buflen);
 
-  struct http_message *hm = (struct http_message *) ev_data;
-  switch (ev) {
-    case MG_EV_HTTP_REQUEST: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
+    // strncpy(_mBuffer, recv_buf, buflen);
 
-      char addr[32];
-      mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
-                          MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-      ESP_LOGI(http_server_tag, "HTTP request from %s: %.*s %.*s\n", addr, (int) hm->method.len,
-             hm->method.p, (int) hm->uri.len, hm->uri.p);
+    /* Is this an HTTP GET command? (only check the first 5 chars, since
+    there are other formats for GET, and we're keeping it very simple )*/
+    printf("buffer = %s \n", recv_buf);
+    fflush(stdout);
+/*    if (buflen>=5 &&
+        recv_buf[0]=='G' &&
+        recv_buf[1]=='E' &&
+        recv_buf[2]=='T' &&
+        recv_buf[3]==' ' &&
+        recv_buf[4]=='/' ) {
+          printf("recv_buf[5] = %c\n", recv_buf[5]);
+       Send the HTML header
+             * subtract 1 from the size, since we dont send the \0 in the string
+             * NETCONN_NOCOPY: our data is const static, so no need to copy it
+       
 
-      if((mg_vcmp(&hm->uri, "/") == 0) || (mg_vcmp(&hm->uri, "/index") == 0)){
-        //mg_send(nc, index_html, sizeof(index_html));
-        mg_send_head(nc, 200, sizeof(index_html), "Content-Type: text/html");
-        mg_send(nc, index_html, sizeof(index_html));
+      netconn_write(conn, http_html_header, sizeof(http_html_header)-1, NETCONN_NOCOPY);
 
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-      }else if(mg_vcmp(&hm->uri, "/mqtt-setup-menu") == 0){
-        mg_send_head(nc, 200, sizeof(mqtt_setup_html), "Content-Type: text/html");
-        mg_send(nc, mqtt_setup_html, sizeof(mqtt_setup_html));
+      if(recv_buf[5]=='j') {
+          netconn_write(conn, json_unformatted, strlen(json_unformatted), NETCONN_NOCOPY);
+      }
+      else {
+          netconn_write(conn, index_html, sizeof(index_html)-1, NETCONN_NOCOPY);
+      }
+    }*/
 
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-      }else if(mg_vcmp(&hm->uri, "/wifi-setup-menu") == 0){
-        mg_send_head(nc, 200, sizeof(wifi_setup_html), "Content-Type: text/html");
-        mg_send(nc, wifi_setup_html, sizeof(wifi_setup_html));
-
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-      }else if(mg_vcmp(&hm->uri, "/wifi-setup") == 0){
-        char ssid[33];
-        char password[64];
-        /* Get form variables */
-        mg_get_http_var(&hm->body, "ssid", ssid, sizeof(ssid));
-        mg_get_http_var(&hm->body, "password", password, sizeof(password));
-        
-        strcpy(actual_wifi.ssid, ssid);
-        strcpy(actual_wifi.password, password);
-
-        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
-        mg_send(nc, success_html, sizeof(success_html));
-
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-
-        ESP_LOGI(http_server_tag, "\n\nwifi: ssid=%s password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
-
-        //mg_mgr_free(&mgr);
-
-        //wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
-        /*err = wifi_sta_start2(actual_wifi.ssid, actual_wifi.password);
-        if(err != ESP_OK){
-          ESP_ERROR_CHECK( err );
-        }*/
-
-      }else if(mg_vcmp(&hm->uri, "/mqtt-setup") == 0){
-        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
-        mg_send(nc, success_html, sizeof(success_html));
-
-        CayenneInit();
-
-        // Connect to Cayenne.
-        err = connectClient();
-        if(err != CAYENNE_SUCCESS){
+    if (strstr(recv_buf, "GET ") && strstr(recv_buf, " HTTP/1.1")) {
+      //printf("\nGET recv_buf: %s\n",recv_buf );
+      if(strstr(recv_buf, "/ ")){
+        netconn_write(conn, index_html_header, sizeof(index_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, index_html, sizeof(index_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
           ESP_ERROR_CHECK( err );
         }
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-      }else if(mg_vcmp(&hm->uri, "/restart") == 0){
-        mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
-        mg_send(nc, success_html, sizeof(success_html));
+      }else if(strstr(recv_buf, "/index ")){
+        netconn_write(conn, index_html_header, sizeof(index_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, index_html, sizeof(index_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        }
+      }else if(strstr(recv_buf, "/wifi-setup-menu ")){
+        netconn_write(conn, wifi_setup_html_header, sizeof(wifi_setup_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, wifi_setup_html, sizeof(wifi_setup_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        }
+      }else if(strstr(recv_buf, "/mqtt-setup-menu ")){
+        netconn_write(conn, mqtt_setup_html_header, sizeof(mqtt_setup_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, mqtt_setup_html, sizeof(mqtt_setup_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        }
+      }else {
+        netconn_write(conn, not_found_error_html_header, sizeof(not_found_error_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, not_found_error_html, sizeof(not_found_error_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        } 
+      }
+  }else if(strstr(recv_buf, "POST ") && strstr(recv_buf, " HTTP/1.1")){
+      //printf("\ninbuf: %s\n",  inbuf.p.payload);
 
-        ESP_LOGI(http_server_tag, "Restarting now.\n");
+      if(strstr(recv_buf, "/wifi-setup")){
+        char ssid[33];
+        parse_http_request(recv_buf, "ssid", &ssid);
 
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-//        fflush(stdout);
-        //delay(5000);
-        esp_restart();
-      }else if(mg_vcmp(&hm->uri, "/erase-wifi-data") == 0){
-        
+        if(strcmp(ssid, "")){
+          char password[64];
+          parse_http_request(recv_buf, "password", &password);
+          //printf("\n\nssid=%s | password=%s\n\n",  ssid, password);
+/*
+          actual_wifi.ssid = (char*)realloc(actual_wifi.ssid, strlen(ssid) * sizeof(char));
+          
+          actual_wifi.password = (char*)realloc(actual_wifi.ssid, strlen(password) * sizeof(char));
+          
 
-        ESP_LOGI(http_server_tag, "Erasing now.\n");
+          */
+          //fflush(stdout);
+          strcpy(actual_wifi.ssid, ssid);
+          strcpy(actual_wifi.password, password);
+          ESP_LOGI(http_server_tag, "\n\nssid=%s | password=%s\n\n",  actual_wifi.ssid, actual_wifi.password);
 
+          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }else{
+            //ESP_ERROR_CHECK( conect_sta() );
+            //wifi_manager_state=WIFI_MANAGER_CONNECTION_ATTEMPT_STA;
+            //ESP_ERROR_CHECK(esp_wifi_disconnect());
+            //err = wifi_sta_connect(*actual_wifi.ssid, *actual_wifi.password);
+            /* Close the connection (server closes in HTTP) */
+            //xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+            netconn_close(conn);
+
+            netbuf_delete(inbuf);
+
+            //delay(5000);
+
+            err = wifi_apsta_configure(actual_wifi.ssid, actual_wifi.password);
+            if(err != ESP_OK){
+              ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+              ESP_ERROR_CHECK( err );
+            }else{
+              err = esp_wifi_connect();
+              if(err != ESP_OK){
+                ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+                ESP_ERROR_CHECK( err );
+              }
+            }
+
+
+
+/*            vTaskDelete(http_server);
+            
+            netconn_delete(conn);
+            netconn_thread_cleanup();*/
+
+            //delay(5000);
+/*            err = wifi_sta_start(actual_wifi.ssid, actual_wifi.password);
+            if(err != ESP_OK){
+              ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+              ESP_ERROR_CHECK( err );
+            }
+*/
+            return;
+          }
+        }else{
+          netconn_write(conn, empty_field_form_html_header, sizeof(empty_field_form_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, empty_field_form_html, sizeof(empty_field_form_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }
+        }
+      }else if(strstr(recv_buf, "/mqtt-setup")){
+        if(strstr(recv_buf, "username") && strstr(recv_buf, "password")){
+          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }
+
+          CayenneInit();
+
+          // Connect to Cayenne.
+          err = connectClient();
+          if(err != CAYENNE_SUCCESS){
+            ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
+            ESP_ERROR_CHECK( err );
+          }
+        }else{
+          netconn_write(conn, empty_field_form_html_header, sizeof(empty_field_form_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, empty_field_form_html, sizeof(empty_field_form_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }
+        }
+      }else if(strstr(recv_buf, "/erase-wifi-data ")){
         err = erase_storage();
         if(err != ESP_OK){
+          ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
           ESP_ERROR_CHECK( err );
-          mg_send_head(nc, 101, sizeof(unknown_error_html), "Content-Type: text/html");
-          mg_send(nc, unknown_error_html, sizeof(unknown_error_html));
         }else{
-          mg_send_head(nc, 200, sizeof(success_html), "Content-Type: text/html");
-          mg_send(nc, success_html, sizeof(success_html));
+          netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+          err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+          if (err != ESP_OK) {
+            ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+            ESP_ERROR_CHECK( err );
+          }
         }
-
-        nc->flags |= MG_F_SEND_AND_CLOSE;
-        //delay(5000);
-      }else{
-        ESP_LOGI(http_server_tag, "Wrong gateway.\n");
-        mg_send_head(nc, 404, sizeof(not_found_error_html), "Content-Type: text/html");
-        mg_send(nc, not_found_error_html, sizeof(not_found_error_html));
-
-        nc->flags |= MG_F_SEND_AND_CLOSE;
+      }else if(strstr(recv_buf, "/restart ")){
+        netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        }
+        printf("Restarting now.\n");
+//        fflush(stdout);
+        delay(5000);
+        esp_restart();
+      }else {
+        netconn_write(conn, not_found_error_html_header, sizeof(not_found_error_html_header)-1, NETCONN_NOCOPY);
+        err = netconn_write(conn, not_found_error_html, sizeof(not_found_error_html), NETCONN_NOCOPY);
+        if (err != ESP_OK) {
+          ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
+          ESP_ERROR_CHECK( err );
+        } 
       }
-
-            
-
-
-      break;
-    }
-    case MG_EV_ACCEPT: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-
-      char addr[32];
-      mg_sock_addr_to_str(&nc->sa, addr, sizeof(addr),
-                          MG_SOCK_STRINGIFY_IP | MG_SOCK_STRINGIFY_PORT);
-      ESP_LOGI(http_server_tag, "Connection %p from %s\n", nc, addr);
-
-      break;
-    }
-    case MG_EV_CLOSE: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-      ESP_LOGI(http_server_tag, "Connection %p closed\n", nc);
-
-      break;
-    }
-    case MG_EV_RECV: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-
-      break;
-    }
-    case MG_EV_HTTP_CHUNK: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-
-      break;
-    }
-    case MG_EV_SEND: {
-      ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-
-      break;
-    }
-    case MG_EV_MQTT_CONNACK: {
-      //ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-      
-      break;
-    }
-    case MG_EV_MQTT_CONNACK_ACCEPTED: {
-      //ESP_LOGI(http_server_tag, "%s", mg_ev_to_string(ev));
-
-      break;
-    }
-    default: {
-      ESP_LOGW(http_server_tag, "( %s )", mg_ev_to_string(ev));
-
-      break;
     }
   }
+  /* Close the connection (server closes in HTTP) */
+  netconn_close(conn);
+
+  /* Delete the buffer (netconn_recv gives us ownership,
+   so we have to make sure to deallocate the buffer) */
+  netbuf_delete(inbuf);
 }
 
-void mg_init(void *data){
-  
+static void http_server(void *pvParameters){
+  err_t err;
+  conn = netconn_new(NETCONN_TCP);
+  netconn_bind(conn, NULL, 80);
+  netconn_listen(conn);
+  do {
+     err = netconn_accept(conn, &newconn);
+     if (err == ERR_OK) {
+       http_server_netconn_serve(newconn);
+       netconn_delete(newconn);
+     }
+   } while(err == ERR_OK);
+   netconn_close(conn);
+   netconn_delete(conn);
 }
 
-void http_server_init(void *data){
-  /* Starting Mongoose */
+void http_server_init(void){
+    err_t err;
 
-  ESP_LOGI(http_server_tag, "Starting web-server on port %s\n", MG_LISTEN_ADDR);
+    err = xTaskCreate(&http_server, "http_server", 2048, NULL, 5, NULL);
+    if (err != pdPASS)  {
+        ESP_LOGI(http_server_tag, "create task %s failed", HTTP_SERVER_ESP32IOT_TASK_NAME);
+    }
+}
 
-  mg_mgr_init(&mgr, NULL);
+#include <ctype.h>
+//ssid=hh&password=gg 
+static err_t parse_http_request(const char* request, const char key[], char* value){
+  err_t err = 0;
 
-  mg_mgr_free(&mgr);
-  nc = mg_bind(&mgr, MG_LISTEN_ADDR, mg_ev_handler);
-  if (nc == NULL) {
-    ESP_LOGI(http_server_tag, "Error setting up listener!\n");
-    return;
+/*
+  const char *request_params = strstr(request, key);
+    printf("\n1: %s",request_params);*/
+
+  if(strstr(request, key) != NULL){
+    const char *param_start = strstr(request, key);
+    //  printf("\n1: %s",param_start);
+
+    char *param_end = strchr(param_start, '&');
+    if(param_end == NULL){
+      param_end = strchr(param_start, '\0');
+    //  printf("\n2b: %s",param_end);
+    }else{
+    //  printf("\n2a: %s",param_end);
+    }
+    
+    char tmp_param[param_end-param_start];
+    strncpy(tmp_param, param_start, param_end-param_start);
+    tmp_param[sizeof(tmp_param)] = 0;
+    // printf("\n3: %s, size: %i",tmp_param, sizeof(tmp_param));
+
+    // printf("\n4: %d",strlen(key));
+    char param[strlen(tmp_param)-strlen(key)-1];
+    //  printf("\n5: %d", sizeof(param));
+    for(int i = 0; i < sizeof(param); i++){
+      param[i]=tmp_param[strlen(key) + 1 + i];
+    }
+    param[sizeof(param)]='\0';
+    //  printf("\n6: %s", param);
+
+    //value = (char*)malloc(strlen(param) * sizeof(char));
+    for(size_t i = 0; i<= sizeof(param); i++)
+      value[i] = param[i];    
+    //copy_string((uint8_t)value, (uint8_t)param);
+
+  }else{
+    ESP_LOGI(http_server_tag, "Key: %s not found.", key);
+    err = 1;
   }
-  mg_set_protocol_http_websocket(nc);
 
-  /* Processing events */
-  for(;;){
-    mg_mgr_poll(&mgr, 1000);
-  }
-  //mg_mgr_free(&mgr);
-
-  return;
+  fflush(stdout);
+  return err;
 }

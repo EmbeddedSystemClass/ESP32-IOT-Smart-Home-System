@@ -1,6 +1,11 @@
 #ifndef WIFI_SETUP_HTML
 #define WIFI_SETUP_HTML
 
+const static unsigned char wifi_setup_html_header[] = 
+"HTTP/1.1 200 OK\r\n" \
+"Content-Type: text/html\r\n" \
+"\r\n";
+
 const static unsigned char wifi_setup_html[] = 
 "<!DOCTYPE html>\r\n" \
 "<html>\r\n" \

@@ -1,7 +1,12 @@
 #ifndef MQTT_SETUP_HTML
 #define MQTT_SETUP_HTML
 
-static const char mqtt_setup_html[] = 
+const static unsigned char mqtt_setup_html_header[] = 
+"HTTP/1.1 200 OK\r\n" \
+"Content-Type: text/html\r\n" \
+"\r\n";
+
+const static unsigned char mqtt_setup_html[] = 
 "<!DOCTYPE html>\r\n" \
 "<html>\r\n" \
 "<head>\r\n" \

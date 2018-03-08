@@ -1,6 +1,12 @@
 #ifndef NOTIFICATIONS_HTML
 #define NOTIFICATIONS_HTML
 
+
+const static unsigned char success_html_header[] = 
+"HTTP/1.1 200 OK\r\n" \
+"Content-Type: text/html\r\n" \
+"\r\n";
+
 const static unsigned char success_html[] =
 "<!DOCTYPE html>\r\n" \
 "<html>\r\n" \
@@ -13,16 +19,9 @@ const static unsigned char success_html[] =
 "</html>\r\n" \
 "\r\n";
 
-const static unsigned char unknown_error_html[] =
-"<!DOCTYPE html>\r\n" \
-"<html>\r\n" \
-  "<head>\r\n" \
-    "<title>ESP32IOT Manager: Unknown Error</title>\r\n" \
-  "</head>\r\n" \
-  "<body>\r\n" \
-    "<h1>Cannot complete operation!</h1>\r\n" \
-  "</body>\r\n" \
-"</html>\r\n" \
+const static unsigned char not_found_error_html_header[] = 
+"HTTP/1.1 404 Not Found\r\n" \
+"Content-Type: text/html\r\n" \
 "\r\n";
 
 const static unsigned char not_found_error_html[] =
@@ -36,6 +35,11 @@ const static unsigned char not_found_error_html[] =
     "<h3>We cannot find the page you`re looking for!</h3>\r\n" \
   "</body>\r\n" \
 "</html>\r\n" \
+"\r\n";
+
+const static unsigned char empty_field_form_html_header[] = 
+"HTTP/1.1 204 No Content\r\n" \
+"Content-Type: text/html\r\n" \
 "\r\n";
 
 const static unsigned char empty_field_form_html[] =
