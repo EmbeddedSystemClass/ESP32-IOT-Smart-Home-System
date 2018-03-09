@@ -20,6 +20,7 @@
 #include "lwip/err.h"
 
 #include "esp32iot_wifi.h"
+#include "esp32iot_bluetooth.h"
 #include "esp32iot_storage.h"
 
 #include "./web_root/index_html.h"

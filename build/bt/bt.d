@@ -1,4 +1,4 @@
-bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
+bt.o: /home/osk/esp/esp32-iot-smart-home-system/components/bt/./bt.c \
  /home/osk/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/osk/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/osk/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -87,7 +87,7 @@ bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
  /home/osk/esp/esp-idf/components/esp32/include/xtensa/core-macros.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_task.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_phy_init.h \
- /home/osk/esp/esp-idf/components/bt/include/esp_bt.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/include/esp_bt.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log.h \
  /home/osk/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_pm.h \
@@ -275,7 +275,7 @@ bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_phy_init.h:
 
-/home/osk/esp/esp-idf/components/bt/include/esp_bt.h:
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/include/esp_bt.h:
 
 /home/osk/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -296,4 +296,4 @@ bt.o: /home/osk/esp/esp-idf/components/bt/./bt.c \
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h:
 
 /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h:
-/home/osk/esp/esp-idf/components/bt/./bt.c:
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/./bt.c:

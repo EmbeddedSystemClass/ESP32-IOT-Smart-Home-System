@@ -169,6 +169,35 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/api.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Bluetooth/esp32iot_bluetooth.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/device/include/controller.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_target.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/stack/include/bt_types.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/stack/include/dyn_mem.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_trace.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/bdaddr.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_defs.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_target.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/hash_map.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/device_features.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_layer.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/allocator.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/osi.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/future.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/semaphore.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_packet_factory.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/event_mask.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_packet_parser.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/version.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/include/bt.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/include/esp_bt.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gap_ble_api.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_defs.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gattc_api.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_defs.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_defs.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_main.h \
+ /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
@@ -513,6 +542,64 @@ main.o: /home/osk/esp/esp32-iot-smart-home-system/main/./main.c \
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/netbuf.h:
 
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/pbuf.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Bluetooth/esp32iot_bluetooth.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/device/include/controller.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_target.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/stack/include/bt_types.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/stack/include/dyn_mem.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_trace.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/bdaddr.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_defs.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/include/bt_target.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/hash_map.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/device_features.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_layer.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/allocator.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/osi.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/future.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/osi/include/semaphore.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_packet_factory.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/event_mask.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/hci/include/hci_packet_parser.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/btcore/include/version.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/include/bt.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/include/esp_bt.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gap_ble_api.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_defs.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gattc_api.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_defs.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_defs.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_main.h:
+
+/home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h:
 

@@ -28,6 +28,9 @@ const static unsigned char index_html[] =
     "<form action=\"/reset_restart_counter\" method=\"post\">\r\n" \
         "<button type=\"submit\">Reset restart counter</button><br>\r\n" \
     "</form>\r\n" \
+    "<form action=\"/ble_test\" method=\"post\">\r\n" \
+        "<button type=\"submit\">BLE test</button><br>\r\n" \
+    "</form>\r\n" \
     "<form action=\"/restart\" method=\"post\">\r\n" \
         "<button type=\"submit\">Restart</button><br>\r\n" \
     "</form>\r\n" \

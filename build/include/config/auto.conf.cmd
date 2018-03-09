@@ -1,7 +1,7 @@
 deps_config := \
 	/home/osk/esp/esp-idf/components/app_trace/Kconfig \
 	/home/osk/esp/esp-idf/components/aws_iot/Kconfig \
-	/home/osk/esp/esp-idf/components/bt/Kconfig \
+	/home/osk/esp/esp32-iot-smart-home-system/components/bt/Kconfig \
 	/home/osk/esp/esp-idf/components/esp32/Kconfig \
 	/home/osk/esp/esp-idf/components/ethernet/Kconfig \
 	/home/osk/esp/esp-idf/components/fatfs/Kconfig \
