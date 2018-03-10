@@ -513,8 +513,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         case SYSTEM_EVENT_STA_GOT_IP:
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
             
-            /*xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	http_server_init();*/
+            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        	http_server_init();
             
             break;
         case SYSTEM_EVENT_STA_LOST_IP:
