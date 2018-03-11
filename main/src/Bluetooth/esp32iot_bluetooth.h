@@ -23,10 +23,15 @@
 #define GATTC_TAG "esp32iot-gattc"
 
 #define REMOTE_SERVICE_UUID        0xF000180F04514000B000000000000000
-#define REMOTE_NOTIFY_CHAR_UUID    0xF0002A1904514000B000000000000000
+#define REMOTE_NOTIFY_CHAR_UUID    0x2901
 #define PROFILE_NUM      1
 #define PROFILE_A_APP_ID 0
 #define INVALID_HANDLE 0
+
+static esp_bt_uuid_t notify_descr_uuid = {
+    .len = ESP_UUID_LEN_16,
+    .uuid = {.uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG,},
+};
 
 static uint8_t remote_service_uuid[ESP_UUID_LEN_128] = {
     /* LSB <--------------------------------------------------------------------------------> MSB */
@@ -43,6 +48,9 @@ static uint8_t remote_notify_char_uuid[ESP_UUID_LEN_128] = {
     //0xF0, 0x00, 0x2A, 0x19, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0
 };
+
+static int temperature = 0;
+static int humidity = 0;
 
 static char bluetooth_tag []="esp32iot-bluetooth";
 
