@@ -1,5 +1,27 @@
 #include "esp32iot_bluetooth.h"
 
+void print_properities(esp_gatt_char_prop_t property){
+
+    if(property & ESP_GATT_CHAR_PROP_BIT_BROADCAST)
+        printf("| ESP_GATT_CHAR_PROP_BIT_BROADCAST |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_READ)
+        printf("| ESP_GATT_CHAR_PROP_BIT_READ |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_WRITE_NR)
+        printf("| ESP_GATT_CHAR_PROP_BIT_WRITE_NR |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_WRITE)
+        printf("| ESP_GATT_CHAR_PROP_BIT_WRITE |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_NOTIFY)
+        printf("| ESP_GATT_CHAR_PROP_BIT_NOTIFY |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_INDICATE)
+        printf("| ESP_GATT_CHAR_PROP_BIT_INDICATE |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_AUTH)
+        printf("| ESP_GATT_CHAR_PROP_BIT_AUTH |");
+    if(property & ESP_GATT_CHAR_PROP_BIT_EXT_PROP)
+        printf("| ESP_GATT_CHAR_PROP_BIT_EXT_PROP |");
+
+    printf("\n");
+}
+
 int hexadecimalToDecimal(char hexVal[])
 {   
     int len = strlen(hexVal);
@@ -99,7 +121,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
         }
-/*        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "HTU21D_data_char_uuid found");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
@@ -111,15 +133,15 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-        }*/
-        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+        }
+        /*else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "MS5637_service_uuid found");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
         }
-/*        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "MS5637_data_char_uuid found");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
@@ -137,7 +159,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-        }*/
+        }
         else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, battery_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "battery_service_uuid found");
             get_server = true;
@@ -145,7 +167,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
         }
-/*        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, battery_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, battery_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "battery_data_char_uuid found");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
@@ -208,7 +230,20 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "HTU21D data characteristics found");
-                    }else if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+
+                        printf("%s: HTU21D data characteristics properties:", GATTC_TAG);
+                        
+                        for(int i = 0; i < strlen(char_elem_result); ++i){
+                          print_properities(char_elem_result[i].properties); 
+                        }
+                        
+
+                        if (count > 0 && (char_elem_result[0].properties & ESP_GATT_CHAR_PROP_BIT_NOTIFY)){
+                            gl_profile_tab[PROFILE_A_APP_ID].char_handle = char_elem_result[0].char_handle;
+                            esp_ble_gattc_register_for_notify (gattc_if, gl_profile_tab[PROFILE_A_APP_ID].remote_bda, char_elem_result[0].char_handle);
+                        } 
+                    }
+                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -216,7 +251,31 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "HTU21D status characteristics found");
-                    }else if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+
+                        printf("%s: HTU21D data characteristics properties:", GATTC_TAG);
+                        for(int i = 0; i < strlen(char_elem_result); ++i){
+                          print_properities(char_elem_result[i].properties); 
+                        }
+
+                        if (count > 0 && (char_elem_result[0].properties & ESP_GATT_CHAR_PROP_BIT_READ)){
+                            gl_profile_tab[PROFILE_A_APP_ID].char_handle = char_elem_result[0].char_handle;
+                            ESP_LOGI(GATTC_TAG, "strlen(char_elem_result): %d, char_elem_result->properties: %d",strlen(char_elem_result), char_elem_result->properties);
+                            esp_log_buffer_hex(GATTC_TAG, char_elem_result->uuid.uuid.uuid128, ESP_UUID_LEN_128);
+
+                            esp_gatt_status_t ret_status = esp_ble_gattc_read_char( gattc_if,
+                                                                         gl_profile_tab[PROFILE_A_APP_ID].conn_id,
+                                                                         char_elem_result->char_handle,
+                                                                         ESP_GATT_AUTH_REQ_NONE);
+                            if (ret_status != ESP_GATT_OK){
+                                ESP_LOGE(GATTC_TAG, " HTU21D status: esp_ble_gattc_get_descr_by_char_handle error");
+                            }else{
+                               ESP_LOGE(GATTC_TAG, " HTU21D status OK"); 
+                            }
+
+                        }
+                    }
+
+                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -224,7 +283,8 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "MS5637 data characteristics found");
-                    }else if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+                    }
+                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -232,7 +292,8 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "MS5637 calibration characteristics found");
-                    }else if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+                    }
+                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -240,7 +301,9 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "MS5637 status characteristics found");
-                    }else if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+                    }
+
+                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -248,10 +311,13 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              char_elem_result,
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "battery data characteristics found");
-                    }else{
-                        ESP_LOGE(GATTC_TAG, "esp_ble_gattc_get_char_by_uuid error");
                     }
-                    ESP_LOGI(GATTC_TAG, "count_post: %d", count);
+
+                    /*else{
+                        ESP_LOGE(GATTC_TAG, "esp_ble_gattc_get_char_by_uuid error");
+                    }*/
+                    
+                    //ESP_LOGI(GATTC_TAG, "count_post: %d", count);
                    /* esp_ble_gattc_get_all_descr(esp_gatt_if_t gattc_if,
                                               uint16_t conn_id,
                                               uint16_t char_handle,
@@ -281,10 +347,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                          
                     }*/
                     /*  Every service have only one char in our 'ESP_GATTS_DEMO' demo, so we used first 'char_elem_result' */
-                    if (count > 0 && (char_elem_result[0].properties & ESP_GATT_CHAR_PROP_BIT_NOTIFY)){
-                        gl_profile_tab[PROFILE_A_APP_ID].char_handle = char_elem_result[0].char_handle;
-                        esp_ble_gattc_register_for_notify (gattc_if, gl_profile_tab[PROFILE_A_APP_ID].remote_bda, char_elem_result[0].char_handle);
-                    }       
+                          
                 }
                 
                 /* free char_elem_result */
@@ -316,6 +379,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                 if (!descr_elem_result){
                     ESP_LOGE(GATTC_TAG, "malloc error, gattc no mem");
                 }else{
+
                     ret_status = esp_ble_gattc_get_descr_by_char_handle( gattc_if,
                                                                          gl_profile_tab[PROFILE_A_APP_ID].conn_id,
                                                                          p_data->reg_for_notify.handle,
@@ -360,20 +424,36 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         }
         esp_log_buffer_hex(GATTC_TAG, p_data->notify.value, p_data->notify.value_len);
         //ESP_LOGI(GATTC_TAG, "temperature=%x | humidity=%x ", p_data->notify.value[0], p_data->notify.value[1]);
-        //char temp[4] = 
+
         char temp_temperature[]={p_data->notify.value[0], p_data->notify.value[1]};
         char temp_humidity[]={p_data->notify.value[3], p_data->notify.value[4]};
-       // char *p1, *p2;
-        //temperature = strtol(temp_temperature, NULL, 16);
-        //humidity = strtol(temp_humidity, NULL, 16);
+       
         temperature = (p_data->notify.value[1]) | (p_data->notify.value[0] << 8);
         humidity = (p_data->notify.value[4]) | (p_data->notify.value[3] << 8);
-        ESP_LOGI(GATTC_TAG, "1 temperature=%d | humidity=%d ", temperature, humidity);
+        ESP_LOGI(GATTC_TAG, "raw: temperature=%d | humidity=%d ", temperature, humidity);
+        //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
+        esp_log_buffer_hex(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128);
 
         temperature=-46.85 + 175.72 * temperature/65536; //(°C) = -46.85 + 175.72 x Temperature Word / 2 16
         humidity=-6 + 125 * humidity/65536; //(%RH) = -6 + 125 x Humidity Word / 2 16
-        //ESP_LOGI(GATTC_TAG, "temperature=%s | humidity=%s ", temp_temperature, temp_humidity);
-        ESP_LOGI(GATTC_TAG, "2 temperature=%d | humidity=%d ", temperature, humidity);
+        ESP_LOGI(GATTC_TAG, "temperature=%d | humidity=%d ", temperature, humidity);
+
+        break;
+    case ESP_GATTC_READ_CHAR_EVT:
+        ESP_LOGI(GATTC_TAG, "ESP_GATTC_READ_CHAR_EVT");
+        if (p_data->read.status != ESP_GATT_OK){
+            ESP_LOGE(GATTC_TAG, "read characteristics failed, error status = %x", p_data->read.status);
+            break;
+        }
+       
+        esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
+
+        char status=p_data->read.value[0]<<8;
+       
+        ESP_LOGI(GATTC_TAG, "raw: status=%d", status);
+
+        //ESP_LOGI(GATTC_TAG, "temperature=%d | humidity=%d ", temperature, humidity);
+
         break;
     case ESP_GATTC_WRITE_DESCR_EVT:
         ESP_LOGI(GATTC_TAG, "ESP_GATTC_WRITE_DESCR_EVT");
@@ -381,6 +461,10 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             ESP_LOGE(GATTC_TAG, "write descr failed, error status = %x", p_data->write.status);
             break;
         }
+        esp_log_buffer_hex(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128);
+        esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
+        //char status[]={p_data->read.value[3], p_data->notify.value[4]};
+
         ESP_LOGI(GATTC_TAG, "write descr success ");
         uint8_t write_char_data[35];
         for (int i = 0; i < sizeof(write_char_data); ++i)
@@ -416,7 +500,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         ESP_LOGI(GATTC_TAG, "ESP_GATTC_DISCONNECT_EVT, reason = %d", p_data->disconnect.reason);
         break;
     default:
-        ESP_LOGI(GATTC_TAG, "default");
+        ESP_LOGI(GATTC_TAG, "gattc_profile_event_handler unhandled event: %d", event);
         break;
     }
 }
@@ -487,7 +571,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
             ESP_LOGI(GATTC_TAG, "ESP_GAP_SEARCH_SEARCH_CANCEL_CMPL_EVT");
             break;
         default:
-            ESP_LOGI(GATTC_TAG, "default");
+            ESP_LOGI(GATTC_TAG, "esp_gap_cb unhandled scan_result->scan_rst.search_evt: %d", scan_result->scan_rst.search_evt);
             break;
         }
         break;
@@ -520,7 +604,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
                     param->update_conn_params.timeout);
         break;
     default:
-        ESP_LOGI(GATTC_TAG, "default");
+        ESP_LOGI(GATTC_TAG, "esp_gap_cb unhandled event: %d", event);
         break;
     }
 }
@@ -537,6 +621,8 @@ static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp
                     param->reg.status);
             return;
         }
+    }else{
+        ESP_LOGI(GATTC_TAG, "esp_gattc_cb unhandled event: %d", event);
     }
 
     /* If the gattc_if equal to profile A, call profile A cb handler,
