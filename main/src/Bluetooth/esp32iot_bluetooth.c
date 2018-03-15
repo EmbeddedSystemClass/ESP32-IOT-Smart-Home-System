@@ -73,7 +73,10 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         }
         break;
     case ESP_GATTC_CONNECT_EVT:{
-        ESP_LOGI(GATTC_TAG, "ESP_GATTC_CONNECT_EVT conn_id %d, if %d", p_data->connect.conn_id, gattc_if);
+        ESP_LOGI(GATTC_TAG, "ESP_GATTC_CONNECT_EVT");
+
+        ESP_LOGI(GATTC_TAG, "conn_id %d, if %d", p_data->connect.conn_id, gattc_if);
+
         gl_profile_tab[PROFILE_A_APP_ID].conn_id = p_data->connect.conn_id;
         memcpy(gl_profile_tab[PROFILE_A_APP_ID].remote_bda, p_data->connect.remote_bda, sizeof(esp_bd_addr_t));
         ESP_LOGI(GATTC_TAG, "REMOTE BDA:");
@@ -90,14 +93,15 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             ESP_LOGE(GATTC_TAG, "open failed, status %d", p_data->open.status);
             break;
         }
-        ESP_LOGI(GATTC_TAG, "open success");
         break;
     case ESP_GATTC_CFG_MTU_EVT:
+        ESP_LOGI(GATTC_TAG, "ESP_GATTC_CFG_MTU_EVT");
         if (param->cfg_mtu.status != ESP_GATT_OK){
             ESP_LOGE(GATTC_TAG,"config mtu failed, error status = %x", param->cfg_mtu.status);
         }
         //printf("%x %x\n", remote_filter_service_uuid.uuid.uuid128[0], remote_filter_service_uuid.uuid.uuid128[16]);
-        ESP_LOGI(GATTC_TAG, "ESP_GATTC_CFG_MTU_EVT, Status %d, MTU %d, conn_id %d", param->cfg_mtu.status, param->cfg_mtu.mtu, param->cfg_mtu.conn_id);
+        ESP_LOGI(GATTC_TAG, "Status %d, MTU %d, conn_id %d", param->cfg_mtu.status, param->cfg_mtu.mtu, param->cfg_mtu.conn_id);
+
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &HTU21D_service_uuid);
         /*esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &HTU21D_data_char_uuid);
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &HTU21D_status_char_uuid);*/
@@ -119,21 +123,21 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
-            ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
+            //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
         }
-        else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+        /*else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_data_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "HTU21D_data_char_uuid found");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
-            ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
+            //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
         }else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_status_char_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "HTU21D_status_char_uuidfound");
             get_server = true;
             gl_profile_tab[PROFILE_A_APP_ID].service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_A_APP_ID].service_end_handle = p_data->search_res.end_handle;
-            ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-        }
+            //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
+        }*/
         /*else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
             ESP_LOGI(GATTC_TAG, "MS5637_service_uuid found");
             get_server = true;
@@ -200,22 +204,6 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                 ESP_LOGE(GATTC_TAG, "esp_ble_gattc_get_attr_count error");
             }
 
-        //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-/*        ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-            //ESP_LOGI(GATTC_TAG, "res: %d", memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_service_uuid.uuid.uuid128, ESP_UUID_LEN_128));
-            if(!memcmp(srvc_id->id.uuid.uuid.uuid128, HTU21D_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)){
-                //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-                ESP_LOGI(GATTC_TAG, "HTU21D characteristics handling:");
-            }else if(!memcmp(srvc_id->id.uuid.uuid.uuid128, MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)){
-                //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-                ESP_LOGI(GATTC_TAG, "MS5637 characteristics handling:");
-            }else if(!memcmp(srvc_id->id.uuid.uuid.uuid128, battery_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)){
-                //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-                ESP_LOGI(GATTC_TAG, "battery characteristics handling:");
-
-            }
-*/
-            ESP_LOGI(GATTC_TAG, "count_pre: %d", count);
             if (count > 0){
 
                 char_elem_result = (esp_gattc_char_elem_t *)malloc(sizeof(esp_gattc_char_elem_t) * count);
@@ -231,19 +219,19 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                              &count) == ESP_GATT_OK){
                         ESP_LOGI(GATTC_TAG, "HTU21D data characteristics found");
 
-                        printf("%s: HTU21D data characteristics properties:", GATTC_TAG);
+                        /*printf("%s: HTU21D data characteristics properties:", GATTC_TAG);
                         
                         for(int i = 0; i < strlen(char_elem_result); ++i){
                           print_properities(char_elem_result[i].properties); 
-                        }
+                        }*/
                         
 
                         if (count > 0 && (char_elem_result[0].properties & ESP_GATT_CHAR_PROP_BIT_NOTIFY)){
                             gl_profile_tab[PROFILE_A_APP_ID].char_handle = char_elem_result[0].char_handle;
-                            esp_ble_gattc_register_for_notify (gattc_if, gl_profile_tab[PROFILE_A_APP_ID].remote_bda, char_elem_result[0].char_handle);
+                            esp_ble_gattc_register_for_notify(gattc_if, gl_profile_tab[PROFILE_A_APP_ID].remote_bda, char_elem_result[0].char_handle);
                         } 
                     }
-                    if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+                    /*if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
                                                              gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
@@ -268,12 +256,10 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                                                          ESP_GATT_AUTH_REQ_NONE);
                             if (ret_status != ESP_GATT_OK){
                                 ESP_LOGE(GATTC_TAG, " HTU21D status: esp_ble_gattc_get_descr_by_char_handle error");
-                            }else{
-                               ESP_LOGE(GATTC_TAG, " HTU21D status OK"); 
                             }
 
                         }
-                    }
+                    }*/
 
                     if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                              p_data->search_cmpl.conn_id,
@@ -383,7 +369,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                     ret_status = esp_ble_gattc_get_descr_by_char_handle( gattc_if,
                                                                          gl_profile_tab[PROFILE_A_APP_ID].conn_id,
                                                                          p_data->reg_for_notify.handle,
-                                                                         notify_descr_uuid,
+                                                                         notify_config_char_uuid,
                                                                          descr_elem_result,
                                                                          &count);
                     if (ret_status != ESP_GATT_OK){
@@ -422,22 +408,63 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         }else{
             ESP_LOGI(GATTC_TAG, "ESP_GATTC_NOTIFY_EVT, receive indicate value:");
         }
-        esp_log_buffer_hex(GATTC_TAG, p_data->notify.value, p_data->notify.value_len);
-        //ESP_LOGI(GATTC_TAG, "temperature=%x | humidity=%x ", p_data->notify.value[0], p_data->notify.value[1]);
+        
+        /*
+        esp_gatt_status_t ret_status = esp_ble_gattc_get_attr_count( gattc_if,
+                                                                     p_data->notify.conn_id,
+                                                                     ESP_GATT_DB_CHARACTERISTIC,
+                                                                     gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
+                                                                     gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
+                                                                     INVALID_HANDLE,
+                                                                     &count);
+        if (ret_status != ESP_GATT_OK){
+            ESP_LOGE(GATTC_TAG, "esp_ble_gattc_get_attr_count error");
+        }*/
 
-        char temp_temperature[]={p_data->notify.value[0], p_data->notify.value[1]};
-        char temp_humidity[]={p_data->notify.value[3], p_data->notify.value[4]};
-       
-        temperature = (p_data->notify.value[1]) | (p_data->notify.value[0] << 8);
-        humidity = (p_data->notify.value[4]) | (p_data->notify.value[3] << 8);
-        ESP_LOGI(GATTC_TAG, "raw: temperature=%d | humidity=%d ", temperature, humidity);
-        //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
-        esp_log_buffer_hex(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128);
+        HTU21D_temperature = (p_data->notify.value[1]) | (p_data->notify.value[0] << 8);
+        HTU21D_humidity = (p_data->notify.value[4]) | (p_data->notify.value[3] << 8);
 
-        temperature=-46.85 + 175.72 * temperature/65536; //(°C) = -46.85 + 175.72 x Temperature Word / 2 16
-        humidity=-6 + 125 * humidity/65536; //(%RH) = -6 + 125 x Humidity Word / 2 16
-        ESP_LOGI(GATTC_TAG, "temperature=%d | humidity=%d ", temperature, humidity);
+        HTU21D_temperature=-46.85 + 175.72 * HTU21D_temperature/65536; //(°C) = -46.85 + 175.72 x Temperature Word / 2 16
+        HTU21D_humidity=-6 + 125 * HTU21D_humidity/65536; //(%RH) = -6 + 125 x Humidity Word / 2 16
+        ESP_LOGI(GATTC_TAG, "HTU21D: temperature=%d | humidity=%d ", HTU21D_temperature, HTU21D_humidity);
+        
+        uint16_t count = 1;
 
+        if (count > 0){
+            char_elem_result = (esp_gattc_char_elem_t *)malloc(sizeof(esp_gattc_char_elem_t) * count);
+            if (!char_elem_result){
+                ESP_LOGE(GATTC_TAG, "gattc no mem");
+            }else{
+                if (esp_ble_gattc_get_char_by_uuid( gattc_if,
+                                         gl_profile_tab[PROFILE_A_APP_ID].conn_id,
+                                         gl_profile_tab[PROFILE_A_APP_ID].service_start_handle,
+                                         gl_profile_tab[PROFILE_A_APP_ID].service_end_handle,
+                                         HTU21D_status_char_uuid,
+                                         char_elem_result,
+                                         &count) == ESP_GATT_OK){
+                    //ESP_LOGI(GATTC_TAG, "HTU21D status characteristics found");
+
+                    //ESP_LOGI(GATTC_TAG, "count: %d", count);
+                    if (count > 0 && (char_elem_result[0].properties & ESP_GATT_CHAR_PROP_BIT_READ)){
+                        gl_profile_tab[PROFILE_A_APP_ID].char_handle = char_elem_result[0].char_handle;
+                        //ESP_LOGI(GATTC_TAG, "strlen(char_elem_result): %d, char_elem_result->properties: %d",strlen(char_elem_result), char_elem_result->properties);
+                        //esp_log_buffer_hex(GATTC_TAG, char_elem_result->uuid.uuid.uuid128, ESP_UUID_LEN_128);
+
+                        esp_gatt_status_t ret_status = esp_ble_gattc_read_char( gattc_if,
+                                                                     gl_profile_tab[PROFILE_A_APP_ID].conn_id,
+                                                                     char_elem_result->char_handle,
+                                                                     ESP_GATT_AUTH_REQ_NONE);
+                        if (ret_status != ESP_GATT_OK){
+                            ESP_LOGE(GATTC_TAG, " HTU21D status: esp_ble_gattc_get_descr_by_char_handle error");
+                        }
+                    }
+                }else{
+                    ESP_LOGE(GATTC_TAG, "HTU21D status characteristics not found");
+                } 
+            }
+            /* free char_elem_result */
+            free(char_elem_result);
+        }
         break;
     case ESP_GATTC_READ_CHAR_EVT:
         ESP_LOGI(GATTC_TAG, "ESP_GATTC_READ_CHAR_EVT");
@@ -446,11 +473,20 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             break;
         }
        
-        esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
-
-        char status=p_data->read.value[0]<<8;
+        //esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
        
-        ESP_LOGI(GATTC_TAG, "raw: status=%d", status);
+        /*HTU21D_temperature = (p_data->notify.value[1]) | (p_data->notify.value[0] << 8);
+        HTU21D_humidity = (p_data->notify.value[4]) | (p_data->notify.value[3] << 8);
+        //ESP_LOGI(GATTC_TAG, "raw: temperature=%d | humidity=%d ", temperature, humidity);
+        //ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
+        //esp_log_buffer_hex(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128);
+
+        HTU21D_temperature=-46.85 + 175.72 * HTU21D_temperature/65536; //(°C) = -46.85 + 175.72 x Temperature Word / 2 16
+        HTU21D_humidity=-6 + 125 * HTU21D_humidity/65536; //(%RH) = -6 + 125 x Humidity Word / 2 16
+        ESP_LOGI(GATTC_TAG, "2HTU21D: temperature=%d | humidity=%d ", HTU21D_temperature, HTU21D_humidity);*/
+        HTU21D_status=p_data->read.value[0]<<8;
+       
+        ESP_LOGI(GATTC_TAG, "HTU21D_status=%d", HTU21D_status);
 
         //ESP_LOGI(GATTC_TAG, "temperature=%d | humidity=%d ", temperature, humidity);
 
@@ -461,12 +497,8 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
             ESP_LOGE(GATTC_TAG, "write descr failed, error status = %x", p_data->write.status);
             break;
         }
-        esp_log_buffer_hex(GATTC_TAG, p_data->search_res.srvc_id.uuid.uuid.uuid128, ESP_UUID_LEN_128);
-        esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
-        //char status[]={p_data->read.value[3], p_data->notify.value[4]};
 
-        ESP_LOGI(GATTC_TAG, "write descr success ");
-        uint8_t write_char_data[35];
+        /*uint8_t write_char_data[35];
         for (int i = 0; i < sizeof(write_char_data); ++i)
         {
             write_char_data[i] = i % 256;
@@ -477,7 +509,7 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
                                   sizeof(write_char_data),
                                   write_char_data,
                                   ESP_GATT_WRITE_TYPE_RSP,
-                                  ESP_GATT_AUTH_REQ_NONE);
+                                  ESP_GATT_AUTH_REQ_NONE);*/
         break;
     case ESP_GATTC_SRVC_CHG_EVT: {
         esp_bd_addr_t bda;
@@ -539,7 +571,6 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
                                                 ESP_BLE_AD_TYPE_NAME_CMPL, &adv_name_len);
             ESP_LOGI(GATTC_TAG, "searched Device Name Len %d", adv_name_len);
             esp_log_buffer_char(GATTC_TAG, adv_name, adv_name_len);
-            ESP_LOGI(GATTC_TAG, "\n");
             if (adv_name != NULL) {
                 if (strlen(remote_device_name) == adv_name_len && strncmp((char *)adv_name, remote_device_name, adv_name_len) == 0) {
                     ESP_LOGI(GATTC_TAG, "searched device %s\n", remote_device_name);
@@ -583,7 +614,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
             ESP_LOGE(GATTC_TAG, "scan stop failed, error status = %x", param->scan_stop_cmpl.status);
             break;
         }
-        ESP_LOGI(GATTC_TAG, "stop scan successfully");
+        //ESP_LOGI(GATTC_TAG, "stop scan successfully");
         break;
 
     case ESP_GAP_BLE_ADV_STOP_COMPLETE_EVT:
