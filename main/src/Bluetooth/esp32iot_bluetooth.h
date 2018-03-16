@@ -22,8 +22,12 @@
 
 #define GATTC_TAG "esp32iot-gattc"
 
-#define PROFILE_NUM      1
-#define PROFILE_A_APP_ID 0
+#define PROFILE_NUM      3
+
+#define PROFILE_TESS_HTU21D_APP_ID 0
+#define PROFILE_TESS_MS5637_APP_ID 1
+#define PROFILE_TESS_Battery_APP_ID 2
+
 #define INVALID_HANDLE 0
 
 static esp_bt_uuid_t notify_descr_char_uuid = {
@@ -52,9 +56,11 @@ static uint8_t remote_notify_char_uuid[ESP_UUID_LEN_128] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0
 };
 
-static int HTU21D_temperature = 0;
-static int HTU21D_humidity = 0;
-static int HTU21D_status = 0;
+static int TESS_HTU21D_temperature = 0;
+static int TESS_HTU21D_humidity = 0;
+static int TESS_HTU21D_status = 0;
+static int TESS_Battery_level = 0;
+static int TESS_Battery_status = 0;
 
 static char bluetooth_tag []="esp32iot-bluetooth";
 
@@ -67,7 +73,10 @@ static esp_gattc_descr_elem_t *descr_elem_result = NULL;
 /* eclare static functions */
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param);
 static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
-static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+
+static void TESS_HTU21D_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+static void TESS_MS5637_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+static void TESS_Battery_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
 
 //enum actual_service {HTU21D, };
 
@@ -167,10 +176,19 @@ struct gattc_profile_inst {
 
 /* One gatt-based profile one app_id and one gattc_if, this array will store the gattc_if returned by ESP_GATTS_REG_EVT */
 static struct gattc_profile_inst gl_profile_tab[PROFILE_NUM] = {
-    [PROFILE_A_APP_ID] = {
-        .gattc_cb = gattc_profile_event_handler,
+    [PROFILE_TESS_HTU21D_APP_ID] = {
+        .gattc_cb = TESS_HTU21D_gattc_profile_event_handler,
         .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
     },
+    [PROFILE_TESS_MS5637_APP_ID] = {
+        .gattc_cb = TESS_MS5637_gattc_profile_event_handler,
+        .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
+    },
+    [PROFILE_TESS_Battery_APP_ID] = {
+        .gattc_cb = TESS_Battery_gattc_profile_event_handler,
+        .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
+    },
+
 };
 
 esp_err_t bluetooth_initialize(void);
