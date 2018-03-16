@@ -24,18 +24,13 @@
 
 #define PROFILE_NUM      3
 
-#define PROFILE_TESS_HTU21D_APP_ID 0
-#define PROFILE_TESS_MS5637_APP_ID 1
-#define PROFILE_TESS_Battery_APP_ID 2
+#define PROFILE_BA5C_HTU21D_APP_ID 0
+#define PROFILE_BA5C_MS5637_APP_ID 1
+#define PROFILE_BA5C_Battery_APP_ID 2
 
 #define INVALID_HANDLE 0
 
 static esp_bt_uuid_t notify_descr_char_uuid = {
-    .len = ESP_UUID_LEN_16,
-    .uuid = {.uuid16 = ESP_GATT_UUID_CHAR_DESCRIPTION,},
-};
-
-static esp_bt_uuid_t notify_config_char_uuid = {
     .len = ESP_UUID_LEN_16,
     .uuid = {.uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG,},
 };
@@ -56,15 +51,20 @@ static uint8_t remote_notify_char_uuid[ESP_UUID_LEN_128] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0
 };
 
-static int TESS_HTU21D_temperature = 0;
-static int TESS_HTU21D_humidity = 0;
-static int TESS_HTU21D_status = 0;
-static int TESS_Battery_level = 0;
-static int TESS_Battery_status = 0;
+static int BA5C_HTU21D_temperature = 0;
+static int BA5C_HTU21D_humidity = 0;
+static int BA5C_HTU21D_status = 0;
+
+static int BA5C_Battery_level = 0;
+static int BA5C_Battery_status = 0;
+
+static int BA5C_MS5637_temperature = 0;
+static int BA5C_MS5637_pressure = 0;
+static int BA5C_MS5637_status = 0;
 
 static char bluetooth_tag []="esp32iot-bluetooth";
 
-static const char remote_device_name[] = "MEAS Tag BA5C";
+//static const char remote_device_name[] = "MEAS Tag BA5C";
 static bool bt_connect    = false;
 static bool get_server = false;
 static esp_gattc_char_elem_t *char_elem_result   = NULL;
@@ -74,9 +74,9 @@ static esp_gattc_descr_elem_t *descr_elem_result = NULL;
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param);
 static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
 
-static void TESS_HTU21D_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
-static void TESS_MS5637_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
-static void TESS_Battery_gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+static void gattc_profile_BA5C_HTU21D_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+static void gattc_profile_BA5C_MS5637_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
+static void gattc_profile_BA5C_Battery_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
 
 //enum actual_service {HTU21D, };
 
@@ -135,11 +135,11 @@ static esp_bt_uuid_t MS5637_status_char_uuid = {
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x4F, 0xAA, 0x00, 0xF0},},
 };
 
-static esp_bt_uuid_t battery_service_uuid = {
+static esp_bt_uuid_t Battery_service_uuid = {
     .len = ESP_UUID_LEN_128,
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x0F, 0x18, 0x00, 0xF0},},
 };
-static esp_gatt_srvc_id_t battery_service_id = {
+static esp_gatt_srvc_id_t Battery_service_id = {
     .id = {
         .uuid = {
             .len = ESP_UUID_LEN_128,
@@ -150,10 +150,30 @@ static esp_gatt_srvc_id_t battery_service_id = {
     },
     .is_primary = true,
 };
-static esp_bt_uuid_t battery_data_char_uuid = {
+static esp_bt_uuid_t Battery_data_char_uuid = {
     .len = ESP_UUID_LEN_128,
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0},},
 };
+
+static bool conn_device_HTU21D   = false;
+static bool conn_device_MS5637   = false;
+static bool conn_device_Battery   = false;
+
+static bool get_service_HTU21D   = false;
+static bool get_service_MS5637   = false;
+static bool get_service_Battery   = false;
+
+static bool Isconnecting    = false;
+static bool stop_scan_done  = false;
+
+static esp_gattc_char_elem_t  *char_elem_result_HTU21D   = NULL;
+static esp_gattc_descr_elem_t *descr_elem_result_HTU21D  = NULL;
+static esp_gattc_char_elem_t  *char_elem_result_MS5637   = NULL;
+static esp_gattc_descr_elem_t *descr_elem_result_MS5637  = NULL;
+static esp_gattc_char_elem_t  *char_elem_result_Battery   = NULL;
+static esp_gattc_descr_elem_t *descr_elem_result_Battery  = NULL;
+
+static const char remote_device_name[1][20] = {"MEAS Tag BA5C"};
 
 static esp_ble_scan_params_t ble_scan_params = {
     .scan_type              = BLE_SCAN_TYPE_ACTIVE,
@@ -176,16 +196,16 @@ struct gattc_profile_inst {
 
 /* One gatt-based profile one app_id and one gattc_if, this array will store the gattc_if returned by ESP_GATTS_REG_EVT */
 static struct gattc_profile_inst gl_profile_tab[PROFILE_NUM] = {
-    [PROFILE_TESS_HTU21D_APP_ID] = {
-        .gattc_cb = TESS_HTU21D_gattc_profile_event_handler,
+    [PROFILE_BA5C_HTU21D_APP_ID] = {
+        .gattc_cb = gattc_profile_BA5C_HTU21D_event_handler,
         .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
     },
-    [PROFILE_TESS_MS5637_APP_ID] = {
-        .gattc_cb = TESS_MS5637_gattc_profile_event_handler,
+    [PROFILE_BA5C_MS5637_APP_ID] = {
+        .gattc_cb = gattc_profile_BA5C_MS5637_event_handler,
         .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
     },
-    [PROFILE_TESS_Battery_APP_ID] = {
-        .gattc_cb = TESS_Battery_gattc_profile_event_handler,
+    [PROFILE_BA5C_Battery_APP_ID] = {
+        .gattc_cb = gattc_profile_BA5C_Battery_event_handler,
         .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
     },
 
