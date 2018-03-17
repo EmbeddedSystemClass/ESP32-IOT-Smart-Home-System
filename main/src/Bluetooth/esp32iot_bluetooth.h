@@ -22,13 +22,13 @@
 
 #define GATTC_TAG "esp32iot-gattc"
 
-#define PROFILE_NUM      1
+#define PROFILE_NUM      2
 
 #define PROFILE_BA5C_APP_ID 0
 
-#define PROFILE_BA5C_HTU21D_APP_ID 1
-#define PROFILE_BA5C_MS5637_APP_ID 2
-#define PROFILE_BA5C_Battery_APP_ID 3
+#define PROFILE_BA5C_HTU21D_APP_ID 5
+#define PROFILE_BA5C_MS5637_APP_ID 1
+#define PROFILE_BA5C_Battery_APP_ID 4
 
 #define INVALID_HANDLE 0
 
@@ -208,8 +208,23 @@ struct gattc_profile_inst {
     uint16_t conn_id;
     uint16_t service_start_handle;
     uint16_t service_end_handle;
+
     uint16_t char_handle;
+
     esp_bd_addr_t remote_bda;
+    
+    /*BA5C*/
+    uint16_t BA5C_HTU21D_char_handle;
+    uint16_t BA5C_HTU21D_data_char_handle;
+    uint16_t BA5C_HTU21D_status_char_handle;;
+
+    uint16_t BA5C_MS5637_char_handle;
+    uint16_t BA5C_MS5637_data_char_handle;
+    uint16_t BA5C_MS5637_calibration_char_handle;
+    uint16_t BA5C_MS5637_status_char_handle;
+
+    uint16_t BA5C_Battery_char_handle;
+    uint16_t BA5C_Battery_data_char_handle;
 };
 
 /* One gatt-based profile one app_id and one gattc_if, this array will store the gattc_if returned by ESP_GATTS_REG_EVT */
@@ -222,10 +237,10 @@ static struct gattc_profile_inst gl_profile_tab[PROFILE_NUM] = {
     //     .gattc_cb = gattc_profile_BA5C_HTU21D_event_handler,
     //     .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
     // },
-    // [PROFILE_BA5C_MS5637_APP_ID] = {
-    //     .gattc_cb = gattc_profile_BA5C_MS5637_event_handler,
-    //     .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
-    // },
+    [PROFILE_BA5C_MS5637_APP_ID] = {
+        .gattc_cb = gattc_profile_BA5C_MS5637_event_handler,
+        .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
+    },
     // [PROFILE_BA5C_Battery_APP_ID] = {
     //     .gattc_cb = gattc_profile_BA5C_Battery_event_handler,
     //     .gattc_if = ESP_GATT_IF_NONE,       /* Not get the gatt_if, so initial is ESP_GATT_IF_NONE */
