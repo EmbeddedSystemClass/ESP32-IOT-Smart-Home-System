@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.ipp": "c",
+        "array": "c",
+        "string_view": "c"
+    }
+}
