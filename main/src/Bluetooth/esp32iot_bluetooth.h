@@ -28,44 +28,24 @@
 
 #define INVALID_HANDLE 0
 
-static esp_bt_uuid_t BA5C_notify_descr_char_uuid = {
-    .len = ESP_UUID_LEN_16,
-    .uuid = {.uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG,},
-    //.uuid = {.uuid16 = ESP_GATT_UUID_CHAR_DESCRIPTION,},
-};
-
-static uint8_t remote_service_uuid[ESP_UUID_LEN_128] = {
-    /* LSB <--------------------------------------------------------------------------------> MSB */
-    //first uuid, 16bit, [12],[13] is the value
-    //0xF0, 0x00, 0x18, 0x0F, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    //0xF0, 0x00, 0x18, 0x0F, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x0F, 0x18, 0x00, 0xF0
-};
-
-static uint8_t remote_notify_char_uuid[ESP_UUID_LEN_128] = {
-    /* LSB <--------------------------------------------------------------------------------> MSB */
-    //first uuid, 16bit, [12],[13] is the value
-    //0xF0, 0x00, 0x2A, 0x19, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    //0xF0, 0x00, 0x2A, 0x19, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0
-};
-
-static int BA5C_HTU21D_temperature = 0;
-static int BA5C_HTU21D_humidity = 0;
-static int BA5C_HTU21D_status = 0;
-
-static int BA5C_MS5637_temperature = 0;
-static int BA5C_MS5637_pressure = 0;
-static int BA5C_MS5637_status = 0;
-
-static int BA5C_Battery_level = 0;
-static int BA5C_Battery_status = 0;
-
 static char bluetooth_tag []="esp32iot-bluetooth";
 
-//static const char remote_device_name[] = "MEAS Tag BA5C";
-static esp_gattc_char_elem_t *char_elem_result   = NULL;
-static esp_gattc_descr_elem_t *descr_elem_result = NULL;
+static uint16_t read_interval = 10;
+
+static uint16_t BA5C_HTU21D_recived_notification_counter = 0;
+static uint16_t BA5C_HTU21D_temperature = 0;
+static uint16_t BA5C_HTU21D_humidity = 0;
+static uint16_t BA5C_HTU21D_status = 0;
+
+static uint16_t BA5C_MS5637_recived_notification_counter = 0;
+static uint16_t BA5C_MS5637_temperature = 0;
+static uint16_t BA5C_MS5637_pressure = 0;
+static uint16_t BA5C_MS5637_status = 0;
+
+//static uint16_t BA5C_Battery_recived_notification_counter = 0;
+static uint16_t BA5C_Battery_level = 0;
+static uint16_t BA5C_Battery_status = 0;
+
 
 /* eclare static functions */
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param);
@@ -74,22 +54,27 @@ static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp
 
 static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param);
 
-//enum actual_service {HTU21D, };
 
+static esp_bt_uuid_t BA5C_notify_descr_char_uuid = {
+    .len = ESP_UUID_LEN_16,
+    .uuid = {.uuid16 = ESP_GATT_UUID_CHAR_CLIENT_CONFIG,},
+    //.uuid = {.uuid16 = ESP_GATT_UUID_CHAR_DESCRIPTION,},
+};
+
+// static esp_gatt_srvc_id_t BA5C_HTU21D_service_id = {
+//     .id = {
+//         .uuid = {
+//             .len = ESP_UUID_LEN_128,
+//             .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x20, 0xAA, 0x00, 0xF0},},
+//         },
+//         .inst_id = 0,
+//     },
+//     .is_primary = true,
+// };
 static esp_bt_uuid_t BA5C_HTU21D_service_uuid = {
     //0xF0, 0x00, 0xAA, 0x20, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     .len = ESP_UUID_LEN_128,
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x20, 0xAA, 0x00, 0xF0},},
-};
-static esp_gatt_srvc_id_t BA5C_HTU21D_service_id = {
-    .id = {
-        .uuid = {
-            .len = ESP_UUID_LEN_128,
-            .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x20, 0xAA, 0x00, 0xF0},},
-        },
-        .inst_id = 0,
-    },
-    .is_primary = true,
 };
 static esp_bt_uuid_t BA5C_HTU21D_data_char_uuid = {
     //0xF0, 0x00, 0xAA, 0x21, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -103,17 +88,17 @@ static esp_bt_uuid_t BA5C_HTU21D_status_char_uuid = {
 
 
 
-static esp_gatt_srvc_id_t BA5C_MS5637_service_id = {
-    .id = {
-        .uuid = {
-            .len = ESP_UUID_LEN_128,
-            //.uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x40, 0xAA, 0x00, 0xF0},},
-            .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x04, 0x15, 0x40, 0x04, 0xAA, 0x00, 0x0F},},   
-        },
-        .inst_id = 0,
-    },
-    .is_primary = true,
-};
+// static esp_gatt_srvc_id_t BA5C_MS5637_service_id = {
+//     .id = {
+//         .uuid = {
+//             .len = ESP_UUID_LEN_128,
+//             //.uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x40, 0xAA, 0x00, 0xF0},},
+//             .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x04, 0x15, 0x40, 0x04, 0xAA, 0x00, 0x0F},},   
+//         },
+//         .inst_id = 0,
+//     },
+//     .is_primary = true,
+// };
 static esp_bt_uuid_t BA5C_MS5637_service_uuid = {
     //0xF0, 0x00, 0xAA, 0x20, 0x04, 0x51, 0x40, 0x00, 0xB0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     .len = ESP_UUID_LEN_128,
@@ -138,54 +123,31 @@ static esp_bt_uuid_t BA5C_MS5637_status_char_uuid = {
     //.uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x04, 0x15, 0x40, 0xF4, 0xAA, 0x00, 0x0F},},
 };
 
+
+// static esp_gatt_srvc_id_t BA5C_Battery_service_id = {
+//     .id = {
+//         .uuid = {
+//             .len = ESP_UUID_LEN_128,
+//             .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x0F, 0x18, 0x00, 0xF0
+// },},
+//         },
+//         .inst_id = 0,
+//     },
+//     .is_primary = true,
+// };
 static esp_bt_uuid_t BA5C_Battery_service_uuid = {
     .len = ESP_UUID_LEN_128,
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x0F, 0x18, 0x00, 0xF0},},
-};
-static esp_gatt_srvc_id_t BA5C_Battery_service_id = {
-    .id = {
-        .uuid = {
-            .len = ESP_UUID_LEN_128,
-            .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x0F, 0x18, 0x00, 0xF0
-},},
-        },
-        .inst_id = 0,
-    },
-    .is_primary = true,
+    //.uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x04, 0x15, 0x40, 0xF0, 0x81, 0x00, 0x0F},},
 };
 static esp_bt_uuid_t BA5C_Battery_data_char_uuid = {
     .len = ESP_UUID_LEN_128,
     .uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, 0x00, 0x40, 0x51, 0x04, 0x19, 0x2A, 0x00, 0xF0},},
+    //.uuid = {.uuid128 = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x04, 0x15, 0x40, 0x91, 0xA2, 0x00, 0x0F},},
 };
-
-static bool conn_device_BA5C   = false;
-static bool get_service_BA5C   = false;
-
-static esp_gattc_char_elem_t  *char_elem_result_BA5C   = NULL;
-static esp_gattc_descr_elem_t *descr_elem_result_BA5C  = NULL;
-
-static const char remote_device_name[1][20] = {"MEAS Tag BA5C"};
-
-
-static bool conn_device_HTU21D   = false;
-static bool conn_device_MS5637   = false;
-static bool conn_device_Battery   = false;
-
-static bool get_service_HTU21D   = false;
-static bool get_service_MS5637   = false;
-static bool get_service_Battery   = false;
 
 static bool Isconnecting    = false;
 static bool stop_scan_done  = false;
-
-static esp_gattc_char_elem_t  *char_elem_result_BA5C_HTU21D   = NULL;
-static esp_gattc_descr_elem_t *descr_elem_result_BA5C_HTU21D  = NULL;
-static esp_gattc_char_elem_t  *char_elem_result_BA5C_MS5637   = NULL;
-static esp_gattc_descr_elem_t *descr_elem_result_BA5C_MS5637  = NULL;
-static esp_gattc_char_elem_t  *char_elem_result_BA5C_Battery   = NULL;
-static esp_gattc_descr_elem_t *descr_elem_result_BA5C_Battery  = NULL;
-
-
 
 static esp_ble_scan_params_t ble_scan_params = {
     .scan_type              = BLE_SCAN_TYPE_ACTIVE,
@@ -195,13 +157,18 @@ static esp_ble_scan_params_t ble_scan_params = {
     .scan_window            = 0x30
 };
 
+static esp_gattc_char_elem_t  *char_elem_result_BA5C   = NULL;
+static esp_gattc_descr_elem_t *descr_elem_result_BA5C  = NULL;
+
+static const char remote_device_name[1][20] = {"MEAS Tag BA5C"};
+
+
+/*ToDo: split gattc_profile_inst data type to be specyfied for particular device*/
 struct gattc_profile_inst {
     esp_gattc_cb_t gattc_cb;
     uint16_t gattc_if;
     uint16_t app_id;
     uint16_t conn_id;
-    uint16_t service_start_handle;
-    uint16_t service_end_handle;
 
     uint16_t char_handle;
 
@@ -212,14 +179,12 @@ struct gattc_profile_inst {
 
     uint16_t BA5C_HTU21D_service_start_handle;
     uint16_t BA5C_HTU21D_service_end_handle;
-    uint16_t BA5C_HTU21D_char_handle;
     uint16_t BA5C_HTU21D_data_char_handle;
     uint16_t BA5C_HTU21D_status_char_handle;
     bool BA5C_HTU21D_get_service;
 
     uint16_t BA5C_MS5637_service_start_handle;
     uint16_t BA5C_MS5637_service_end_handle;
-    uint16_t BA5C_MS5637_char_handle;
     uint16_t BA5C_MS5637_data_char_handle;
     uint16_t BA5C_MS5637_calibration_char_handle;
     uint16_t BA5C_MS5637_status_char_handle;
@@ -227,7 +192,6 @@ struct gattc_profile_inst {
 
     uint16_t BA5C_Battery_service_start_handle;
     uint16_t BA5C_Battery_service_end_handle;
-    uint16_t BA5C_Battery_char_handle;
     uint16_t BA5C_Battery_data_char_handle;
     bool BA5C_Battery_get_service;
 

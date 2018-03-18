@@ -94,7 +94,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         if (p_data->open.status != ESP_GATT_OK){
             //open failed, ignore the first device, connect the second device
             ESP_LOGE(GATTC_TAG, "connect device failed, status %d", p_data->open.status);
-            conn_device_BA5C = false;
+            gl_profile_tab[PROFILE_BA5C_APP_ID].conn_device_BA5C = false;
             //start_scan();
             break;
         }
@@ -119,7 +119,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_HTU21D_service_uuid);
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_MS5637_service_uuid);
-        //esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_Battery_service_uuid);
+        esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_Battery_service_uuid);
         
         break;
     case ESP_GATTC_SEARCH_RES_EVT: {
@@ -129,7 +129,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         esp_gatt_srvc_id_t *srvc_id = (esp_gatt_srvc_id_t *)&p_data->search_res.srvc_id;
         ESP_LOGI(GATTC_TAG, "conn_id = %x", p_data->search_res.conn_id);
         if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, BA5C_HTU21D_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
-            ESP_LOGI(GATTC_TAG, "BA5C HTU21D service found");
+            ESP_LOGI(GATTC_TAG, "HTU21D service found");
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
             
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service = true;
@@ -140,9 +140,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_service_end_handle = p_data->search_res.end_handle; 
             ESP_LOGI(GATTC_TAG, "service_start_handle: %d | service_end_handle: %d ", p_data->search_res.start_handle, p_data->search_res.end_handle);
             //esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_MS5637_service_uuid);
-        }
-        if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, BA5C_MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
-            ESP_LOGI(GATTC_TAG, "BA5C MS5637 service found");
+        }else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, BA5C_MS5637_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+            ESP_LOGI(GATTC_TAG, "MS5637 service found");
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
             
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service = false;
@@ -153,9 +152,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_service_end_handle = p_data->search_res.end_handle; 
             ESP_LOGI(GATTC_TAG, "service_start_handle: %d | service_end_handle: %d ", p_data->search_res.start_handle, p_data->search_res.end_handle);   
             //esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_Battery_service_uuid);         
-        }
-        if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, BA5C_Battery_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
-            ESP_LOGI(GATTC_TAG, "BA5C Battery service found");
+        }else if (srvc_id->id.uuid.len == ESP_UUID_LEN_128 && !memcmp(srvc_id->id.uuid.uuid.uuid128, BA5C_Battery_service_uuid.uuid.uuid128, ESP_UUID_LEN_128)) {
+            ESP_LOGI(GATTC_TAG, "Battery service found");
             ESP_LOG_BUFFER_HEX_LEVEL(GATTC_TAG, srvc_id->id.uuid.uuid.uuid128, ESP_UUID_LEN_128, ESP_LOG_INFO);
             
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service = false;
@@ -164,7 +162,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
 
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_service_start_handle = p_data->search_res.start_handle;
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_service_end_handle = p_data->search_res.end_handle; 
-            ESP_LOGI(GATTC_TAG, "service_start_handle: %d | service_end_handle: %d ", p_data->search_res.start_handle, p_data->search_res.end_handle);            
+            ESP_LOGI(GATTC_TAG, "service_start_handle: %d | service_end_handle: %d ", p_data->search_res.start_handle, p_data->search_res.end_handle);   
+            //esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_Battery_service_uuid);         
         }
        
         break;
@@ -181,7 +180,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         uint16_t tmp_count = 0;
 
         if (gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service){
-            ESP_LOGI(GATTC_TAG, "gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service");
+            ESP_LOGI(GATTC_TAG, "HTU21D_get_service");
 
             esp_gatt_status_t status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                      p_data->search_cmpl.conn_id,
@@ -241,8 +240,9 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
                 ESP_LOGE(GATTC_TAG, "no char found");
             }
         }
+
         if (gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_get_service){
-            ESP_LOGI(GATTC_TAG, "gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_get_service");
+            ESP_LOGI(GATTC_TAG, "MS5637_get_service");
 
             esp_gatt_status_t status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                      p_data->search_cmpl.conn_id,
@@ -316,9 +316,11 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
                 ESP_LOGE(GATTC_TAG, "no char found");
             }
         }
+
+
         
         if (gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_get_service){
-            ESP_LOGI(GATTC_TAG, "gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_get_service");
+            ESP_LOGI(GATTC_TAG, "Battery_get_service");
 
             esp_gatt_status_t status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                      p_data->search_cmpl.conn_id,
@@ -330,15 +332,12 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             if (status != ESP_GATT_OK){
                 ESP_LOGE(GATTC_TAG, "esp_ble_gattc_get_attr_count error");
             }
-            ESP_LOGE(GATTC_TAG, "count: %d", count);
             if (count > 0) {
                 tmp_count = count;
                 char_elem_result_BA5C = (esp_gattc_char_elem_t *)malloc(sizeof(esp_gattc_char_elem_t) * count);
                 if (!char_elem_result_BA5C){
                     ESP_LOGE(GATTC_TAG, "gattc no mem");
                 }else {
-
-
                     if (esp_ble_gattc_get_char_by_uuid( gattc_if,
                                                         p_data->search_cmpl.conn_id,
                                                         gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_service_start_handle,
@@ -376,7 +375,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         uint16_t notify_en = 1;
 
         if(p_data->reg_for_notify.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_data_char_handle){
-            ESP_LOGI(GATTC_TAG, "PROFILE_BA5C char_handle: %d", p_data->reg_for_notify.handle);
+            ESP_LOGI(GATTC_TAG, "HTU21D reg_for_notify handle: %d", p_data->reg_for_notify.handle);
 
             esp_gatt_status_t ret_status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                          gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
@@ -426,7 +425,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
                 ESP_LOGE(GATTC_TAG, "decsr not found");
             }
         }else if(p_data->reg_for_notify.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_data_char_handle){
-            ESP_LOGI(GATTC_TAG, "PROFILE_BA5C_MS5637 char_handle: %d", p_data->reg_for_notify.handle);
+            ESP_LOGI(GATTC_TAG, "MS5637 reg_for_notify handle: %d", p_data->reg_for_notify.handle);
 
             esp_gatt_status_t ret_status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                          gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
@@ -476,7 +475,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
                 ESP_LOGE(GATTC_TAG, "decsr not found");
             }
         }else if(p_data->reg_for_notify.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_data_char_handle){
-            ESP_LOGI(GATTC_TAG, "PROFILE_BA5C char_handle: %d", p_data->reg_for_notify.handle);
+            ESP_LOGI(GATTC_TAG, "Battery reg_for_notify handle: %d", p_data->reg_for_notify.handle);
 
             esp_gatt_status_t ret_status = esp_ble_gattc_get_attr_count( gattc_if,
                                                                          gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
@@ -515,7 +514,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
                     }
 
                     if (ret_status != ESP_GATT_OK){
-                        ESP_LOGE(GATTC_TAG, "esp_ble_gattc_write_char_descr error");
+                        ESP_LOGE(GATTC_TAG, "esp_ble_gattc_write_char_descr ecountrror");
                     }
 
                     /* free descr_elem_result */
@@ -544,11 +543,23 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             BA5C_HTU21D_humidity=-6 + 125 * BA5C_HTU21D_humidity/65536; //(%RH) = -6 + 125 x Humidity Word / 2 16
             ESP_LOGI(GATTC_TAG, "HTU21D: temperature=%d | humidity=%d", BA5C_HTU21D_temperature, BA5C_HTU21D_humidity);
 
-            if (esp_ble_gattc_read_char( gattc_if,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_status_char_handle,
-                                         ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
-                ESP_LOGE(GATTC_TAG, "HTU21D status: esp_ble_gattc_get_descr_by_char_handle error");
+            BA5C_HTU21D_recived_notification_counter++;
+            if(BA5C_HTU21D_recived_notification_counter >= read_interval){
+                if (esp_ble_gattc_read_char( gattc_if,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_status_char_handle,
+                                             ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
+                    ESP_LOGE(GATTC_TAG, "HTU21D status: esp_ble_gattc_get_descr_by_char_handle error");
+                }
+
+                if (esp_ble_gattc_read_char( gattc_if,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_data_char_handle,
+                                             ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
+                    ESP_LOGE(GATTC_TAG, "Battery data: esp_ble_gattc_get_descr_by_char_handle error");
+                }
+
+                BA5C_HTU21D_recived_notification_counter = (uint16_t)0;
             }
         }else if(p_data->notify.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_data_char_handle){
             //ESP_LOGI(GATTC_TAG, "BA5C_MS5637 char_handle: %d", p_data->notify.handle);
@@ -556,18 +567,22 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
 
             esp_log_buffer_hex(GATTC_TAG, p_data->notify.value, p_data->notify.value_len);
 
-            if (esp_ble_gattc_read_char( gattc_if,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_calibration_char_handle,
-                                         ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
-                ESP_LOGE(GATTC_TAG, "MS5637 calibration: esp_ble_gattc_get_descr_by_char_handle error");
-            }
+            BA5C_MS5637_recived_notification_counter++;
+            if(BA5C_MS5637_recived_notification_counter >= read_interval){
+                if (esp_ble_gattc_read_char( gattc_if,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_calibration_char_handle,
+                                             ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
+                    ESP_LOGE(GATTC_TAG, "MS5637 calibration: esp_ble_gattc_get_descr_by_char_handle error");
+                }
 
-            if (esp_ble_gattc_read_char( gattc_if,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
-                                         gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_status_char_handle,
-                                         ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
-                ESP_LOGE(GATTC_TAG, "MS5637 status: esp_ble_gattc_get_descr_by_char_handle error");
+                if (esp_ble_gattc_read_char( gattc_if,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].conn_id,
+                                             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_status_char_handle,
+                                             ESP_GATT_AUTH_REQ_NONE) != ESP_GATT_OK){
+                    ESP_LOGE(GATTC_TAG, "MS5637 status: esp_ble_gattc_get_descr_by_char_handle error");
+                }
+                BA5C_MS5637_recived_notification_counter = (uint16_t)0;
             }
         }else if(p_data->notify.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_data_char_handle){
             //ESP_LOGI(GATTC_TAG, "BA5C_Battery char_handle: %d", p_data->notify.handle);
@@ -575,8 +590,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
 
             esp_log_buffer_hex(GATTC_TAG, p_data->notify.value, p_data->notify.value_len);
 
-            BA5C_Battery_level = (p_data->notify.value[0] << 8);
-            BA5C_Battery_status = (p_data->notify.value[1]);
+            BA5C_Battery_level = p_data->notify.value[0];
+            BA5C_Battery_status = p_data->notify.value[1];
 
             ESP_LOGI(GATTC_TAG, "Battery: level=%d | status=%d", BA5C_Battery_level, BA5C_Battery_status);
 
@@ -591,11 +606,11 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         }
 
         if(p_data->read.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_status_char_handle){
-            //ESP_LOGI(GATTC_TAG, "PROFILE_BA5C char_handle: %d", p_data->read.handle);
+                //ESP_LOGI(GATTC_TAG, "PROFILE_BA5C char_handle: %d", p_data->read.handle);
             ESP_LOGI(GATTC_TAG, "HTU21D read status value:");
 
             esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
-            BA5C_HTU21D_status=p_data->read.value[0]<<8;
+            BA5C_HTU21D_status=p_data->read.value[0];
             ESP_LOGI(GATTC_TAG, "HTU21D_status=%d", BA5C_HTU21D_status);
         }else if(p_data->read.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_calibration_char_handle){
             //ESP_LOGI(GATTC_TAG, "PROFILE_BA5C_MS5637 char_handle: %d", p_data->read.handle);
@@ -608,10 +623,29 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
 
             esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
 
-            BA5C_MS5637_status=p_data->read.value[0]<<8;
+            BA5C_MS5637_status=p_data->read.value[0];
             ESP_LOGI(GATTC_TAG, "MS5637_status=%d", BA5C_MS5637_status);
+        }else if(p_data->read.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_Battery_data_char_handle){
+            //ESP_LOGI(GATTC_TAG, "PROFILE_BA5C_Battery char_handle: %d", p_data->read.handle);
+            ESP_LOGI(GATTC_TAG, "Battery read data value:");
+
+            esp_log_buffer_hex(GATTC_TAG, p_data->read.value, p_data->read.value_len);
+
+            BA5C_Battery_level = p_data->read.value[0];
+            BA5C_Battery_status = p_data->read.value[1];
+
+            ESP_LOGI(GATTC_TAG, "Battery: level=%d | status=%d", BA5C_Battery_level, BA5C_Battery_status);
         }
 
+        break;
+    case ESP_GATTC_QUEUE_FULL_EVT:
+        ESP_LOGI(GATTC_TAG, "BA5C ESP_GATTC_QUEUE_FULL_EVT");
+
+        if (p_data->queue_full.status != ESP_GATT_OK){
+            ESP_LOGE(GATTC_TAG, "write descr failed, error status = %x", p_data->queue_full.status);
+            break;
+        }
+        //bta_gattc_free_command_data(tBTA_GATTC_CLCB *p_clcb)
         break;
     case ESP_GATTC_WRITE_DESCR_EVT:
         ESP_LOGI(GATTC_TAG, "BA5C ESP_GATTC_WRITE_DESCR_EVT");
@@ -648,7 +682,7 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
         start_scan();
         if (memcmp(p_data->disconnect.remote_bda, gl_profile_tab[PROFILE_BA5C_APP_ID].remote_bda, 6) == 0){
             ESP_LOGI(GATTC_TAG, "device a disconnect");
-            conn_device_BA5C = false;
+            gl_profile_tab[PROFILE_BA5C_APP_ID].conn_device_BA5C = false;
 
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_HTU21D_get_service = false;
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_MS5637_get_service = false;
@@ -705,7 +739,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
             if (Isconnecting){
                 break;
             }
-            if (conn_device_BA5C && !stop_scan_done){
+            if (gl_profile_tab[PROFILE_BA5C_APP_ID].conn_device_BA5C && !stop_scan_done){
                 stop_scan_done = true;
                 esp_ble_gap_stop_scanning();
                 ESP_LOGI(GATTC_TAG, "all devices are connected");
@@ -714,8 +748,8 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
             if (adv_name != NULL) {
 
                 if (strlen(remote_device_name[0]) == adv_name_len && strncmp((char *)adv_name, remote_device_name[0], adv_name_len) == 0) {
-                    if (conn_device_BA5C == false) {
-                        conn_device_BA5C = true;
+                    if (gl_profile_tab[PROFILE_BA5C_APP_ID].conn_device_BA5C == false) {
+                        gl_profile_tab[PROFILE_BA5C_APP_ID].conn_device_BA5C = true;
                         ESP_LOGI(GATTC_TAG, "Searched device %s", remote_device_name[0]);
                         esp_ble_gap_stop_scanning();
                         esp_ble_gattc_open(gl_profile_tab[PROFILE_BA5C_APP_ID].gattc_if, scan_result->scan_rst.bda, true);
