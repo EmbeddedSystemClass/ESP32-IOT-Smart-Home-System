@@ -11,7 +11,7 @@
 
 #include "esp32iot_wifi.h"
 #include "esp32iot_storage.h"
-#include "esp32iot_http_server.h"
+#include "esp32iot_server.h"
 
 #define delay(ms) (vTaskDelay(ms/portTICK_RATE_MS))
 

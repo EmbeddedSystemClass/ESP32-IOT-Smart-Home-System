@@ -63,35 +63,7 @@ void copy_string(uint8_t d[], uint8_t s[]) {
 }
 
 
-esp_err_t wifi_initialize(void)
-{
-	esp_err_t err;
 
-	tcpip_adapter_init();
-
-	wifi_event_group = xEventGroupCreate();
-	
-	err = esp_event_loop_init(wifi_event_handler, NULL);
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-	
-	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-	err = esp_wifi_init(&cfg);
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-
-	err = esp_wifi_set_storage(WIFI_STORAGE_RAM);
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-
-	return ESP_OK;
-}
 
 esp_err_t wifi_ap_start(void) {
 	esp_err_t err;
@@ -134,62 +106,6 @@ esp_err_t wifi_ap_start(void) {
 	}
 
 	connection_failure_counter = 0;
-	//vTaskDelete(NULL);
-
-	return ESP_OK;
-}
-
-esp_err_t wifi_apsta_configure(const char ssid[], const char password[]) {
-	esp_err_t err;
-
-/*	err = esp_wifi_stop();
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}*/
-
-	err = esp_wifi_set_mode(WIFI_MODE_APSTA);
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-
-	wifi_config_t apsta_config = {
-		.sta = {
-			.ssid = "",
-			.password = "",
-      		.bssid_set = false,
-      		.channel = 0.
-	  	},
-	   .ap = {
-	      .ssid=DEFAULT_AP_SSID,
-	      .ssid_len=0,
-	      .password=DEFAULT_AP_PASSWORD,
-	      //.bssid_set = false,
-	      .channel=1,
-	      .authmode=DEFAULT_AP_AUTHMODE,
-	      .ssid_hidden=0,
-	      .max_connection=4,
-	      .beacon_interval=100
-	   }
-	};
-
-	for(size_t i = 0; i<= strlen(ssid); ++i)
-      apsta_config.sta.ssid[i] = ssid[i];
-	for(size_t i = 0; i<= strlen(password); ++i)
-      apsta_config.sta.password[i] = password[i];  
-
-	//strcpy(sta_config.sta.ssid, ssid);
-	//strcpy(sta_config.sta.password, password);
-	//ESP_LOGI(wifi_tag, "\n%s | %s\n", apsta_config.sta.ssid, apsta_config.sta.password );
-
-	err = esp_wifi_set_config(WIFI_IF_STA, &apsta_config);
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-
-	//connection_failure_counter = 0;
 	//vTaskDelete(NULL);
 
 	return ESP_OK;
@@ -311,86 +227,6 @@ esp_err_t wifi_sta_start2(const char ssid[], const char password[])
 	return ESP_OK;
 }
 
-esp_err_t wifi_start(void){
-	esp_err_t err;
-
-	err = wifi_initialize();
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}
-
-/*	err = wifi_sta_start("hotosk", "W6game555");
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}*/
-
-/*    err = wifi_ap_start();
-    if(err != ESP_OK){
-        ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-        ESP_ERROR_CHECK( err );
-    }*/
-/*
-    err = wifi_apsta_configure("hotosk", "W6game555");
-	if(err != ESP_OK){
-		ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-		ESP_ERROR_CHECK( err );
-	}else{
-		err = esp_wifi_start();
-		if(err != ESP_OK){
-			ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-			ESP_ERROR_CHECK( err );
-		}
-	}*/
-
-
-
-    err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
-    if (err != ESP_OK){
-        ESP_LOGW(wifi_tag, "( %d )", err);
-        ESP_ERROR_CHECK( err );
-    }else{
-    	if(strcmp(actual_wifi.ssid, "") && strcmp(actual_wifi.password, "")){
-    		ESP_LOGW(wifi_tag, "Last connected wifi: ssid=%s password=%s\n",  actual_wifi.ssid, actual_wifi.password);
-    		//ESP_ERROR_CHECK( wifi_sta_conect(ssid, password) );
-    		err = wifi_apsta_configure(actual_wifi.ssid, actual_wifi.password);
-			if(err != ESP_OK){
-				ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-				ESP_ERROR_CHECK( err );
-			}else{
-				err = esp_wifi_start();
-				if(err != ESP_OK){
-					ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-					ESP_ERROR_CHECK( err );
-				}
-			}
-    	}else{
-    		err = wifi_apsta_configure(DEFAULT_AP_SSID,"");
-			if(err != ESP_OK){
-				ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-				ESP_ERROR_CHECK( err );
-			}else{
-				err = esp_wifi_start();
-				if(err != ESP_OK){
-					ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-					ESP_ERROR_CHECK( err );
-				}
-			}
-    	}
-	}
-
-
-
-/*    err = save_wifi(ssid, "W6game55");
-    if (err != ESP_OK){
-        ESP_LOGW(webserver_wifi_tag, "( %d )", err);
-        ESP_ERROR_CHECK( err );
-    }*/
-	
-	return ESP_OK;
-}
-
 
 esp_err_t wifi_scan_start(void) {
 	esp_err_t err;
@@ -445,7 +281,7 @@ esp_err_t wifi_scan_get(void ) {
 }
 
 esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
-	esp_err_t err;
+	static esp_err_t err;
 
 	if(network.connected == 1){
 		loop();
@@ -488,7 +324,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             break;
         case SYSTEM_EVENT_STA_DISCONNECTED:
             ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_STA_DISCONNECTED");
-            xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+            //xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
 
             /*connection_failure_counter++;
             if(connection_failure_counter < MAX_WIFI_CONNECTION_ATTEMPTS){
@@ -513,8 +349,8 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         case SYSTEM_EVENT_STA_GOT_IP:
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
             
-            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	http_server_init();
+            //xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        	//http_server_init();
             
             break;
         case SYSTEM_EVENT_STA_LOST_IP:
@@ -554,9 +390,13 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         	
      		break;
      	case SYSTEM_EVENT_AP_STADISCONNECTED:
-        	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STADISCONNECTED");
+        	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STADISCONNECTED, MAC=%02x:%02x:%02x:%02x:%02x:%02x AID=%i",
+				event->event_info.sta_disconnected.mac[0],event->event_info.sta_disconnected.mac[1],
+				event->event_info.sta_disconnected.mac[2],event->event_info.sta_disconnected.mac[3],
+				event->event_info.sta_disconnected.mac[4],event->event_info.sta_disconnected.mac[5],
+				event->event_info.sta_disconnected.aid);
         	
-        	xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+        	//xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         	
         	/*connection_failure_counter++;
             if(connection_failure_counter < MAX_WIFI_CONNECTION_ATTEMPTS){
@@ -577,13 +417,16 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
             }*/
      		break;  
      	case SYSTEM_EVENT_AP_STACONNECTED:
-            ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: station:"MACSTR" join,AID=%d\n", MAC2STR(event->event_info.sta_connected.mac), 
-			event->event_info.sta_connected.aid);
+            ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED, MAC=%02x:%02x:%02x:%02x:%02x:%02x AID=%i",
+		        event->event_info.sta_connected.mac[0],event->event_info.sta_connected.mac[1],
+		        event->event_info.sta_connected.mac[2],event->event_info.sta_connected.mac[3],
+		        event->event_info.sta_connected.mac[4],event->event_info.sta_connected.mac[5],
+		        event->event_info.sta_connected.aid);
 
             //ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_AP_STACONNECTED IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 
-            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        	http_server_init();
+            //xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        	//http_server_init();
 
      		break;
      	case SYSTEM_EVENT_AP_PROBEREQRECVED:
@@ -591,7 +434,9 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         	
      		break;
      	case SYSTEM_EVENT_GOT_IP6:
-        	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_GOT_IP6");
+        	ESP_LOGI(wifi_tag, "wifi_event_handler: SYSTEM_EVENT_GOT_IP6 IP6=%01x:%01x:%01x:%01x",
+        		event->event_info.got_ip6.ip6_info.ip.addr[0],event->event_info.got_ip6.ip6_info.ip.addr[1],
+        		event->event_info.got_ip6.ip6_info.ip.addr[2],event->event_info.got_ip6.ip6_info.ip.addr[3]);
         	
      		break;
      	case SYSTEM_EVENT_ETH_START:
@@ -626,3 +471,184 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 	return ESP_OK;
 }
 
+esp_err_t wifi_initialize(void)
+{
+	esp_err_t err;
+
+	const char* LOCAL_TAG = "wifi_initialize";
+
+	tcpip_adapter_init();
+	ESP_ERROR_CHECK(tcpip_adapter_dhcps_stop(TCPIP_ADAPTER_IF_AP));
+	//tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_AP,"esp32");
+	tcpip_adapter_ip_info_t info;
+	memset(&info, 0, sizeof(info));
+	IP4_ADDR(&info.ip, 192, 168, 4, 1);
+	IP4_ADDR(&info.gw, 192, 168, 4, 1);
+	IP4_ADDR(&info.netmask, 255, 255, 255, 0);
+	ESP_LOGI(LOCAL_TAG,"Setting gateway IP");
+	ESP_ERROR_CHECK(tcpip_adapter_set_ip_info(TCPIP_ADAPTER_IF_AP, &info));
+	//ESP_ERROR_CHECK(tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_AP,"esp32"));
+	//ESP_LOGI(LOCAL_TAG,"set hostname to \"%s\"",hostname);
+	ESP_LOGI(LOCAL_TAG,"Starting DHCPS adapter");
+	ESP_ERROR_CHECK(tcpip_adapter_dhcps_start(TCPIP_ADAPTER_IF_AP));
+	//ESP_ERROR_CHECK(tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_AP,hostname));
+	
+	ESP_LOGI(LOCAL_TAG,"Starting event loop");
+	err = esp_event_loop_init(wifi_event_handler, NULL);
+	if(err != ESP_OK){
+		ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+	ESP_LOGI(LOCAL_TAG,"Initializing WiFi");
+	wifi_init_config_t wifi_init_config = WIFI_INIT_CONFIG_DEFAULT();
+	ESP_ERROR_CHECK(esp_wifi_init(&wifi_init_config));
+	ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
+	
+  	ESP_LOGI(LOCAL_TAG,"WiFi Initialized");
+
+	return ESP_OK;
+}
+
+esp_err_t wifi_apsta_configure(const char ssid[], const char password[]) {
+	esp_err_t err;
+
+	const char* LOCAL_TAG = "wifi_apsta_configure";
+
+/*	ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
+
+	wifi_config_t wifi_apsta_config = {
+		.ap = {
+	      .ssid=DEFAULT_AP_SSID,
+	      .password=DEFAULT_AP_PASSWORD,
+	      .ssid_len=0,
+	      //.bssid_set = false,
+	      .channel=2,
+	      .authmode=WIFI_AUTH_WPA2_PSK,
+	      .ssid_hidden=0,
+	      .max_connection=4,
+	      .beacon_interval=100
+	   	},
+		.sta = {
+			.ssid = "",
+			.password = "",
+			.bssid_set = false,
+			.channel = 1.
+		}
+	};
+
+	for(size_t i = 0; i<= strlen(ssid); ++i)
+      wifi_apsta_config.sta.ssid[i] = ssid[i];
+	for(size_t i = 0; i<= strlen(password); ++i)
+      wifi_apsta_config.sta.password[i] = password[i];  
+
+	//strcpy(sta_config.sta.ssid, ssid);
+	//strcpy(sta_config.sta.password, password);
+	//ESP_LOGI(LOCAL_TAG, "\n%s | %s\n", wifi_apsta_config.sta.ssid, wifi_apsta_config.sta.password );
+
+  	ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_apsta_config));*/
+
+	ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
+
+	wifi_config_t wifi_config = {
+		.ap = {
+		  .ssid=DEFAULT_AP_SSID,
+		  .password=DEFAULT_AP_PASSWORD,
+		  .channel = 0,
+		  .authmode = WIFI_AUTH_WPA2_PSK,
+		  .ssid_hidden = 0,
+		  .max_connection = 4,
+		  .beacon_interval = 100
+		},
+		.sta = {
+			.ssid = "",
+			.password = "",
+			.bssid_set = false,
+			.channel = 1.
+		},
+	};
+
+	for(size_t i = 0; i<= strlen(ssid); ++i)
+      wifi_config.sta.ssid[i] = ssid[i];
+	for(size_t i = 0; i<= strlen(password); ++i)
+      wifi_config.sta.password[i] = password[i];  
+
+	ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+
+
+  	ESP_LOGI(LOCAL_TAG,"WiFi Configured");
+
+	return ESP_OK;
+}
+
+esp_err_t wifi_start(void){
+	esp_err_t err;
+
+	const char* LOCAL_TAG = "wifi_start";
+
+	err = wifi_initialize();
+	if(err != ESP_OK){
+		ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}
+
+/*	err = wifi_sta_start("hotosk", "W6game555");
+	if(err != ESP_OK){
+		ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}*/
+
+/*    err = wifi_ap_start();
+    if(err != ESP_OK){
+        ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+        ESP_ERROR_CHECK( err );
+    }*/
+/*
+    err = wifi_apsta_configure("hotosk", "W6game555");
+	if(err != ESP_OK){
+		ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+		ESP_ERROR_CHECK( err );
+	}else{
+		err = esp_wifi_start();
+		if(err != ESP_OK){
+			ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+			ESP_ERROR_CHECK( err );
+		}
+	}*/
+
+    err = get_last_connected_wifi(&actual_wifi.ssid, &actual_wifi.password);
+    if (err != ESP_OK){
+        ESP_LOGW(LOCAL_TAG, "( %d )", err);
+        ESP_ERROR_CHECK( err );
+    }else{
+    	if(strcmp(actual_wifi.ssid, "") && strcmp(actual_wifi.password, "")){
+    		ESP_LOGW(LOCAL_TAG, "Last connected wifi: ssid=%s password=%s\n",  actual_wifi.ssid, actual_wifi.password);
+    		//ESP_ERROR_CHECK( wifi_sta_conect(ssid, password) );
+    		err = wifi_apsta_configure(actual_wifi.ssid, actual_wifi.password);
+			if(err != ESP_OK){
+				ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+				ESP_ERROR_CHECK( err );
+			}else{
+				ESP_ERROR_CHECK(esp_wifi_start());
+			}
+    	}else{
+    		err = wifi_apsta_configure(DEFAULT_AP_SSID,"");
+			if(err != ESP_OK){
+				ESP_LOGW(LOCAL_TAG, "%s", wifi_err_to_string(err));
+				ESP_ERROR_CHECK( err );
+			}else{
+				ESP_ERROR_CHECK(esp_wifi_start());
+			}
+    	}
+	}
+
+
+
+/*    err = save_wifi(ssid, "W6game55");
+    if (err != ESP_OK){
+        ESP_LOGW(webserver_LOCAL_TAG, "( %d )", err);
+        ESP_ERROR_CHECK( err );
+    }*/
+	
+	return ESP_OK;
+}

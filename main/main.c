@@ -49,12 +49,16 @@ void app_main()
         ESP_LOGW(main_tag, "Error ( %d )", err);
         ESP_ERROR_CHECK( err );
     }
-
+    
     err = wifi_start();
     if (err != ESP_OK){
         ESP_LOGW(main_tag, "Error ( %d )", err);
         ESP_ERROR_CHECK( err );
+    }else{
+       http_server_init(); 
     }
+
+    
 
 /*    TimerInit(&timer);
     printf("Timer: TimerIsExpired: %i \n\n", TimerIsExpired(&timer));

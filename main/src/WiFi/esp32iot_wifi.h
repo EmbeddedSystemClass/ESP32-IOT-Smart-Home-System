@@ -13,9 +13,12 @@
 #include "esp32iot_storage.h"
 #include "esp32iot_cayenne.h"
 
-#define DEFAULT_AP_SSID "esp32-iot-smart-home-system"
-#define DEFAULT_AP_PASSWORD ""
-#define DEFAULT_AP_AUTHMODE WIFI_AUTH_OPEN
+#define DEFAULT_AP_SSID "S/M/H_Beacon"
+
+#define DEFAULT_AP_PASSWORD "SMH_322AQ"
+#define DEFAULT_AP_AUTHMODE WIFI_AUTH_WPA2_PSK
+// #define DEFAULT_AP_PASSWORD ""
+// #define DEFAULT_AP_AUTHMODE WIFI_AUTH_OPEN
 
 //#define DEFAULT_SCAN_METHOD WIFI_ALL_CHANNEL_SCAN
 #define DEFAULT_SCAN_METHOD WIFI_FAST_SCAN
@@ -82,6 +85,6 @@ esp_err_t wifi_apsta_configure(const char ssid[], const char password[]);
 esp_err_t wifi_start(void);
 
 /*  WiFi event handler. */
-esp_err_t wifi_event_handler(void *ctx, system_event_t *event);
+static esp_err_t wifi_event_handler(void *ctx, system_event_t *event);
 
 #endif

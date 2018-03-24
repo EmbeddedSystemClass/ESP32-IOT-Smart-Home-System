@@ -17,8 +17,10 @@ deps_config := \
 	/home/osk/esp/esp-idf/components/spiffs/Kconfig \
 	/home/osk/esp/esp-idf/components/tcpip_adapter/Kconfig \
 	/home/osk/esp/esp-idf/components/wear_levelling/Kconfig \
+	/home/osk/esp/esp32-iot-smart-home-system/components/websocket/Kconfig \
 	/home/osk/esp/esp-idf/components/bootloader/Kconfig.projbuild \
 	/home/osk/esp/esp-idf/components/esptool_py/Kconfig.projbuild \
+	/home/osk/esp/esp32-iot-smart-home-system/main/Kconfig.projbuild \
 	/home/osk/esp/esp-idf/components/partition_table/Kconfig.projbuild \
 	/home/osk/esp/esp-idf/Kconfig
 
