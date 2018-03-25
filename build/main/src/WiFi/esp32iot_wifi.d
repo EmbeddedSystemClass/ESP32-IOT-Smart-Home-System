@@ -176,6 +176,7 @@ src/WiFi/esp32iot_wifi.o: \
  /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_defs.h \
  /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_main.h \
  /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h \
+ /home/osk/esp/esp-idf/components/newlib/include/math.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/wifi-setup/wifi-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
@@ -555,6 +556,8 @@ src/WiFi/esp32iot_wifi.o: \
 /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_main.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/math.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/index_html.h:
 

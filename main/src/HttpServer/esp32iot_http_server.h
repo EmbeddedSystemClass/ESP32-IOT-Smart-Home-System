@@ -43,15 +43,7 @@ static char* clientID = "";
 
 #define HTTP_SERVER_ESP32IOT_LOCAL_TCP_PORT     443
 
-const static int CONNECTED_BIT = BIT0;
-
 static char http_server_tag []="esp32iot-http_server";
-
-char* json_unformatted;
-
-extern struct wifi_evidence_t actual_wifi;
-
-extern uint8_t wifi_manager_state;
 
 struct netconn *conn, *newconn;
 

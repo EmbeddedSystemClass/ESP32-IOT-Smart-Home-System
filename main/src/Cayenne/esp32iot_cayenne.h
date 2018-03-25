@@ -7,6 +7,8 @@
 
 #include "CayenneMQTTClient.h"
 
+#include "esp32iot_bluetooth.h"
+
 static char cayenne_tag []="esp32iot-cayenne";
 
 Network network;
@@ -18,5 +20,7 @@ void CayenneInit(const char* username, const char* password, const char* clientI
 int connectClient(void);
 
 void loop(void);
+
+void cayenne_task(void *param);
 
 #endif

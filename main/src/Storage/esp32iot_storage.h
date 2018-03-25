@@ -28,8 +28,8 @@ esp_err_t save_last_connected_wifi(const char* ssid, const char* password);
 esp_err_t get_wifi(const char* ssid, char* password);
 esp_err_t get_last_connected_wifi(const char* ssid, char* password);
 
-esp_err_t save_mqtt(void);
-esp_err_t get_mqtt(void);
+esp_err_t save_last_connected_mqtt(const char* username, const char* password, const char* clientID);
+esp_err_t get_last_connected_mqtt(char* username, char* password, char* clientID);
 
 esp_err_t save_restart_counter(void);
 esp_err_t get_restart_counter(void);

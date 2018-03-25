@@ -145,7 +145,7 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
             //return;
           }else{
-
+            save_last_connected_mqtt(username, password, clientID);
           }
 
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
@@ -216,7 +216,7 @@ static void http_server_netconn_serve(struct netconn *conn){
         }
         printf("Restarting now.\n");
 //        fflush(stdout);
-        delay(5000);
+        //delay(5000);
         esp_restart();
       }else {
         netconn_write(conn, not_found_error_html_header, sizeof(not_found_error_html_header)-1, NETCONN_NOCOPY);

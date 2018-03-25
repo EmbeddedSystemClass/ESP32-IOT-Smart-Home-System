@@ -318,29 +318,71 @@ esp_err_t get_last_connected_wifi(const char* ssid, char* password){
     return ESP_OK;
 }
 
-esp_err_t save_mqtt(void){
-	nvs_handle my_handle;
-    esp_err_t err;
-
-    // Open
-    err = nvs_open(MQTT_SETTINGS_STORAGE_NAMESPACE, NVS_READWRITE, &my_handle);
-    if (err != ESP_OK){
-        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
-    	ESP_ERROR_CHECK( err );
-    	return err;
-    } 
-
-	// Close
-    nvs_close(my_handle);
-    return ESP_OK;
-}
-
-esp_err_t get_mqtt(void){
+esp_err_t save_last_connected_mqtt(const char* username, const char* password, const char* clientID){
     nvs_handle my_handle;
     esp_err_t err;
 
     // Open
-    err = nvs_open(MQTT_SETTINGS_STORAGE_NAMESPACE, NVS_READWRITE, &my_handle);
+    err = nvs_open(WIFI_SETTINGS_STORAGE_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    // Read the size of memory space required for str
+    size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_str(my_handle, "mqtt_user", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    }
+
+    err = nvs_set_str(my_handle, "mqtt_user", username);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+
+    // Read the size of memory space required for str
+    required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_str(my_handle, "mqtt_pass", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    }
+
+    err = nvs_set_str(my_handle, "mqtt_pass", password);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+
+    // Read the size of memory space required for str
+    required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_str(my_handle, "mqtt_id", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    }
+
+    // Write last connected wifi ssid
+    err = nvs_set_str(my_handle, "mqtt_id", clientID);
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    }
+
+    // Commit
+    err = nvs_commit(my_handle);
     if (err != ESP_OK){
         ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
         ESP_ERROR_CHECK( err );
@@ -349,6 +391,111 @@ esp_err_t get_mqtt(void){
 
     // Close
     nvs_close(my_handle);
+
+    return ESP_OK; 
+}
+
+esp_err_t get_last_connected_mqtt(char* username, char* password, char* clientID){
+    nvs_handle my_handle;
+    esp_err_t err;
+
+    // Open
+    err = nvs_open(WIFI_SETTINGS_STORAGE_NAMESPACE, NVS_READWRITE, &my_handle);
+    ESP_ERROR_CHECK( err );
+    if (err != ESP_OK){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    // Read last connected wifi ssid
+    size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+    // obtain required memory space to store blob being read from NVS
+    err = nvs_get_str(my_handle, "mqtt_user", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    if (required_size == 0) {
+        ESP_LOGI(storage_tag, "No last connected cayenne mqtt  username saved!\n");
+    } else {
+        char* found_username = malloc(required_size);
+        err = nvs_get_str(my_handle, "mqtt_user", found_username, &required_size);
+        if (err != ESP_OK){
+            ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+            ESP_ERROR_CHECK( err );
+            return err;
+        } else{
+            //*ssid malloc= malloc(required_size);
+            strcpy(username, found_username);
+            ESP_LOGI(storage_tag, "Cayenne: found_username=%s", found_username); 
+
+            free(found_username);
+        }
+            
+    }
+
+    required_size = 0;
+    // Read last connected wifi password
+    err = nvs_get_str(my_handle, "mqtt_pass", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    if (required_size == 0) {
+        ESP_LOGI(storage_tag, "No last connected cayenne mqtt password saved!\n");
+    } else {
+        char* found_password = malloc(required_size);
+        err = nvs_get_str(my_handle, "mqtt_pass", found_password, &required_size);
+        if (err != ESP_OK){
+            ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+            ESP_ERROR_CHECK( err );
+            return err;
+        } else{
+            //*password = malloc(required_size);
+            strcpy(password, found_password);
+            ESP_LOGI(storage_tag, "Cayenne: found_password=%s", found_password)
+
+            free(found_password);
+        }
+            
+    }
+
+    required_size = 0;
+    // Read last connected wifi password
+    err = nvs_get_str(my_handle, "mqtt_id", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND){
+        ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+        ESP_ERROR_CHECK( err );
+        return err;
+    } 
+
+    if (required_size == 0) {
+        ESP_LOGI(storage_tag, "No last connected cayenne mqtt clientID saved!\n");
+    } else {
+        char* found_clientID = malloc(required_size);
+        err = nvs_get_str(my_handle, "mqtt_id", found_clientID, &required_size);
+        if (err != ESP_OK){
+            ESP_LOGW(storage_tag, "%s", nvs_event_to_string(err));
+            ESP_ERROR_CHECK( err );
+            return err;
+        } else{
+            //*password = malloc(required_size);
+            strcpy(clientID, found_clientID);
+            ESP_LOGI(storage_tag, "Cayenne: found_clientID=%s", found_clientID)
+
+            free(found_clientID);
+        }
+            
+    }
+    
+    // Close
+    nvs_close(my_handle);
+
     return ESP_OK;
 }
 

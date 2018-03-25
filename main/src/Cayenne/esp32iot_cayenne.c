@@ -18,8 +18,8 @@ int connectClient(void)
         ESP_LOGI(cayenne_tag, "NetworkConnect error: %d\n", error);
         return error;
     }
-
     if ((error = CayenneMQTTConnect(&mqttClient)) != MQTT_SUCCESS) {
+
         NetworkDisconnect(&network);
         ESP_LOGI(cayenne_tag, "CayenneMQTTConnect error: %d\n", error);
         return error;
@@ -35,9 +35,32 @@ int connectClient(void)
 
 void loop(void)
 {
+
+    ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
+    // Yield to allow MQTT message processing.
     CayenneMQTTYield(&mqttClient, 1000);
+    //TimerLeftMS(&Timer);
+    //delay(2000);
 
     // Publish some example data every second. This should be changed to send your actual data to Cayenne.
     CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5);
     CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000);
+
+}
+
+void cayenne_task(void *param){
+    //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
+
+    
+    while(1){
+        loop();
+
+
+        //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
+    }
+
+        //delay(2000);
+    
+
+    abort();
 }
