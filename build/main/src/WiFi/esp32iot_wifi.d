@@ -192,13 +192,6 @@ src/WiFi/esp32iot_wifi.o: \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/PlatformHeader.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/MQTTesp32.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
- /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_struct.h \
- /home/osk/esp/esp-idf/components/driver/include/driver/periph_ctrl.h \
- /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h \
- /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h \
- /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
- /home/osk/esp/esp-idf/components/driver/include/driver/timer.h \
- /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/dns.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
@@ -596,20 +589,6 @@ src/WiFi/esp32iot_wifi.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/MQTTesp32.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
-
-/home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_struct.h:
-
-/home/osk/esp/esp-idf/components/driver/include/driver/periph_ctrl.h:
-
-/home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h:
-
-/home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h:
-
-/home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h:
-
-/home/osk/esp/esp-idf/components/driver/include/driver/timer.h:
-
-/home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h:
 

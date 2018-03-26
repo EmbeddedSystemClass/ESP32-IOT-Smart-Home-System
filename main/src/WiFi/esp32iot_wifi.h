@@ -4,7 +4,9 @@
 #include "main.h"
 
 #include <esp_wifi.h>
+#include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
+#include "freertos/task.h"
 
 #include <esp_log.h>
 #include <esp_event.h>
@@ -68,6 +70,5 @@ esp_err_t wifi_ap_configure(void );
 esp_err_t wifi_sta_configure(const char ssid[], const char password[]);
 
 esp_err_t wifi_apsta_configure(const char ssid[], const char password[]);
-
 
 #endif

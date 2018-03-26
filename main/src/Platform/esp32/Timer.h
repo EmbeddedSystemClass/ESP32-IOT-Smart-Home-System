@@ -17,38 +17,17 @@
 #if !defined(__TIMER_h)
 #define __TIMER_h
 
+#include <sys/time.h>
 #include <stdio.h>
 
-#include "esp_types.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-#include "soc/timer_group_struct.h"
-#include "driver/periph_ctrl.h"
-#include "driver/timer.h"
-
-#define TIMER_DIVIDER         16  //  Hardware timer clock divider
-#define TIMER_SCALE           (TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
-
-#define CAYENNE_TIMER_IDX 	  TIMER_0
-#define CAYENNE_TIMER_GROUP   TIMER_GROUP_0
-
-//#include <sys/time.h>
  /**
  * Countdown timer struct.
  */
-static timer_idx_t timers_counter = 0;
-
 typedef struct Timer
 {
-	uint64_t timeout;
-	uint64_t counter_value; /**< Countdown end time. */
-	timer_idx_t idx;
-	//struct timeval end_time; /**< Countdown end time. */
+	struct timeval end_time; /**< Countdown end time. */
 } Timer;
 
-
-														
 /**
 * Initialize countdown timer.
 * @param[in] timer Pointer to Timer struct

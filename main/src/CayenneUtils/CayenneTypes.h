@@ -26,6 +26,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 #define TYPE_RELATIVE_HUMIDITY "rel_hum" // Relative Humidity
 #define TYPE_TEMPERATURE "temp" // Temperature
 #define TYPE_VOLTAGE "voltage" // Voltage
+#define TYPE_STATUS "digital" // Voltage
+
 
 #define MAX_TYPE_LENGTH 7
 

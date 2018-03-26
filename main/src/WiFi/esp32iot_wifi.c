@@ -103,6 +103,43 @@ esp_err_t wifi_scan_get(void ) {
 	return ESP_OK;
 }
 
+
+// static void cayenne_task1(void *pvParameters){
+
+// 	while(1){
+// 		//ESP_LOGI(wifi_tag, "Pozdro 600 na rejonie\n");
+// 		loop();
+// 		//vTaskDelay(5000 / portTICK_RATE_MS);
+// 	}
+
+// }
+static void cayenne_task_handler(void *param){
+    
+    while(1){
+        cayenne_task();
+    }
+
+
+
+
+
+/*    Timer timer1;
+    Timer timer;
+
+    TimerInit(&timer1);
+    TimerCountdownMS(&timer1, 5000);
+
+    TimerInit(&timer);
+    TimerCountdownMS(&timer, 10000);
+
+    while(1){
+        ESP_LOGI(cayenne_tag, "TimerX left: timer: %d | timer1: %d\n", TimerLeftMS(&timer), TimerLeftMS(&timer1));
+        if(TimerIsExpired(&timer) && TimerIsExpired(&timer1)){
+            ESP_LOGI(cayenne_tag, "Timer has expired. Another timer 10s.\n");
+        }
+    }*/
+}
+
 esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 	static esp_err_t err;
 
@@ -171,7 +208,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 			// 		}
 		 //    	}else{
 
-		 //    	}
+		 //    	}cayenne_task
 			// }
             break;
         case SYSTEM_EVENT_STA_DISCONNECTED:
@@ -238,20 +275,36 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 							delay(2000);
 							ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
 						}
-						xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
-					}else{
-						xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
 						//loop();
-						/*err = bluetooth_initialize();
-				        if(err != ESP_OK){
-				          ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
-				          ESP_ERROR_CHECK( err );
-				        }else{
+						//xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
+						//xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
+						//cayenne_event_group = xEventGroupCreate();
+    					//ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
+    					ESP_LOGI(wifi_tag, "A");
+    					xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+					}else{
+						ESP_LOGI(wifi_tag, "B");
 
-				        }*/
+						err = bluetooth_initialize();
+				        if(err != ESP_OK){
+				          ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
+				          ESP_ERROR_CHECK( err );
+				        }
+
+						while(1){
+							cayenne_task();
+						}
+						
+    					//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+
+    					//ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
 					}
 				}else{
-					xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
+					ESP_LOGI(wifi_tag, "C");
+					//cayenne_event_group = xEventGroupCreate();
+    				xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    				
+					//xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
 				}
 
 					// while(connectClient() != CAYENNE_SUCCESS){
