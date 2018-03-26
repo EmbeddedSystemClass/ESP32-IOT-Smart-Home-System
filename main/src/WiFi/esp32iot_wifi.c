@@ -192,6 +192,14 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
             	connection_failure_counter = 0;
             }*/
+
+            esp_err_t err = wifi_ap_configure();
+			if(err != ESP_OK){
+				ESP_LOGW(wifi_tag, "%s", wifi_err_to_string(err));
+				ESP_ERROR_CHECK( err );
+			}else{
+				ESP_ERROR_CHECK(esp_wifi_start());
+			}
             
             break;
         case SYSTEM_EVENT_STA_AUTHMODE_CHANGE:
@@ -220,10 +228,17 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
 		    		//delay(5000);
 					// Connect to Cayenne.
+					if(!CayenneMQTTConnected(&mqttClient)){
 					err = connectClient();
 					if(err != CAYENNE_SUCCESS){
 						ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
 						//ESP_ERROR_CHECK( err );
+
+						while(connectClient() != CAYENNE_SUCCESS){
+							delay(2000);
+							ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
+						}
+						xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
 					}else{
 						xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
 						//loop();
@@ -235,11 +250,14 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 
 				        }*/
 					}
+				}else{
+					xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
+				}
 
-/*					while(connectClient() != CAYENNE_SUCCESS){
-						ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
-					}
-					xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", stack_size, NULL, 5, NULL, 1);*/
+					// while(connectClient() != CAYENNE_SUCCESS){
+					// 	ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
+					// }
+					// xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", stack_size, NULL, 5, NULL, 1);
 		    	}else{
 
 		    	}

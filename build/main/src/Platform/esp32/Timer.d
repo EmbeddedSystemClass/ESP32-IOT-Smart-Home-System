@@ -86,8 +86,7 @@ src/Platform/esp32/Timer.o: \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h \
  /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/timer.h \
- /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h \
- /home/osk/esp/esp-idf/components/newlib/include/sys/time.h
+ /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
 
@@ -262,6 +261,4 @@ src/Platform/esp32/Timer.o: \
 /home/osk/esp/esp-idf/components/driver/include/driver/timer.h:
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h:
-
-/home/osk/esp/esp-idf/components/newlib/include/sys/time.h:
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.c:

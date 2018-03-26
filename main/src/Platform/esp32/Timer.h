@@ -33,26 +33,22 @@
 #define CAYENNE_TIMER_IDX 	  TIMER_0
 #define CAYENNE_TIMER_GROUP   TIMER_GROUP_0
 
-#include <sys/time.h>
+//#include <sys/time.h>
  /**
  * Countdown timer struct.
  */
+static timer_idx_t timers_counter = 0;
+
 typedef struct Timer
 {
-	unsigned int counter_value; /**< Countdown end time. */
-	struct timeval end_time; /**< Countdown end time. */
+	uint64_t timeout;
+	uint64_t counter_value; /**< Countdown end time. */
+	timer_idx_t idx;
+	//struct timeval end_time; /**< Countdown end time. */
 } Timer;
 
-xQueueHandle timer_queue;
 
-
-
-/*
- * A simple helper function to print the raw timer counter value
- * and the counter value converted to seconds
- */
-void print_timer_counter();
-
+														
 /**
 * Initialize countdown timer.
 * @param[in] timer Pointer to Timer struct

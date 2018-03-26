@@ -96,7 +96,6 @@ src/CayenneMQTTClient/CayenneMQTTClient.o: \
  /home/osk/esp/esp-idf/components/esp32/include/esp_dport_access.h \
  /home/osk/esp/esp-idf/components/driver/include/driver/timer.h \
  /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h \
- /home/osk/esp/esp-idf/components/newlib/include/sys/time.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h \
  /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/opt.h \
@@ -105,6 +104,7 @@ src/CayenneMQTTClient/CayenneMQTTClient.o: \
  /home/osk/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/osk/esp/esp-idf/components/newlib/include/unistd.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/unistd.h \
+ /home/osk/esp/esp-idf/components/newlib/include/sys/time.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/fcntl.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/stat.h \
@@ -330,8 +330,6 @@ src/CayenneMQTTClient/CayenneMQTTClient.o: \
 
 /home/osk/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h:
 
-/home/osk/esp/esp-idf/components/newlib/include/sys/time.h:
-
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Network.h:
 
 /home/osk/esp/esp-idf/components/lwip/include/lwip/lwip/err.h:
@@ -347,6 +345,8 @@ src/CayenneMQTTClient/CayenneMQTTClient.o: \
 /home/osk/esp/esp-idf/components/newlib/include/unistd.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/unistd.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/sys/time.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/sys/fcntl.h:
 

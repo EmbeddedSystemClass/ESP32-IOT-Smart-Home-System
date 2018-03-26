@@ -33,35 +33,55 @@ int connectClient(void)
     return CAYENNE_SUCCESS;
 }
 
-Timer timer;
 
 void loop(void)
 {
 
     //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
-    print_timer_counter(&timer);
+    //print_timer_counter(&timer);
     // Yield to allow MQTT message processing.
-/*    CayenneMQTTYield(&mqttClient, 1000);
+    //CayenneMQTTYield(&mqttClient, 1000);
     //TimerLeftMS(&Timer);
     //delay(2000);
 
     // Publish some example data every second. This should be changed to send your actual data to Cayenne.
-    CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5);
-    CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000);*/
+    //CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5);
+    //CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000);
 
 
 
 }
 
+
 void cayenne_task(void *param){
     //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
 
     
-    TimerInit(&timer);
-    TimerCountdownMS(&timer, (double)5000);
-    while(1){
-        loop();
+    // TimerInit(&timer);
+    // TimerCountdownMS(&timer, (double)10000);
 
+/*    TimerInit(&timer);
+    TimerCountdown(&timer, 10);*/
+
+    Timer timer1;
+    timer1.idx = TIMER_1;
+    Timer timer;
+    timer.idx = TIMER_0;
+
+    TimerInit(&timer1);
+    TimerCountdownMS(&timer1, 5000);
+
+    TimerInit(&timer);
+    TimerCountdownMS(&timer, 10000);
+
+    while(1){
+        //loop();
+
+        ESP_LOGI(cayenne_tag, "TimerX left: timer: %d | timer1: %d\n", TimerLeftMS(&timer), TimerLeftMS(&timer1));
+        if(TimerIsExpired(&timer) && TimerIsExpired(&timer1)){
+            ESP_LOGI(cayenne_tag, "Timer has expired. Another timer 10s.\n");
+            break;
+        }
 
         //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
     }
