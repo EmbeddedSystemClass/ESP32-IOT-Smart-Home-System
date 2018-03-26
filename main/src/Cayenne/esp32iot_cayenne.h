@@ -8,6 +8,7 @@
 #include "CayenneMQTTClient.h"
 
 #include "esp32iot_bluetooth.h"
+#include "Timer.h"
 
 static char cayenne_tag []="esp32iot-cayenne";
 

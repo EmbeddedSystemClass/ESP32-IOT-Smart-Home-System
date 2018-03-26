@@ -17,16 +17,41 @@
 #if !defined(__TIMER_h)
 #define __TIMER_h
 
-#include <sys/time.h>
 #include <stdio.h>
 
+#include "esp_types.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "soc/timer_group_struct.h"
+#include "driver/periph_ctrl.h"
+#include "driver/timer.h"
+
+#define TIMER_DIVIDER         16  //  Hardware timer clock divider
+#define TIMER_SCALE           (TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
+
+#define CAYENNE_TIMER_IDX 	  TIMER_0
+#define CAYENNE_TIMER_GROUP   TIMER_GROUP_0
+
+#include <sys/time.h>
  /**
  * Countdown timer struct.
  */
 typedef struct Timer
 {
+	unsigned int counter_value; /**< Countdown end time. */
 	struct timeval end_time; /**< Countdown end time. */
 } Timer;
+
+xQueueHandle timer_queue;
+
+
+
+/*
+ * A simple helper function to print the raw timer counter value
+ * and the counter value converted to seconds
+ */
+void print_timer_counter();
 
 /**
 * Initialize countdown timer.

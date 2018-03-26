@@ -33,18 +33,23 @@ int connectClient(void)
     return CAYENNE_SUCCESS;
 }
 
+Timer timer;
+
 void loop(void)
 {
 
-    ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
+    //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
+    print_timer_counter(&timer);
     // Yield to allow MQTT message processing.
-    CayenneMQTTYield(&mqttClient, 1000);
+/*    CayenneMQTTYield(&mqttClient, 1000);
     //TimerLeftMS(&Timer);
     //delay(2000);
 
     // Publish some example data every second. This should be changed to send your actual data to Cayenne.
     CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5);
-    CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000);
+    CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000);*/
+
+
 
 }
 
@@ -52,6 +57,8 @@ void cayenne_task(void *param){
     //ESP_LOGI(cayenne_tag, "Pozdro 600 na rejonie\n");
 
     
+    TimerInit(&timer);
+    TimerCountdownMS(&timer, (double)5000);
     while(1){
         loop();
 
