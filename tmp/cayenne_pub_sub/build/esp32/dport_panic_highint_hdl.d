@@ -1,0 +1,60 @@
+dport_panic_highint_hdl.o: \
+ /home/osk/esp/esp-idf/components/esp32/./dport_panic_highint_hdl.S \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/coreasm.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/hal.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/xtensa-versions.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core-matmap.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/tie.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/tie-asm.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/specreg.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/corebits.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/config/system.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/simcall.h \
+ /home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h \
+ /home/osk/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h \
+ /home/osk/esp/esp-idf/components/esp32/include/esp_panic.h \
+ /home/osk/esp/esp32-iot_temp/esp-idf/examples/protocols/http_request/build/include/sdkconfig.h \
+ /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
+ /home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h \
+ /home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/coreasm.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/hal.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/xtensa-versions.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/core-matmap.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/tie.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/tie-asm.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/specreg.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/corebits.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/config/system.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/simcall.h:
+
+/home/osk/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h:
+
+/home/osk/esp/esp-idf/components/esp32/include/esp_panic.h:
+
+/home/osk/esp/esp32-iot_temp/esp-idf/examples/protocols/http_request/build/include/sdkconfig.h:
+
+/home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
+
+/home/osk/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h:
+
+/home/osk/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
+/home/osk/esp/esp-idf/components/esp32/./dport_panic_highint_hdl.S:

@@ -128,26 +128,48 @@ static void http_server_netconn_serve(struct netconn *conn){
         }
       }else if(strstr(recv_buf, "/mqtt-setup")){
 
-        parse_http_request2(recv_buf, "username", &username);
-        ESP_LOGI(http_server_tag, "\nusername=%s|", username);
-        parse_http_request2(recv_buf, "password", &password);
-        ESP_LOGI(http_server_tag, "\npassword=%s|", password);
-        parse_http_request2(recv_buf, "clientID", &clientID);
-        ESP_LOGI(http_server_tag, "\nclientID=%s|", clientID);
+        parse_http_request2(recv_buf, "username", &cayenne_mqtt_username);
+        ESP_LOGI(http_server_tag, "\nusername=%s|", cayenne_mqtt_username);
+        parse_http_request2(recv_buf, "password", &cayenne_mqtt_password);
+        ESP_LOGI(http_server_tag, "\npassword=%s|", cayenne_mqtt_password);
+        parse_http_request2(recv_buf, "clientID", &cayenne_mqtt_clientID);
+        ESP_LOGI(http_server_tag, "\nclientID=%s|", cayenne_mqtt_clientID);
 
-        if(strcmp(username, "") && strcmp(password, "") && strcmp(clientID, "")){
-          CayenneInit(username, password, clientID);
+        if(strcmp(cayenne_mqtt_username, "") && strcmp(cayenne_mqtt_password, "") && strcmp(cayenne_mqtt_clientID, "")){
+          
 
-          // Connect to Cayenne.
-          err = connectClient();
-          if(err != CAYENNE_SUCCESS){
-            ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
-            ESP_ERROR_CHECK( err );
-            //return;
+          if(!CayenneMQTTConnected(&mqttClient)){
+            CayenneInit(cayenne_mqtt_username, cayenne_mqtt_password, cayenne_mqtt_clientID);
+            // // Connect to Cayenne.
+            err = connectClient();
+            if(err != CAYENNE_SUCCESS){
+              ESP_LOGW(wifi_tag, "%s", "Connection failed, exiting\n");
+              //return;
+            }else{
+              save_last_connected_mqtt(cayenne_mqtt_username, cayenne_mqtt_password, cayenne_mqtt_clientID);
+            }
           }else{
-            save_last_connected_mqtt(username, password, clientID);
+            ESP_LOGI(wifi_tag, "%s", "CayenneMQTTConnected, disconnecting.\n");
+            CayenneInit(cayenne_mqtt_username, cayenne_mqtt_password, cayenne_mqtt_clientID);
+            save_last_connected_mqtt(cayenne_mqtt_username, cayenne_mqtt_password, cayenne_mqtt_clientID);
+
+            delay(1000);
+            printf("Restarting now.\n");
+    //        fflush(stdout);
+            //delay(5000);
+            esp_restart();
+
+/*            err = CayenneMQTTDisconnect(&mqttClient);
+            if(err != CAYENNE_SUCCESS){
+              ESP_LOGE(wifi_tag, "%s", "CayenneMQTTDisconnect, failed to diconnect.\n");
+              return;
+            }else{
+              
+            }*/
           }
 
+            
+            
           netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
           err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
           if (err != ESP_OK) {

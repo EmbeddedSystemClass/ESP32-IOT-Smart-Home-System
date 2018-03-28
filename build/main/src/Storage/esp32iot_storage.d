@@ -152,6 +152,7 @@ src/Storage/esp32iot_storage.o: \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDefines.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneDataArray.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h \
+ /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Bluetooth/esp32iot_bluetooth.h \
  /home/osk/esp/esp-idf/components/newlib/include/string.h \
  /home/osk/esp/esp-idf/components/newlib/include/sys/string.h \
@@ -187,7 +188,6 @@ src/Storage/esp32iot_storage.o: \
  /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_bt_main.h \
  /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h \
  /home/osk/esp/esp-idf/components/newlib/include/math.h \
- /home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h \
  /home/osk/esp/esp-idf/components/openssl/include/openssl/ssl.h \
  /home/osk/esp/esp-idf/components/openssl/include/internal/ssl_x509.h \
@@ -510,6 +510,8 @@ src/Storage/esp32iot_storage.o: \
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../CayenneUtils/CayenneUtils.h:
 
+/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
+
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Bluetooth/esp32iot_bluetooth.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/string.h:
@@ -579,8 +581,6 @@ src/Storage/esp32iot_storage.o: \
 /home/osk/esp/esp32-iot-smart-home-system/components/bt/bluedroid/api/include/esp_gatt_common_api.h:
 
 /home/osk/esp/esp-idf/components/newlib/include/math.h:
-
-/home/osk/esp/esp32-iot-smart-home-system/main/src/Platform/esp32/Timer.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/esp32iot_http_server.h:
 

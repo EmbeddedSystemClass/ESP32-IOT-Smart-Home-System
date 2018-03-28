@@ -30,9 +30,9 @@
 
 #include "esp32iot_cayenne.h"
 
-static char* username = "";
-static char* password = "";
-static char* clientID = "";
+static char* cayenne_mqtt_username = "";
+static char* cayenne_mqtt_password = "";
+static char* cayenne_mqtt_clientID = "";
 
 #define HTTP_SERVER_ESP32IOT_TASK_NAME        "ESP32IOT Manager"
 
