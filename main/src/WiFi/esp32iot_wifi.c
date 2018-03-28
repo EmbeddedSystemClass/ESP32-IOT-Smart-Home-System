@@ -281,7 +281,11 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 						//cayenne_event_group = xEventGroupCreate();
     					//ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
     					ESP_LOGI(wifi_tag, "A");
-    					xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    					//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    					while(1){
+							cayenne_task();
+						}
+						
 					}else{
 						ESP_LOGI(wifi_tag, "B");
 
@@ -292,9 +296,6 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 				        }
 
 						while(1){
-							//pool_Update();
-							// CayenneMQTTYield(&mqttClient, 1000);
-							//delay(1000);
 							cayenne_task();
 						}
 						
@@ -305,7 +306,11 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 				}else{
 					ESP_LOGI(wifi_tag, "C");
 					//cayenne_event_group = xEventGroupCreate();
-    				xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    				//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    				while(1){
+						cayenne_task();
+					}
+						
     				
 					//xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
 				}
