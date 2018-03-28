@@ -28,6 +28,8 @@
 
 #define PROFILE_BA5C_APP_ID 0
 
+#define BA5C_SERVICE_SOFTWARE_ERROR 9
+
 #define INVALID_HANDLE 0
 
 static char bluetooth_tag []="esp32iot-bluetooth";
@@ -102,22 +104,23 @@ typedef struct {
     uint16_t Battery_service_end_handle;
     uint16_t Battery_data_char_handle;
     bool Battery_get_service;
+
 } BA5C_handle_data_t;
 
 typedef struct {
     uint8_t HTU21D_recived_notification_counter;
     int16_t HTU21D_temperature;
     int16_t HTU21D_humidity;
-    uint8_t HTU21D_status;
+    uint8_t HTU21D_status; //9 - software error value, 1 - hardware error value
 
     uint8_t MS5637_recived_notification_counter;
     uint32_t MS5637_D1, MS5637_D2;
     int32_t MS5637_temperature;
     int32_t MS5637_pressure;
-    uint8_t MS5637_status;
+    uint8_t MS5637_status; //9 - software error value, 1 - hardware error value
 
     uint8_t Battery_level;
-    uint8_t Battery_status;
+    uint8_t Battery_status; //9 - software error value, 1 - hardware error value
 } BA5C_data_t;
 
 BA5C_data_t BA5C_data;

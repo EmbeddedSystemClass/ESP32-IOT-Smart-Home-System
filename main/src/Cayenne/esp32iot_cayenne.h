@@ -12,10 +12,20 @@
 
 #include "freertos/event_groups.h"
 
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <stdlib.h>
+
 static char cayenne_tag []="esp32iot-cayenne";
 
 Network network;
 CayenneMQTTClient mqttClient;
+static bool finished = false;
+
+//int i = 0;
+Timer timer;
+    
 
 static EventGroupHandle_t cayenne_event_group;
 
@@ -24,6 +34,20 @@ void CayenneInit(const char* username, const char* password, const char* clientI
 // Connect to the Cayenne server.
 int connectClient(void);
 
+/**
+* Print the message info.
+* @param[in] message The message received from the Cayenne server.
+*/
+void outputMessage(CayenneMessageData* message);
+
+/**
+* Handle messages received from the Cayenne server.
+* @param[in] message The message received from the Cayenne server.
+*/
+void messageArrived(CayenneMessageData* message);
+
 void cayenne_task(void);
+
+void intHandler(int signum);
 
 #endif

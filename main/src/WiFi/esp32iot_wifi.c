@@ -292,6 +292,9 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 				        }
 
 						while(1){
+							//pool_Update();
+							// CayenneMQTTYield(&mqttClient, 1000);
+							//delay(1000);
 							cayenne_task();
 						}
 						

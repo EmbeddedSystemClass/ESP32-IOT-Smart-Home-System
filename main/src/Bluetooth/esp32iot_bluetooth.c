@@ -86,6 +86,9 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
      so must compare the mac address to check which device is connected, so it is a good choice to use ESP_GATTC_OPEN_EVT. */
     case ESP_GATTC_CONNECT_EVT:
         ESP_LOGI(GATTC_TAG, "BA5C ESP_GATTC_CONNECT_EVT");
+        BA5C_data.HTU21D_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.MS5637_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.Battery_status = BA5C_SERVICE_SOFTWARE_ERROR;
 
         break;
     case ESP_GATTC_OPEN_EVT:
@@ -96,6 +99,10 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             ESP_LOGE(GATTC_TAG, "connect device failed, status %d", p_data->open.status);
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_handle_data.conn_device = false;
             //start_scan();
+            BA5C_data.HTU21D_status = BA5C_SERVICE_SOFTWARE_ERROR;
+            BA5C_data.MS5637_status = BA5C_SERVICE_SOFTWARE_ERROR;
+            BA5C_data.Battery_status = BA5C_SERVICE_SOFTWARE_ERROR;
+
             break;
         }
         memcpy(gl_profile_tab[PROFILE_BA5C_APP_ID].remote_bda, p_data->open.remote_bda, 6);
@@ -116,6 +123,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             ESP_LOGE(GATTC_TAG,"Config mtu failed");
         }
         ESP_LOGI(GATTC_TAG, "status %d, MTU %d, conn_id %d", param->cfg_mtu.status, param->cfg_mtu.mtu, param->cfg_mtu.conn_id);
+        
+
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_uuid.HTU21D_service_uuid);
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_uuid.MS5637_service_uuid);
         esp_ble_gattc_search_service(gattc_if, param->cfg_mtu.conn_id, &BA5C_uuid.Battery_service_uuid);
@@ -696,7 +705,18 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             ESP_LOGE(GATTC_TAG, "write descr failed, error status = %x", p_data->write.status);
             break;
         }
-        ESP_LOGI(GATTC_TAG, "write descr success");
+        ESP_LOGI(GATTC_TAG, "write descr success status: %d", p_data->write.status);
+        //BA5C_data.registered_notify_services++;
+/*        if(p_data->write.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_handle_data.HTU21D_data_char_handle){
+            ESP_LOGI(GATTC_TAG, "HTU21D write descr success");
+
+        }else if(p_data->write.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_handle_data.MS5637_data_char_handle){
+            ESP_LOGI(GATTC_TAG, "MS5637 write descr success");
+
+        }else if(p_data->write.handle == gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_handle_data.Battery_data_char_handle){
+            ESP_LOGI(GATTC_TAG, "Battery write descr success");
+
+        }*/
         break;
     case ESP_GATTC_WRITE_CHAR_EVT:
         ESP_LOGI(GATTC_TAG, "BA5C ESP_GATTC_WRITE_CHAR_EVT");
@@ -731,6 +751,18 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
             gl_profile_tab[PROFILE_BA5C_APP_ID].BA5C_handle_data.Battery_get_service = false;
             
         }
+
+        BA5C_data.HTU21D_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.MS5637_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.Battery_status = BA5C_SERVICE_SOFTWARE_ERROR;
+
+        break;
+    case ESP_GATTC_CLOSE_EVT:
+        ESP_LOGI(GATTC_TAG, "BA5C ESP_GATTC_CLOSE_EVT");
+        BA5C_data.HTU21D_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.MS5637_status = BA5C_SERVICE_SOFTWARE_ERROR;
+        BA5C_data.Battery_status = BA5C_SERVICE_SOFTWARE_ERROR;
+
         break;
     default:
         ESP_LOGI(GATTC_TAG, "BA5C unhandled event: %d", event);
@@ -741,6 +773,8 @@ static void gattc_profile_BA5C_event_handler(esp_gattc_cb_event_t event, esp_gat
 
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)
 {
+    static char* LOCAL_TAG = "esp_gap_cb";
+
     uint8_t *adv_name = NULL;
     uint8_t adv_name_len = 0;
     switch (event) {
@@ -826,6 +860,8 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
         case ESP_GAP_SEARCH_INQ_CMPL_EVT:
             break;
         default:
+            ESP_LOGI(LOCAL_TAG, " unhandled event: %d", scan_result->scan_rst.search_evt);
+
             break;
         }
         break;
@@ -849,12 +885,15 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
         break;
 
     default:
+        ESP_LOGI(LOCAL_TAG, " unhandled event: %d", event);
+
         break;
     }
 }
 
 static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp_ble_gattc_cb_param_t *param)
 {
+    static char* LOCAL_TAG = "esp_gattc_cb";
     //ESP_LOGI(GATTC_TAG, "EVT %d, gattc if %d, app_id %d", event, gattc_if, param->reg.app_id);
 
     /* If event is register event, store the gattc_if for each profile */
@@ -867,6 +906,8 @@ static void esp_gattc_cb(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if, esp
                     param->reg.status);
             return;
         }
+    }else{
+        ESP_LOGI(LOCAL_TAG, " unhandled event: %d", event);
     }
 
     /* If the gattc_if equal to profile A, call profile A cb handler,
