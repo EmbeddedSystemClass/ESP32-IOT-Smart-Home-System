@@ -244,7 +244,7 @@ int cycle(MQTTClient* c, Timer* timer)
 {
     // read the socket, see what work is due
     unsigned short packet_type = readPacket(c, timer);
-    
+    printf("%s, message: %d, packet_type: %d\n", "---!:)DEBUG(:!---   :", 3, packet_type);
     int len = 0,
         rc = MQTT_SUCCESS;
 
@@ -308,10 +308,13 @@ int cycle(MQTTClient* c, Timer* timer)
             c->ping_outstanding = 0;
             break;
     }
+    printf("%s, message: %d, packet_type: %d\n", "---!:)DEBUG(:!---   :", 4, packet_type);
     keepalive(c);
 exit:
     if (rc == MQTT_SUCCESS)
         rc = packet_type;
+
+    printf("%s, message: %d, rc: %d\n", "---!:)DEBUG(:!---   :", 5, rc);
     return rc;
 }
 
@@ -326,8 +329,10 @@ int MQTTYield(MQTTClient* c, int timeout_ms)
 
 	do
     {
+        printf("%s, message: %d\n", "---!:)DEBUG(:!---   :", 1);
         if (cycle(c, &timer) == MQTT_FAILURE)
         {
+            printf("%s, message: %d\n", "---!:)DEBUG(:!---   :", 2);
             rc = MQTT_FAILURE;
             break;
         }

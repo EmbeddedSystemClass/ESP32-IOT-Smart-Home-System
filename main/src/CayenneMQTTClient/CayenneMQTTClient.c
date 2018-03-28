@@ -414,5 +414,6 @@ int CayenneMQTTConnected(CayenneMQTTClient* client)
 */
 int CayenneMQTTYield(CayenneMQTTClient* client, int time)
 {
+	printf("%s, message: %d\n", "---!:)DEBUG(:!---   :", 0);
 	return MQTTYield(&client->mqttClient, time);
 }
