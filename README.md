@@ -1,6 +1,7 @@
 # Smart Home System README
 
 0. ToDo: 
+
     -          Dodanie mozliwosci wyboru sieci po SSID z listy dostępnych
 
     -          Przywrócenie ustawien fabrycznych przyciskiem
@@ -10,23 +11,26 @@
     -          Wyświetl haslo podczas wpisywania
 
 1.  Manual:
+
         a)  Configure:
 
         b)  
                     
-2. How to develop WebPage:
+2.  How to develop WebPage:
 
-    1.  Code pageX.html content file like for regularar website except all script and styles must be implemented inline in pageX.html file. 
+        1.  Code pageX.html content file like for regularar website except all script and styles must be implemented inline in pageX.html file. 
 
-    2.  Create pageX_html.h file according to template in project_dir/tmp/webpage directory.
+        2.  Create pageX_html.h file according to template in project_dir/tmp/webpage directory.
 
-    3.  Convert pageX.html to c/c++ string format. 
-            For example on webpage:
-                1.  
-                    a)  Go toOnline C++ string Escape Tool | Online CPP Escape Tool | Online C Escape Tool: http://easyonlineconverter.com/converters/cpp-string-escape.html
-                    b)
-                2. 
-    3.  Copy converted content to const static unsigned char pageX_html[] variable in pageX_html.h file.
+        3.  Convert pageX.html to c/c++ string format. 
+                For example on webpage:
+                    1.  
+                        a)  Go toOnline C++ string Escape Tool | Online CPP Escape Tool | Online C Escape Tool: http://easyonlineconverter.com/converters/cpp-string-escape.html
+                        b)
+                    2. 
+        3.  Copy converted content to const static unsigned char pageX_html[] variable in pageX_html.h file.
+
+        4.  
 
 3.  Cayenne MQTT
         I.  Used channels description:
