@@ -51,6 +51,22 @@ void outputMessage(CayenneMessageData* message)
         printf(" id=%s", message->id);
     }
     printf("\n");
+
+    if((message->channel == (unsigned int)BA5C_RESTART_BUTTON_CHANNEL) && !strcmp(message->values[0].value, BUTTON_ON)){
+        ESP_LOGW(LOCAL_TAG, "Cayenne BA5C restart button pressed. Restarting now");
+
+        // Disconnect from Cayenne.
+        if(CayenneMQTTConnected(&mqttClient))
+            CayenneMQTTDisconnect(&mqttClient);
+
+        // Disconnect network client.
+        if(NetworkConnected(&network))
+            NetworkDisconnect(&network);
+
+        delay(2000);
+
+        esp_restart();
+    }
 }
 
 
@@ -151,20 +167,31 @@ void cayenne_task(void)
 {
     static char* LOCAL_TAG = "cayenne_task";
     
+    int error = 0;
     Timer timer;
     TimerInit(&timer);
     //Start the countdown timer for publishing data every 5 seconds. Change the timeout parameter to publish at a different interval.
     TimerCountdown(&timer, 5);
+
+    error = (int)bluetooth_initialize();
+    if(error != ESP_OK){
+      ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(error));
+      ESP_ERROR_CHECK( (esp_err_t)error );
+    }
+
+    if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 8, NULL, NULL, 0)) != CAYENNE_SUCCESS) {
+        ESP_LOGE(LOCAL_TAG, "Publish BA5C reset button failed, error: %d\n", error);
+    }
+
     
     while(1){
         i++;
 
         // Yield to allow MQTT message processing.
-        int error = MQTTYield(&mqttClient, 1000);
+        error = MQTTYield(&mqttClient, 1000);
         if(error != MQTT_SUCCESS){
-            ESP_LOGE(LOCAL_TAG, "CayenneMQTTYield error: %d", error);
+            //ESP_LOGE(LOCAL_TAG, "CayenneMQTTYield error: %d", error);
         }
-
 
         // Check that we are still connected, if not, reconnect.
         if (!NetworkConnected(&network) || !CayenneMQTTConnected(&mqttClient)) {
@@ -179,26 +206,40 @@ void cayenne_task(void)
 
         // Publish some example data every few seconds. This should be changed to send your actual data to Cayenne.
         if (TimerIsExpired(&timer)) {
-            int error = 0;
-            if ((error = CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5 + i)) != CAYENNE_SUCCESS) {
-                printf("Publish temperature failed, error: %d\n", error);
+            error = 0;
+
+
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, BA5C_data.HTU21D_temperature)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.HTU21D_temperature failed, error: %d\n", error);
             }
-            if ((error = CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000 + i)) != CAYENNE_SUCCESS) {
-                printf("Publish luminosity failed, error: %d\n", error);
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_RELATIVE_HUMIDITY, UNIT_PERCENT, BA5C_data.HTU21D_humidity)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.HTU21D_humidity failed, error: %d\n", error);
             }
-            if ((error = CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 2, TYPE_BAROMETRIC_PRESSURE, UNIT_HECTOPASCAL, 800 + i)) != CAYENNE_SUCCESS) {
-                printf("Publish barometric pressure failed, error: %d\n", error);
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 2, NULL, UNIT_UNDEFINED, BA5C_data.HTU21D_status)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.HTU21D_status failed, error: %d\n", error);
             }
+
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 3, TYPE_TEMPERATURE, UNIT_CELSIUS, BA5C_data.MS5637_temperature)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.MS5637_temperature failed, error: %d\n", error);
+            }
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 4, TYPE_BAROMETRIC_PRESSURE, UNIT_HECTOPASCAL, BA5C_data.MS5637_pressure)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.MS5637_pressure failed, error: %d\n", error);
+            }
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 5, NULL, UNIT_UNDEFINED, BA5C_data.MS5637_status)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.MS5637_status failed, error: %d\n", error);
+            }
+
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 6, TYPE_BATTERY, UNIT_PERCENT, BA5C_data.Battery_level)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.Battery_level failed, error: %d\n", error);
+            }
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 7, NULL, UNIT_UNDEFINED, BA5C_data.Battery_status)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish BA5C_data.Battery_status failed, error: %d\n", error);
+            }
+
+
             //Restart the countdown timer for publishing data every 5 seconds. Change the timeout parameter to publish at a different interval.
             TimerCountdown(&timer, 5);
         }
-
-        printf(".\n");
-
-        if(i >1000){
-            i=0;
-        }
-
     }
 
     // // Disconnect from Cayenne.

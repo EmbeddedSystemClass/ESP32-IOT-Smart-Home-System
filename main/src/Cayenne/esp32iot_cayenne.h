@@ -25,7 +25,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "esp32iot_bluetooth.h"
+
 #define delay(ms) (vTaskDelay(ms/portTICK_RATE_MS))
+
+
+#define BA5C_RESTART_BUTTON_CHANNEL 8
+
+#define BUTTON_ON "1"
+#define BUTTON_OFF "0"
 
 // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
 static char* username = "1b98ead0-06af-11e8-ba62-45381d39c6f0";
