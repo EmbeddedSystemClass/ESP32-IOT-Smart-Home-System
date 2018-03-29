@@ -265,7 +265,7 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 		    		CayenneInit(username, password, clientID);
 				    while(connectClient() != CAYENNE_SUCCESS){
 				        delay(2000);
-				        ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");   
+				        ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");   
 				    }
 				    xTaskCreate(&cayenne_task, "cayenne_task", 4096, NULL, 5, NULL);
 		    		

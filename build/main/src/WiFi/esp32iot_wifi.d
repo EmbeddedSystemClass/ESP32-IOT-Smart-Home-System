@@ -182,6 +182,8 @@ src/WiFi/esp32iot_wifi.o: \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/mqtt-setup/mqtt-setup_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
+ /home/osk/esp/esp-idf/components/newlib/include/signal.h \
+ /home/osk/esp/esp-idf/components/newlib/include/sys/signal.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/MQTTClient.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h \
@@ -569,6 +571,10 @@ src/WiFi/esp32iot_wifi.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/HttpServer/./web_root/notifications/notifications_html.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/signal.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/sys/signal.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h:
 

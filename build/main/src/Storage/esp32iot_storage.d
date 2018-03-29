@@ -128,6 +128,8 @@ src/Storage/esp32iot_storage.o: \
  /home/osk/esp/esp-idf/components/esp32/include/esp_event_loop.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Storage/esp32iot_storage.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h \
+ /home/osk/esp/esp-idf/components/newlib/include/signal.h \
+ /home/osk/esp/esp-idf/components/newlib/include/sys/signal.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/MQTTClient.h \
  /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/../MQTTCommon/MQTTPacket.h \
@@ -461,6 +463,10 @@ src/Storage/esp32iot_storage.o: \
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Storage/esp32iot_storage.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/Cayenne/esp32iot_cayenne.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/signal.h:
+
+/home/osk/esp/esp-idf/components/newlib/include/sys/signal.h:
 
 /home/osk/esp/esp32-iot-smart-home-system/main/src/CayenneMQTTClient/CayenneMQTTClient.h:
 
