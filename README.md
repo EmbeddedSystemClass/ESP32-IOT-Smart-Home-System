@@ -33,11 +33,29 @@
         4.  
 
 3.  Cayenne MQTT:
-
+        
         I.  Used channels description:
 
+            0.  S/M/H gate:
+
+                Channel 9:
+                    a) data:
+                        S/M/H gate IP info
+                    b)
+
+                Channel 8:
+                    a) data:
+                        S/M/H gate restart
+                    b)  
+
+                Channel X:
+                    a)  data:
+
+                    b) 
+
+
             1.  BA5C:
-            
+
                 Channel 0:
                     a) data:
                         BA5C HTU21D temperature
@@ -78,23 +96,8 @@
                         BA5C Battery status
                     b)  
 
-                Channel 8:
-                    a) data:
-                        S/M/H gate restart
-                    b)  
-
-                Channel 9:
-                    a) data:
-                        S/M/H gate IP info
-                    b)  
-
-                Channel 10:
-                    a)  data:
-
-                    b) 
 
         II. 
 
-                     
 
 4.                       
