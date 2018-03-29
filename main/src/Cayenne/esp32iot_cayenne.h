@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "esp32iot_wifi.h"
 #include "esp32iot_bluetooth.h"
 
 #define delay(ms) (vTaskDelay(ms/portTICK_RATE_MS))
@@ -36,9 +37,9 @@
 #define BUTTON_OFF "0"
 
 // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
-static char* username = "1b98ead0-06af-11e8-ba62-45381d39c6f0";
-static char* password = "6d70c659b7caaf0fa1bf03c3c79a846b0c5ae33b";
-static char* clientID = "6ddbde60-3292-11e8-82f6-390cc0260849";
+static char* username = "";
+static char* password = "";
+static char* clientID = "";
 
 Network network;
 CayenneMQTTClient mqttClient;

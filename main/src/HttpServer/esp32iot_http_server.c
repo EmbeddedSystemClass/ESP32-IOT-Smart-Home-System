@@ -51,21 +51,21 @@ static void http_server_netconn_serve(struct netconn *conn){
           ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
           ESP_ERROR_CHECK( err );
         }
-      }else if(strstr(recv_buf, "/index ")){
+      }else if(strstr(recv_buf, "/index")){
         netconn_write(conn, index_html_header, sizeof(index_html_header)-1, NETCONN_NOCOPY);
         err = netconn_write(conn, index_html, sizeof(index_html), NETCONN_NOCOPY);
         if (err != ESP_OK) {
           ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
           ESP_ERROR_CHECK( err );
         }
-      }else if(strstr(recv_buf, "/wifi-setup-menu ")){
+      }else if(strstr(recv_buf, "/wifi-setup-menu")){
         netconn_write(conn, wifi_setup_html_header, sizeof(wifi_setup_html_header)-1, NETCONN_NOCOPY);
         err = netconn_write(conn, wifi_setup_html, sizeof(wifi_setup_html), NETCONN_NOCOPY);
         if (err != ESP_OK) {
           ESP_LOGW(http_server_tag, "error: %s ", lwip_strerr(err));
           ESP_ERROR_CHECK( err );
         }
-      }else if(strstr(recv_buf, "/mqtt-setup-menu ")){
+      }else if(strstr(recv_buf, "/mqtt-setup-menu")){
         netconn_write(conn, mqtt_setup_html_header, sizeof(mqtt_setup_html_header)-1, NETCONN_NOCOPY);
         err = netconn_write(conn, mqtt_setup_html, sizeof(mqtt_setup_html), NETCONN_NOCOPY);
         if (err != ESP_OK) {
@@ -190,7 +190,7 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }
         }
-      }else if(strstr(recv_buf, "/erase-wifi-data ")){
+      }else if(strstr(recv_buf, "/erase-wifi-data")){
         err = erase_storage();
         if(err != ESP_OK){
           ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
@@ -203,7 +203,7 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }
         }
-      }else if(strstr(recv_buf, "/reset_restart_counter ")){
+      }else if(strstr(recv_buf, "/reset_restart_counter")){
         err = reset_restart_counter();
         if(err != ESP_OK){
           ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
@@ -216,7 +216,7 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }
         }
-      }else if(strstr(recv_buf, "/ble_test ")){
+      }else if(strstr(recv_buf, "/ble_test")){
         err = bluetooth_initialize();
         if(err != ESP_OK){
           ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
@@ -229,7 +229,7 @@ static void http_server_netconn_serve(struct netconn *conn){
             ESP_ERROR_CHECK( err );
           }
         }
-      }else if(strstr(recv_buf, "/restart ")){
+      }else if(strstr(recv_buf, "/restart")){
         netconn_write(conn, success_html_header, sizeof(success_html_header)-1, NETCONN_NOCOPY);
         err = netconn_write(conn, success_html, sizeof(success_html), NETCONN_NOCOPY);
         if (err != ESP_OK) {

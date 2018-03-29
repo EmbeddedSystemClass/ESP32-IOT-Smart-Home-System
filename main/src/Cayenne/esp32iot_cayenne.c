@@ -184,6 +184,8 @@ void cayenne_task(void)
     }
 
     
+
+    
     while(1){
         i++;
 
@@ -237,6 +239,10 @@ void cayenne_task(void)
             }
 
 
+            if ((CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 9, NULL, NULL, ip_address_info)) != CAYENNE_SUCCESS) {
+                ESP_LOGE(LOCAL_TAG, "Publish IP address info failed, error: %d\n", error);
+            }
+            
             //Restart the countdown timer for publishing data every 5 seconds. Change the timeout parameter to publish at a different interval.
             TimerCountdown(&timer, 5);
         }

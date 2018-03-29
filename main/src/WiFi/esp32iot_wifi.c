@@ -51,6 +51,17 @@ char *wifi_err_to_string(int ev) {
 	return unknown;
 }
 
+static void copy_string(char *target, char *source)
+{
+    while(*source)
+    {
+        *target = *source;        
+        source++;        
+        target++;
+    }    
+    *target = '\0';
+}
+
 esp_err_t wifi_scan_start(void) {
 	esp_err_t err;
 
@@ -244,8 +255,14 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
         	
      		break;
         case SYSTEM_EVENT_STA_GOT_IP:
+
+        	//copy_string(ip_address_info, );
+        	ipaddr_aton(&ip_address_info, &event->event_info.got_ip.ip_info.ip);
             ESP_LOGI(wifi_tag, "wifi_event_handler:  SYSTEM_EVENT_STA_GOT_IP IP: %s\n", ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
             
+
+            //ip_address_info = (char *)malloc(sizeof(char)*strlen(ip_info));
+            //copy_string(ip_address_info, ip_info);
             //xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         	//http_server_init();
             

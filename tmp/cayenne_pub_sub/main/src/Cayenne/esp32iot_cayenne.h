@@ -34,15 +34,6 @@ static char* clientID = "6ddbde60-3292-11e8-82f6-390cc0260849";
 
 Network network;
 CayenneMQTTClient mqttClient;
-//static bool finished = false;
-
-//int i = 0;
-//Timer timer;
-    
-
-
-
-//static EventGroupHandle_t cayenne_event_group;
 
 void CayenneInit(const char* username_arg, const char* password_arg, const char* clientID_arg);
 
