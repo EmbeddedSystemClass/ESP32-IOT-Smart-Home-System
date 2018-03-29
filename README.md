@@ -32,8 +32,12 @@
 
         4.  
 
-3.  Cayenne MQTT
+3.  Cayenne MQTT:
+
         I.  Used channels description:
+
+            1.  BA5C:
+            
                 Channel 0:
                     a) data:
                         BA5C HTU21D temperature
