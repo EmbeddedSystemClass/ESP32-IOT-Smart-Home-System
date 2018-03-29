@@ -194,26 +194,33 @@ void app_main()
 
     ESP_ERROR_CHECK( nvs_flash_init() );
     initialise_wifi();
-    CayenneInit(username, password, clientID);
-    int err = connectClient();
-    if(err != CAYENNE_SUCCESS){
-        ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");
-        //ESP_ERROR_CHECK( err );
 
-        while(connectClient() != CAYENNE_SUCCESS){
-            delay(2000);
-            ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");
-        }
-        //loop();
-        //xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
-        //xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
-        //cayenne_event_group = xEventGroupCreate();
-        //ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
-        ESP_LOGI(LOCAL_TAG, "A");
-        //xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
-        while(1){
-            cayenne_task();
-        }
+    CayenneInit(username, password, clientID);
+    while(connectClient() != CAYENNE_SUCCESS){
+        delay(2000);
+        ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");   
     }
+    xTaskCreate(&cayenne_task, "cayenne_task", 4096, NULL, 5, NULL);
+
+    // int err = connectClient();
+    // if(err != CAYENNE_SUCCESS){
+    //     ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");
+    //     //ESP_ERROR_CHECK( err );
+
+    //     while(connectClient() != CAYENNE_SUCCESS){
+    //         delay(2000);
+    //         ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");
+    //     }
+    //     //loop();
+    //     //xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
+    //     //xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
+    //     //cayenne_event_group = xEventGroupCreate();
+    //     //ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
+    //     ESP_LOGI(LOCAL_TAG, "A");
+    //     //xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
+    //     while(1){
+    //         cayenne_task();
+    //     }
+    // }
     xTaskCreate(&http_get_task, "http_get_task", 4096, NULL, 5, NULL);
 }

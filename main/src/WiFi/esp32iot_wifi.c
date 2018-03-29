@@ -263,83 +263,17 @@ esp_err_t wifi_event_handler(void *ctx, system_event_t *event) {
 		    		delay(1000);
 
 		    		CayenneInit(username, password, clientID);
+				    while(connectClient() != CAYENNE_SUCCESS){
+				        delay(2000);
+				        ESP_LOGE(LOCAL_TAG, "%s", "Cayenne MQTT connection failed.\n");   
+				    }
+				    xTaskCreate(&cayenne_task, "cayenne_task", 4096, NULL, 5, NULL);
 		    		
-		    		//delay(5000);
-					// Connect to Cayenne.
-					if(!CayenneMQTTConnected(&mqttClient)){
-						err = connectClient();
-						if(err != CAYENNE_SUCCESS){
-							ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
-							//ESP_ERROR_CHECK( err );
+		    		//!CayenneMQTTConnected(&mqttClient)
 
-							while(connectClient() != CAYENNE_SUCCESS){
-								delay(2000);
-								ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
-							}
-							//loop();
-							//xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", 2048, NULL, 5, NULL, NULL);
-							//xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
-							//cayenne_event_group = xEventGroupCreate();
-	    					//ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
-	    					ESP_LOGI(wifi_tag, "A");
-	    					//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
-	    					while(1){
-								cayenne_task();
-							}
-							
-						}else{
-							ESP_LOGI(wifi_tag, "B");
+		    	}else{
 
-							// err = bluetooth_initialize();
-					  //       if(err != ESP_OK){
-					  //         ESP_LOGW(http_server_tag, "%s", wifi_err_to_string(err));
-					  //         ESP_ERROR_CHECK( err );
-					  //       }
-							//int i = 0;
-							while(1){
-								cayenne_task();
-
-						        // Yield to allow MQTT message processing.
-/*						        i++;
-						        int error = 0;
-						        error = CayenneMQTTYield(&mqttClient, 1000);
-						        if(error != MQTT_SUCCESS){
-						            ESP_LOGE(wifi_tag, "CayenneMQTTYield error: %d", error);
-						        }
-						        //delay(1000);
-						        // Publish some example data every second. This should be changed to send your actual data to Cayenne.
-						        CayenneMQTTPublishDataFloat(&mqttClient, NULL, DATA_TOPIC, 0, TYPE_TEMPERATURE, UNIT_CELSIUS, 30.5+i);
-						        CayenneMQTTPublishDataInt(&mqttClient, NULL, DATA_TOPIC, 1, TYPE_LUMINOSITY, UNIT_LUX, 1000+i);
-						        printf(".\n");
-
-						        if(i >1000){
-						            i=0;
-						        }*/
-							}
-							
-	    					//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
-
-	    					//ESP_ERROR_CHECK( esp_event_loop_init(cayenne_handler, NULL) );
-						}
-					}else{
-						ESP_LOGI(wifi_tag, "C");
-						//cayenne_event_group = xEventGroupCreate();
-	    				//xTaskCreate(&cayenne_task_handler, "cayenne_task_handler", 36*1024, NULL, 5, NULL);
-	    				while(1){
-							cayenne_task();
-						}
-							
-	    				
-						//xTaskCreate(&cayenne_task, "cayenne_task", configMINIMAL_STACK_SIZE, NULL, 5, NULL);
-					}
-
-						// while(connectClient() != CAYENNE_SUCCESS){
-						// 	ESP_LOGE(wifi_tag, "%s", "Cayenne MQTT connection failed.\n");
-						// }
-						// xTaskCreatePinnedToCore(&cayenne_task, "cayenn_task", stack_size, NULL, 5, NULL, 1);
-			    	}else{
-
-			    	}
+		    	}
 			}
             break;
         case SYSTEM_EVENT_STA_LOST_IP:
