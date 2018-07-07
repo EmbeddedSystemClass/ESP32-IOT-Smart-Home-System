@@ -30,6 +30,3 @@ Development Guide:
 				 	make monitor
 				d. To flash and watch: 
 					make flash monitor
-			
-
-See the README.md file in the upper level 'src' directory for more information.
